@@ -11,10 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/admin', 'HomeController@index')->name('admin');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'HomeController@index');
+
+    Route::get('roles', 'RoleController@index')->name('roles');
+
+    Route::get('users', 'UserController@index')->name('users');
+    Route::get('user-list', 'UserController@getList')->name('user-list');
+
+    Route::group(['middleware' => ['role:admin']], function () {
+
+
+
+    });
+
+});
