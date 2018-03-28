@@ -58,7 +58,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $data = User::find($user);
+
+        return view('admin.user.edit', compact('data'));
     }
 
     /**
@@ -86,9 +88,38 @@ class UserController extends Controller
 
     public function getList()
     {
-        $data = User::get();
+        $list = User::get();
 
-        return DataTables::of($data)->make();
+        $data = Datatables::of($list)
+            ->addColumn('id', function ($list) {
+                $info = $list->id;
+                return $info;
+            })
+            ->addColumn('name', function ($list) {
+                $info = $list->name;
+                return $info;
+            })
+            ->addColumn('email', function ($list) {
+                $info = $list->email;
+                return $info;
+            })
+            ->addColumn('created_at', function ($list) {
+                $info = $list->created_at;
+                return $info;
+            })
+            ->addColumn('updated_at', function ($list) {
+                $info = $list->updated_at;
+                return $info;
+            })
+            ->addColumn('action', function ($list) {
+                $menu = [];
+//                $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-check text-success"></i> Edit</button>';
+                $menu[] = '<a href="'. route('user.edit',array('user'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
+                return '<div class="btn-group text-right">'.implode($menu).'</div>';
+            })
+            ->make(true);
+
+        return $data;
     }
 
 }
