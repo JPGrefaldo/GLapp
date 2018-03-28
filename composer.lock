@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "b7904d07d1e1765a0a199aa11d6301a3",
-=======
     "content-hash": "e02e3ca2cb16617b4203acd16bbf5892",
->>>>>>> d82a395ca31c4d8d88e270ce733240cdf179fd1f
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -325,8 +321,6 @@
             "time": "2017-06-15T17:19:42+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "hieu-le/active",
             "version": "3.5.1",
             "source": {
@@ -390,7 +384,6 @@
             "time": "2017-09-07T02:36:51+00:00"
         },
         {
->>>>>>> d82a395ca31c4d8d88e270ce733240cdf179fd1f
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -675,8 +668,6 @@
             "time": "2018-03-06T17:34:36+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "laravelcollective/html",
             "version": "v5.5.3",
             "source": {
@@ -743,7 +734,6 @@
             "time": "2018-02-12T14:19:55+00:00"
         },
         {
->>>>>>> d82a395ca31c4d8d88e270ce733240cdf179fd1f
             "name": "league/flysystem",
             "version": "1.0.43",
             "source": {
@@ -1398,8 +1388,6 @@
             "time": "2018-01-20T00:28:24+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "spatie/laravel-permission",
             "version": "2.9.2",
             "source": {
@@ -1464,7 +1452,6 @@
             "time": "2018-03-12T16:15:16+00:00"
         },
         {
->>>>>>> d82a395ca31c4d8d88e270ce733240cdf179fd1f
             "name": "swiftmailer/swiftmailer",
             "version": "v6.0.2",
             "source": {
@@ -2429,8 +2416,6 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "yajra/laravel-datatables-oracle",
@@ -2501,7 +2486,6 @@
                 "laravel"
             ],
             "time": "2018-02-16T08:22:10+00:00"
->>>>>>> d82a395ca31c4d8d88e270ce733240cdf179fd1f
         }
     ],
     "packages-dev": [
