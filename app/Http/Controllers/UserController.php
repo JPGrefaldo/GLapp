@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\ContactInfo;
+use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
@@ -177,9 +180,44 @@ class UserController extends Controller
         return $data;
     }
 
-    public function userProfileIndex()
+    public function userProfileCreate ()
     {
 
+        return view('admin.profile.create');
+    }
+
+    public function userProfileStore (Request $request)
+    {
+        $profile = new Profile();
+        $profile->user_id = Auth::user()->id;
+        $profile->firstname = $request->input('firstname');
+        $profile->middlename = $request->input('middlename');
+        $profile->lastname = $request->input('lastname');
+        $profile->status = $request->input('status');
+        $profile->blood_type = $request->input('blood_type');
+        $profile->dob = $request->input('dob');
+        if($profile->save()){
+            $contact = new ContactInfo();
+            $contact->profile_id = $profile->id;
+
+        }
+
+        return view('admin.profile.create');
+    }
+
+    public function userProfileShow ()
+    {
+        return view('admin.profile.create');
+    }
+
+    public function userProfileEdit ()
+    {
+        return view('admin.profile.create');
+    }
+
+    public function userProfileUpdate (Request $request)
+    {
+        return view('admin.profile.create');
     }
 
 }

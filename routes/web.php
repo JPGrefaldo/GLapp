@@ -23,6 +23,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', 'UserController');
     Route::get('user-list', 'UserController@getList')->name('user-list');
 
+    Route::get('profile', 'UserController@getList')->name('profile');
+    Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
+    Route::get('profile-store', 'UserController@userProfileStore')->name('profile-store');
+
     Route::group(['middleware' => ['role:admin']], function () {
 
 

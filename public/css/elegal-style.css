@@ -1,0 +1,9 @@
+.resize-vertical {
+    resize:vertical;
+    overflow:auto;
+    height: 80px !important;
+}
+
+.input-group-select {
+    width: 15% !important;
+}
