@@ -22,7 +22,7 @@
         </div>
         <div class="col-lg-4">
             <div class="title-action">
-                <a href="" target="_blank" class="btn btn-primary"><i class="fa fa-plus"></i> Add User</a>
+                <a href="{!! route('user.create') !!}" class="btn btn-primary"><i class="fa fa-plus"></i> Add User</a>
             </div>
         </div>
     </div>

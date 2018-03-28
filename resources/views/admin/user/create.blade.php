@@ -7,18 +7,21 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Basic Form</h2>
+            <h2>Create User</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="/">User</a>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/user">User</a>
                 </li>
                 <li class="active">
-                    <strong>Create</strong>
+                    <strong>Create User</strong>
                 </li>
             </ol>
         </div>
         <div class="col-lg-4">
-            <a href="" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Create User</a>
+
         </div>
     </div>
 
@@ -27,31 +30,43 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Basic form <small>Simple login form example</small></h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+                        <h5>Create User <small>complete all fields</small></h5>
+
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequuntur dicta
-                                    dolorem ducimus facilis incidunt obcaecati quibusdam reiciendis sit velit. Aperiam
-                                    consequuntur ducimus impedit, laborum natus quam qui rem saepe.</p>
+                            <div class="col-sm-12 col-md-6">
+                                {{Form::open(array('route'=>array('user.store')))}}
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    {{Form::text('name',null, array('class'=>'form-control'))}}
+                                    @if($errors->has('name'))
+                                        <span class="text-danger">{{$errors->first('name')}}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    {{Form::text('email',null, array('class'=>'form-control'))}}
+                                    @if($errors->has('email'))
+                                        <span class="text-danger">{{$errors->first('email')}}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    {{Form::password('password', array('class'=>'form-control'))}}
+                                    @if($errors->has('password'))
+                                        <span class="text-danger">{{$errors->first('password')}}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Repeat Password</label>
+                                    {{Form::password('repeat-password', array('class'=>'form-control'))}}
+                                    @if($errors->has('repeat-password'))
+                                        <span class="text-danger">{{$errors->first('repeat-password')}}</span>
+                                    @endif
+                                </div>
+                                {{Form::submit('Create', array('class'=>'btn btn-success'))}}
+                                {{Form::close()}}
                             </div>
                         </div>
                     </div>
