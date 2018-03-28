@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_token" value="{!! csrf_token() !!}">
 
     <title>@yield('title')</title>
 
@@ -60,7 +61,7 @@
                     <a href="/roles"><i class="fa fa-lock"></i> <span class="nav-label">Roles</span></a>
                 </li>
                 <li class="{!! if_uri(array('users')) == 1 ? 'active' : '' !!}">
-                    <a href="/users"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
+                    <a href="{!! route('user.index') !!}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
                 </li>
                 {{--side menus end--}}
 
