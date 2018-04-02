@@ -8,10 +8,17 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {!! Html::style('css/bootstrap.min.css') !!}
+    {!! Html::style('font-awesome/css/font-awesome.css') !!}
+    {!! Html::style('css/plugins/iCheck/custom.css') !!}
+    {!! Html::style('css/animate.css') !!}
+    {!! Html::style('css/style.css') !!}
+    {!! Html::style('css/elegal-style.css') !!}
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -29,7 +36,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        E-legal
                     </a>
                 </div>
 
@@ -76,5 +83,15 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Mainly scripts -->
+    {!! Html::script('js/jquery-3.1.1.min.js') !!} 
+    {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::script('js/plugins/metisMenu/jquery.metisMenu.js') !!}
+    {!! Html::script('js/plugins/slimscroll/jquery.slimscroll.min.js') !!}
+
+    <!-- Custom and plugin javascript -->
+    {!! Html::script('js/inspinia.js') !!}
+    {!! Html::script('js/plugins/pace/pace.min.js') !!}
+    @yield('scripts')
 </body>
 </html>
