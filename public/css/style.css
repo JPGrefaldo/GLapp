@@ -3631,6 +3631,7 @@ video {
 #wrapper {
   width: 100%;
   overflow-x: hidden;
+  height: 100%;
 }
 .wrapper {
   padding: 0 20px;

@@ -3,56 +3,44 @@
 
 <!-- styles for wizard -->
 @section('styles')
-
+<style>
+@media only screen and (max-width: 1199px) {
+    .fieldScroll {
+        overflow-y:scroll;
+    }
+}
+.wizard-big.wizard > .content {
+    min-height: 360px;
+}
+</style>
 @endsection
 
 @section('content')
 <!-- Content -->
 <div id="wrapper">
 
-<div id="page-wrapper" class="gray-bg">
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Wizard with Validation</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
                 <div class="ibox-content">
                     <h2>
-                        Validation Wizard Form
+                        Sign Up
                     </h2>
                     <p>
-                        This example show how to use Steps with jQuery Validation plugin.
+                        Please fill up each form, to move to the next form click next.
                     </p>
 
                     <form id="form" action="#" class="wizard-big">
+                    {{ csrf_field() }}
                         <h1>Account</h1>
                         <fieldset>
                             <h2>Account Information</h2>
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        <label>Username *</label>
-                                        <input id="userName" name="userName" type="text" class="form-control required">
+                                        <label>Email *</label>
+                                        <input id="email" name="email" type="text" class="form-control required email">
                                     </div>
                                     <div class="form-group">
                                         <label>Password *</label>
@@ -71,46 +59,91 @@
                                     </div>
                                 </div>
                             </div>
-
                         </fieldset>
+
                         <h1>Profile</h1>
                         <fieldset>
                             <h2>Profile Information</h2>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>First name *</label>
-                                        <input id="name" name="name" type="text" class="form-control required">
+                                        <label>Date of Birth *</label>
+                                        <input id="bday" name="bday" type="date" class="form-control required">
                                     </div>
                                     <div class="form-group">
-                                        <label>Last name *</label>
-                                        <input id="surname" name="surname" type="text" class="form-control required">
+                                        <label>Contact No. *</label>
+                                        <input id="contactNo" name="contactNo" type="text" class="form-control required">
                                     </div>
                                 </div>
+                            </div>
+                        </fieldset>
+
+                        <h1>Emergency Contacts</h1>
+                        <fieldset class="fieldScroll">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                <h2>Contact #1</h2>
+                                    <div class="form-group">
+                                        <label>Name *</label>
+                                        <input id="name1" name="name1" type="text" class="form-control required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact No. *</label>
+                                        <input id="contactNo1" name="contactNo1" type="text" class="form-control required">
+                                    </div>
+                                    <div class="form-group">
+                                        <p><label>Complete Adress *</label></p>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <h2>Contact #2</h2>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Email *</label>
-                                        <input id="email" name="email" type="text" class="form-control required email">
+                                        <label>Name *</label>
+                                        <input id="name2" name="name2" type="text" class="form-control required">
                                     </div>
                                     <div class="form-group">
-                                        <label>Address *</label>
-                                        <input id="address" name="address" type="text" class="form-control">
+                                        <label>Contact No. *</label>
+                                        <input id="contactNo2" name="contactNo2" type="text" class="form-control required">
+                                    </div>
+                                    <div class="form-group">
+                                        <p><label>Complete Adress *</label></p>
+                                        <textarea class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <h1>Warning</h1>
+                        <h1>Security Question</h1>
                         <fieldset>
-                            <div class="text-center" style="margin-top: 120px">
-                                <h2>You did it Man :-)</h2>
-                            </div>
-                        </fieldset>
-
-                        <h1>Finish</h1>
-                        <fieldset>
-                            <h2>Terms and Conditions</h2>
-                            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                            <label>Question #1 *</label>
+                            <select class="form-control m-b" name="question1" required>
+                                <option value="" disabled selected>Please select question</option>
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                            </select>                            
+                                <label>Answer *</label>
+                                <input id="answer1" name="answer1" type="text" class="form-control required">
+                            </div>                      
+                        </div>
+                        <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Question #2 *</label>
+                            <select class="form-control m-b" name="question2" required>
+                                <option value="" disabled selected>Please select question</option>
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                            </select>                            
+                                <label>Answer *</label>
+                                <input id="answer2" name="answer2" type="text" class="form-control required">
+                        </div> 
+                        </div>                       
                         </fieldset>
                     </form>
                 </div>
@@ -119,9 +152,6 @@
 
         </div>
     </div>
-
-
-</div>
 </div>
 <!-- Script for wizard -->
 @section('scripts')
