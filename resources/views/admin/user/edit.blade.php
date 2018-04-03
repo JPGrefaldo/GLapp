@@ -61,6 +61,16 @@
                                         <span class="text-danger">{{$errors->first('repeat-password')}}</span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select name="role" id="" class="form-control">
+                                        @foreach($roles as $role)
+
+                                                <option value="{!! $role->name !!}" @hasrole($role->name) selected @endhasrole>{!! ucfirst($role->name) !!}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
                                 {{Form::submit('Save', array('class'=>'btn btn-success'))}}
                                 {{Form::close()}}
                             </div>

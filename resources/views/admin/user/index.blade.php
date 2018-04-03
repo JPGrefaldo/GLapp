@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Post page')
+@section('title', 'User page')
 
 
 @section('content')
@@ -54,18 +54,18 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table class="table table-bordered" id="users-table">
-                                    <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="users-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,19 +85,22 @@
     {!! Html::script('js/dataTables.min.js') !!}
     <script>
         $(document).ready(function(){
-            $('#users-table').DataTable({
+            var table = $('#users-table').DataTable({
+                dom: 'Bfrtip',
                 processing: true,
                 serverSide: true,
-                ajax: '/user-list',
+                order: [[0, 'desc']],
+                buttons: [
+                    'csv', 'excel', 'pdf', 'print', 'reset', 'reload'
+                ],
+                ajax: '{!! route('user-list') !!}',
                 columnDefs: [
-                    { className: "text-right", "targets": [ 5 ] }
+                    { className: "text-right", "targets": [ 3 ] }
                 ],
                 columns: [
-                    { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
                     { data: 'created_at', name: 'created_at' },
-                    { data: 'updated_at', name: 'updated_at' },
                     { data: 'action', name: 'action' }
                 ]
             });

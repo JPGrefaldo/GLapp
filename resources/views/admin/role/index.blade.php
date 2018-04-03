@@ -1,22 +1,19 @@
 @extends('layouts.master')
 
-@section('title', 'Post page')
+@section('title', 'Roles')
 
 
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Basic Form</h2>
+            <h2>Roles</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/">Home</a>
                 </li>
-                <li>
-                    <a>Level 1</a>
-                </li>
                 <li class="active">
-                    <strong>Blank</strong>
+                    <strong>Roles</strong>
                 </li>
             </ol>
         </div>
@@ -30,31 +27,21 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Basic form <small>Simple login form example</small></h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+                        <h5>Role list<small>Simple login form example</small></h5>
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequuntur dicta
-                                    dolorem ducimus facilis incidunt obcaecati quibusdam reiciendis sit velit. Aperiam
-                                    consequuntur ducimus impedit, laborum natus quam qui rem saepe.</p>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="roles-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,9 +54,25 @@
 
 
 @section('styles')
-
+    {!! Html::style('css/dataTables.min.css') !!}
 @endsection
 
 @section('scripts')
-
+    {!! Html::script('js/dataTables.min.js') !!}
+    <script>
+        $(document).ready(function(){
+            var table = $('#roles-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('role-list') !!}',
+                columnDefs: [
+                    { className: "text-right", "targets": [ 1 ] }
+                ],
+                columns: [
+                    { data: 'name', name: 'name' },
+                    { data: 'action', name: 'action' }
+                ]
+            });
+        });
+    </script>
 @endsection

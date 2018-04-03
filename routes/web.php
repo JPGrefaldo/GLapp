@@ -19,6 +19,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
 
     Route::get('role', 'RoleController@index')->name('role');
+    Route::get('role-list', 'RoleController@getList')->name('role-list');
+    Route::get('role-show/{id}', 'RoleController@show')->name('role-show');
+
 
     Route::resource('user', 'UserController');
     Route::get('user-list', 'UserController@getList')->name('user-list');

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -91,7 +92,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        $roles = Role::get();
+        return view('admin.user.edit', compact('user','roles'));
     }
 
     /**
@@ -132,6 +134,7 @@ class UserController extends Controller
             $user->password = bcrypt($request->input('password'));
         }
         if($user->update()){
+            $user->syncRoles($request->input('role'));
             return redirect(route('user.index'));
         }
     }
@@ -152,10 +155,6 @@ class UserController extends Controller
         $list = User::get();
 
         $data = Datatables::of($list)
-            ->addColumn('id', function ($list) {
-                $info = $list->id;
-                return $info;
-            })
             ->addColumn('name', function ($list) {
                 $info = $list->name;
                 return $info;
@@ -166,10 +165,6 @@ class UserController extends Controller
             })
             ->addColumn('created_at', function ($list) {
                 $info = $list->created_at;
-                return $info;
-            })
-            ->addColumn('updated_at', function ($list) {
-                $info = $list->updated_at;
                 return $info;
             })
             ->addColumn('action', function ($list) {

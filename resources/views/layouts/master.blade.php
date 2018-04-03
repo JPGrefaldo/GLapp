@@ -54,39 +54,39 @@
                 </li>
 
                 {{--side menus start--}}
-                <li class="{!! if_uri(array('/')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('/')) == 1 ? 'active' : '' !!}">
                     <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-book"></i> <span class="nav-label">Contracts</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-users"></i> <span class="nav-label">Council</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href=""><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
                 </li>
 
-                <li class="{!! if_uri(array('user','profile-create')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('user*','profile*','role*')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Others</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="{!! if_uri(array('user','profile-create')) == 1 ? 'active' : '' !!}"><a href="{!! route('user.index') !!}">Users</a></li>
-                        <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}"><a href="/roles">Roles</a></li>
+                        <li class="{!! if_uri_pattern(array('user*','profile*')) == 1 ? 'active' : '' !!}"><a href="{!! route('user.index') !!}">Users</a></li>
+                        <li class="{!! if_uri_pattern(array('role*')) == 1 ? 'active' : '' !!}"><a href="{!! route('role') !!}">Roles</a></li>
                     </ul>
                 </li>
                 {{--side menus end--}}
@@ -236,7 +236,7 @@
 </form>
 
 <!-- Mainly scripts -->
-{!! Html::script('js/jquery-3.1.1.min.js') !!}
+{!! Html::script('js/jquery-3.3.1.min.js') !!}
 {!! Html::script('js/bootstrap.min.js') !!}
 {!! Html::script('js/plugins/metisMenu/jquery.metisMenu.js') !!}
 {!! Html::script('js/plugins/slimscroll/jquery.slimscroll.min.js') !!}
