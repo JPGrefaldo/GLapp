@@ -27,10 +27,10 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Basic form <small>Simple login form example</small></h5>
+                        <h5>Create Profile</h5>
                     </div>
                     <div class="ibox-content">
-                        {{Form::open(array('route'=>array('user.store')))}}
+                        {{ Form::open(array('route'=>'profile-store')) }}
                         <div class="row">
                             <div class="col-sm-6">
                                 <h3 class="m-t-none m-b text-success">Basic Information</h3>
@@ -68,7 +68,7 @@
                                         <div class="form-group" id="data_3">
                                             <label>Date of Birth</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="01/13/2000">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="dob" class="form-control" value="01/13/2000">
                                             </div>
                                         </div>
                                     </div>
@@ -119,14 +119,14 @@
                                             <label>Contact Number</label>
                                             <div class="input-group">
                                                 <div class="input-group-btn input-group-select">
-                                                    <select name="" class="form-control">
+                                                    <select name="contact-type" class="form-control">
                                                         <option value="">Select type</option>
                                                         <option value="telephone">Telephone</option>
                                                         <option value="fax">Fax</option>
                                                         <option value="mobile">Mobile</option>
                                                     </select>
                                                 </div>
-                                                <input type="text" class="form-control">
+                                                <input type="text" name="contact-number" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -153,47 +153,94 @@
 
                                 <div class="hr-line-dashed"></div>
                                 <h3 class="m-t-none m-b text-success">In case of Emergency Contact</h3>
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    {{Form::text('icoe_name',null, array('class'=>'form-control'))}}
-                                    @if($errors->has('icoe_name'))
-                                        <span class="text-danger">{{$errors->first('icoe_name')}}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact Relation</label>
-                                    {{Form::text('icoe_relation',null, array('class'=>'form-control'))}}
-                                    @if($errors->has('icoe_relation'))
-                                        <span class="text-danger">{{$errors->first('icoe_relation')}}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact Number</label>
-                                    <div class="input-group">
-                                        <div class="input-group-btn input-group-select">
-                                            <select name="" class="form-control">
-                                                <option value="">Select type</option>
-                                                <option value="telephone">Telephone</option>
-                                                <option value="fax">Fax</option>
-                                                <option value="mobile">Mobile</option>
-                                            </select>
-                                        </div>
-                                        <input type="text" class="form-control">
+                                <div id="icoe-first">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" name="icoe-name[]" class="form-control">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    {{Form::textarea('icoe_address',null, array('class'=>'form-control resize-vertical'))}}
-                                    @if($errors->has('icoe_address'))
-                                        <span class="text-danger">{{$errors->first('icoe_address')}}</span>
-                                    @endif
+                                    <div class="form-group">
+                                        <label>Contact Relation</label>
+                                        <input type="text" name="icoe-relation[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Number</label>
+                                        <div class="input-group">
+                                            <div class="input-group-btn input-group-select">
+                                                <select name="icoe-contact-type[]" class="form-control">
+                                                    <option value="">Select type</option>
+                                                    <option value="telephone">Telephone</option>
+                                                    <option value="fax">Fax</option>
+                                                    <option value="mobile">Mobile</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" name="icoe-contact-number[]" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea name="icoe-address[]" class="form-control resize-vertical"></textarea>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
                                 </div>
                                 <div id="icoe-second"></div>
 
-                                <button type="button" class="btn btn-success">Add another</button>
-                                <div class="hr-line-dashed"></div>
-                                {{Form::submit('Create', array('class'=>'btn btn-success'))}}
+                                <button type="button" class="btn btn-success add-icoe">Add another</button>
 
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <h3 class="m-t-none m-b text-success">Account security question</h3>
+                                <div class="form-group">
+                                    <label>Question 1</label>
+                                    <select name="question[]" id="" class="form-control">
+                                        <option value="question-01">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
+                                        <option value="question-02">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
+                                        <option value="question-03">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
+                                        <option value="question-04">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
+                                        <option value="question-05">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
+                                        <option value="question-06">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
+                                        <option value="question-07">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
+                                        <option value="question-08">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
+                                        <option value="question-09">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
+                                        <option value="question-10">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Answer 1</label>
+                                    <input type="text" name="answer[]" class="form-control">
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group">
+                                    <label>Question 2</label>
+                                    <select name="question[]" id="" class="form-control">
+                                        <option value="question-11">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
+                                        <option value="question-12">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
+                                        <option value="question-13">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
+                                        <option value="question-14">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
+                                        <option value="question-15">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
+                                        <option value="question-16">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
+                                        <option value="question-17">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
+                                        <option value="question-18">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
+                                        <option value="question-19">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
+                                        <option value="question-20">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Answer 2</label>
+                                    <input type="text" name="answer[]" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="hr-line-dashed"></div>
+                                <div class="text-right">
+                                    {{Form::submit('Create', array('class'=>'btn btn-lg btn-primary'))}}
+                                </div>
                             </div>
                         </div>
                         {{Form::close()}}
@@ -221,6 +268,16 @@
                 keyboardNavigation: false,
                 forceParse: false,
                 autoclose: true
+            });
+            $(document).on('click','.add-icoe',function(){
+                $('#icoe-first').clone().appendTo('#icoe-second');
+                $(this).hide();
+                $('#icoe-second').append('<button type="button" class="btn btn-danger remove-icoe">Remove</button>')
+            });
+            $(document).on('click','.remove-icoe',function(){
+                $('#icoe-second').empty();
+                $('.add-icoe').show();
+                $(this).remove();
             });
         });
     </script>

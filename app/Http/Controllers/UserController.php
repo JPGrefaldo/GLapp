@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\ContactInfo;
+use App\IcoeInfo;
 use App\Profile;
+use App\SecurityQA;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -60,11 +63,11 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        if($user->save()){
+        $data = new User();
+        $data->name = $request->input('name');
+        $data->email = $request->input('email');
+        $data->password = bcrypt($request->input('password'));
+        if($data->save()){
             return redirect(route('user.index'));
         }
     }
@@ -182,7 +185,6 @@ class UserController extends Controller
 
     public function userProfileCreate ()
     {
-
         return view('admin.profile.create');
     }
 
@@ -195,29 +197,86 @@ class UserController extends Controller
         $profile->lastname = $request->input('lastname');
         $profile->status = $request->input('status');
         $profile->blood_type = $request->input('blood_type');
-        $profile->dob = $request->input('dob');
+        $profile->dob = Carbon::parse($request->input('dob'));
         if($profile->save()){
-            $contact = new ContactInfo();
-            $contact->profile_id = $profile->id;
+
+            $contacts = array(
+                array('permanent_address', $request->input('permanent_address')),
+                array('present_address', $request->input('present_address')),
+                array($request->input('contact-type'), $request->input('contact-number')),
+            );
+
+            foreach ($contacts as $contact){
+                $data = new ContactInfo();
+                $data->profile_id = $profile->id;
+                $data->type = $contact[0];
+                $data->description = $contact[1];
+                $data->save();
+            }
+
+            $icoe_input1 = $request->input('icoe-name');
+            $icoe_input2 = $request->input('icoe-relation');
+            $icoe_input3 = $request->input('icoe-contact-type');
+            $icoe_input4 = $request->input('icoe-contact-number');
+            $icoe_input5 = $request->input('icoe-address');
+            foreach ($icoe_input1 as $key => $input){
+                $icoe = new IcoeInfo();
+                $icoe->user_id = $profile->user_id;
+                $icoe->name = $input;
+                $icoe->relation_type = $icoe_input2[$key];
+                if($icoe->save()){
+
+                    $data = new ContactInfo();
+                    $data->icoe_id = $icoe->id;
+                    $data->type = $icoe_input3[$key];
+                    $data->description = $icoe_input4[$key];
+                    $data->save();
+
+                    $data = new ContactInfo();
+                    $data->icoe_id = $icoe->id;
+                    $data->type = 'present_address';
+                    $data->description = $icoe_input5[$key];
+                    $data->save();
+                }
+            }
+
+            $question = $request->input('question');
+            $answer = $request->input('answer');
+            foreach ($question as $key => $input){
+                $data = new SecurityQA();
+                $data->user_id = $profile->user_id;
+                $data->question = $input;
+                $data->answer = $answer[$key];
+                $data->save();
+            }
 
         }
 
-        return view('admin.profile.create');
+        return view('admin.profile.index');
     }
 
     public function userProfileShow ()
     {
-        return view('admin.profile.create');
+        $data = User::with('profile')
+            ->with('icoe')
+            ->with('sqa')
+            ->find(Auth::user()->id);
+//        return $data;
+        return view('admin.profile.index', compact('data'));
     }
 
     public function userProfileEdit ()
     {
-        return view('admin.profile.create');
+        $data = User::with('profile')
+            ->with('icoe')
+            ->with('sqa')
+            ->find(Auth::user()->id);
+        return view('admin.profile.edit', compact('data'));
     }
 
     public function userProfileUpdate (Request $request)
     {
-        return view('admin.profile.create');
+        return view('admin.profile.index');
     }
 
 }

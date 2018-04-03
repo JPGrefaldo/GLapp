@@ -28,4 +28,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function profile(){
+        return $this->hasOne('App\Profile')->with('contact');
+    }
+
+    public function icoe(){
+        return $this->hasMany('App\IcoeInfo')->with('contact');
+    }
+
+    public function sqa(){
+        return $this->hasMany('App\SecurityQA');
+    }
 }

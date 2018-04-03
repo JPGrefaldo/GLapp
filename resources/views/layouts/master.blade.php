@@ -57,11 +57,37 @@
                 <li class="{!! if_uri(array('/')) == 1 ? 'active' : '' !!}">
                     <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span></a>
                 </li>
-                <li class="{!! if_uri(array('roles')) == 1 ? 'active' : '' !!}">
-                    <a href="/roles"><i class="fa fa-lock"></i> <span class="nav-label">Roles</span></a>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
-                <li class="{!! if_uri(array('users')) == 1 ? 'active' : '' !!}">
-                    <a href="{!! route('user.index') !!}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-book"></i> <span class="nav-label">Contracts</span></a>
+                </li>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-users"></i> <span class="nav-label">Council</span></a>
+                </li>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
+                </li>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
+                </li>
+
+                <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}">
+                    <a href=""><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
+                </li>
+
+                <li class="{!! if_uri(array('user','profile-create')) == 1 ? 'active' : '' !!}">
+                    <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Others</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="{!! if_uri(array('user','profile-create')) == 1 ? 'active' : '' !!}"><a href="{!! route('user.index') !!}">Users</a></li>
+                        <li class="{!! if_uri(array('')) == 1 ? 'active' : '' !!}"><a href="/roles">Roles</a></li>
+                    </ul>
                 </li>
                 {{--side menus end--}}
 
