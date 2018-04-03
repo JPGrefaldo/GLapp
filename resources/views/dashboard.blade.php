@@ -3,7 +3,20 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-
+<style>
+    .nopads{
+        padding:0;
+    }
+    .rmlt{
+        padding-left:0;
+    }
+    .rmrt{
+        padding-right:0;
+    }
+    .rmgin{
+        margin:0;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -20,9 +33,10 @@
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-2">
+<div class="row">
+    <!-- Left -->
+        <div class="nopads col-lg-8">
+            <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-success pull-right">Monthly</span>
@@ -35,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-2">
+            <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-success pull-right">Monthly</span>
@@ -48,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-2">
+            <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-success pull-right">Monthly</span>
@@ -61,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-2">
+            <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-success pull-right">Monthly</span>
@@ -74,11 +88,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+                    <!-- Chart Start -->
 
-        <!-- Chart Start -->
         <div class="col-lg-12">
-        <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <div>
@@ -136,9 +148,112 @@
                     </div>
                 </div>
             </div>
-        </div>
+
         <!-- Chart End -->
+        </div>
+    <!-- Left Eng -->
+ <!-- Activity -->
+ <div class="col-sm-4">
+                    <div class="rmgin ibox">
+                        <div class="ibox-content" style="padding: 5px 20px 10px 20px;">
+                        <h4>User Activity</h4>
+
+                            <table class="rmgin table table-striped table-hover">
+                                <tbody>
+                                <tr>
+                                    <td class="client-avatar"><img alt="image" src="img/a2.jpg"> </td>
+                                    <td><a data-toggle="tab" href="#contact-1" class="client-link" aria-expanded="true">Anthony Jackson</a></td>
+                                    <td class="client-status"><span class="label label-info">Login</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><img alt="image" src="img/a3.jpg"> </td>
+                                    <td><a data-toggle="tab" href="#contact-2" class="client-link" aria-expanded="true">Rooney Lindsay</a></td>
+                                    <td class="client-status"><span class="label label-info">Login</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><img alt="image" src="img/a4.jpg"> </td>
+                                    <td><a data-toggle="tab" href="#contact-3" class="client-link" aria-expanded="true">Lionel Mcmillan</a></td>
+                                    <td class="client-status"><span class="label label-info">Logout</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a5.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-4" class="client-link" aria-expanded="true">Edan Randall</a></td>
+                                    <td class="client-status"><span class="label label-warning">Add Client</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a6.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-2" class="client-link" aria-expanded="true">Jasper Carson</a></td>
+                                    <td class="client-status"><span class="label label-warning">Modify Client</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a7.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-3" class="client-link" aria-expanded="true">Reuben Pacheco</a></td>
+                                    <td class="client-status"><span class="label label-info">Phoned</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a1.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-1" class="client-link" aria-expanded="true">Simon Carson</a></td>
+                                    <td class="client-status"><span class="label label-primary">Active</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a3.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-2" class="client-link" aria-expanded="true">Rooney Lindsay</a></td>
+                                    <td class="client-status"><span class="label label-warning">Waiting</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a4.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-3" class="client-link" aria-expanded="true">Lionel Mcmillan</a></td>
+                                    <td class="client-status"></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a5.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-4" class="client-link" aria-expanded="true">Edan Randall</a></td>
+                                    <td class="client-status"></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="client-avatar"><a href=""><img alt="image" src="img/a2.jpg"></a> </td>
+                                    <td><a data-toggle="tab" href="#contact-1" class="client-link" aria-expanded="true">Anthony Jackson</a></td>
+                                    <td class="client-status"><span class="label label-danger">Deleted</span></td>
+                                    <td>{{ Date('m/d/Y H:m:s') }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+                <!-- Activity End -->
     </div>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+    <div class="col-lg-3">
+                <div class="contact-box center-version">
+
+                    <a href="profile.html">
+
+                        <img alt="image" class="img-circle" src="img/a2.jpg">
+
+
+                        <h3 class="m-b-xs"><strong>Atty. John Smith</strong></h3>
+
+                        <div class="font-bold">Graphics designer</div>
+
+
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
 </div>
 
 @endsection
