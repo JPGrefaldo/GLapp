@@ -151,7 +151,7 @@
 @section('scripts')
 
 {!! Html::script('js/plugins/chartJs/Chart.min.js') !!}
-// ChartJS line graph Data
+
 <script>
         $(document).ready(function() {
 
