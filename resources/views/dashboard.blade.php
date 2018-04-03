@@ -13,8 +13,17 @@
     .rmrt{
         padding-right:0;
     }
+    .rmbt{
+        padding-bottom:0;
+    }
+    .rmtp{
+        padding-top:0;
+    }
     .rmgin{
         margin:0;
+    }
+    .fixwidth {
+        width: 19%;
     }
 </style>
 @endsection
@@ -236,22 +245,77 @@
 </div>
 <div class="row">
     <div class="col-lg-8">
-    <div class="col-lg-3">
-                <div class="contact-box center-version">
-
-                    <a href="profile.html">
-
-                        <img alt="image" class="img-circle" src="img/a2.jpg">
-
-
-                        <h3 class="m-b-xs"><strong>Atty. John Smith</strong></h3>
-
-                        <div class="font-bold">Graphics designer</div>
-
-
-                    </a>
-                </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div>
+                <h3 class="font-bold no-margins">
+                    Counsel List
+                </h3>
             </div>
+
+
+                <div class="row">
+                    <div class="fixwidth col-lg-3">
+                        <div class="rmlt rmrt widget-head-color-box navy-bg p-lg text-center" style="padding-top:10px;padding-bottom:10px;">
+                            <img src="img/a5.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                            <div class="rmgin m-b-md">
+                            <h3 class="font-bold no-margins">
+                                Atty. Alex
+                            </h3>
+                                <small>Counsel Partner</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixwidth col-lg-3">
+                        <div class="rmlt rmrt widget-head-color-box navy-bg p-lg text-center" style="padding-top:10px;padding-bottom:10px;">
+                            <img src="img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                            <div class="rmgin m-b-md">
+                            <h3 class="font-bold no-margins">
+                                Atty. Simon
+                            </h3>
+                                <small>Counsel Partner</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixwidth col-lg-3">
+                        <div class="rmlt rmrt widget-head-color-box navy-bg p-lg text-center" style="padding-top:10px;padding-bottom:10px;">
+                            <img src="img/a1.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                            <div class="rmgin m-b-md">
+                            <h3 class="font-bold no-margins">
+                                Atty. Smith
+                            </h3>
+                                <small>Counsel Partner</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixwidth col-lg-3">
+                        <div class="rmlt rmrt widget-head-color-box navy-bg p-lg text-center" style="padding-top:10px;padding-bottom:10px;">
+                            <img src="img/a2.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                            <div class="rmgin m-b-md">
+                            <h3 class="font-bold no-margins">
+                                Atty. Ralla
+                            </h3>
+                                <small>Counsel Partner</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixwidth col-lg-3">
+                        <div class="rmlt rmrt widget-head-color-box navy-bg p-lg text-center" style="padding-top:10px;padding-bottom:10px;">
+                            <img src="img/a3.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                            <div class="rmgin m-b-md">
+                            <h3 class="font-bold no-margins">
+                                Atty. Rayle
+                            </h3>
+                                <small>Counsel Partner</small>
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
+
+
+        </div>
+    </div>
+
     </div>
 </div>
 </div>
