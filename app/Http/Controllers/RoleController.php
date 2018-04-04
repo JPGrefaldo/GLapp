@@ -26,7 +26,7 @@ class RoleController extends Controller
             ->addColumn('action', function ($list) {
                 $menu = [];
 //                $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-check text-success"></i> Edit</button>';
-                $menu[] = '<a href="'. route('user.edit',array('user'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
+                $menu[] = '<a href="'. route('role-show',array('id'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-search text-success"></i> view</a>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);
@@ -37,9 +37,15 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $permissions = Permission::get();
+        $permissions2 = Permission::select('name')->where('table_name','table_name')->groupBy('table_name');
 
-        dd($permissions);
+//        $permissions = Permission::select('name')
+//            ->groupBy($permissions2)
+//            ->get();
+dd($permissions2);
+        return $permissions2;
+
+       
         return view('admin.role.show', compact('role','permissions'));
     }
 

@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
         $models = array(
             'users',
             'profiles',
-            'client',
+            'clients',
         );
 
         foreach ($models as $model){
