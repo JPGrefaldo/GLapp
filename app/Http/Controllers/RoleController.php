@@ -37,10 +37,9 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $permissions = Permission::groupBy('table_name')
-            ->get();
+        $permissions = Permission::get();
 
-
+        dd($permissions);
         return view('admin.role.show', compact('role','permissions'));
     }
 
