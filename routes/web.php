@@ -17,6 +17,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/client', 'ClientController@index');
 
     Route::get('role', 'RoleController@index')->name('role');
     Route::get('role-list', 'RoleController@getList')->name('role-list');
@@ -31,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
     Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
     Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
+    Route::view('googleapi','googleapi');
 
     Route::group(['middleware' => ['role:admin']], function () {
 
