@@ -330,6 +330,7 @@
 @section('scripts')
 
 {!! Html::script('js/plugins/chartJs/Chart.min.js') !!}
+{!! Html::script('js/plugins/slimscroll/jquery.slimscroll.min.js') !!}
 
 <script>
         $(document).ready(function() {

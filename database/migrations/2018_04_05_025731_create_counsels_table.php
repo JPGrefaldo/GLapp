@@ -15,6 +15,12 @@ class CreateCounselsTable extends Migration
     {
         Schema::create('counsels', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('fname');
+            $table->string('mname');
+            $table->string('lname');
+            $table->text('address');
+            $table->string('lawyer_type');
+            $table->string('lawyer_code');
             $table->timestamps();
         });
     }

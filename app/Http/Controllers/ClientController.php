@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
+use Faker\Factory as Faker;
 
 class ClientController extends Controller
 {
@@ -13,8 +14,17 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('client');
+    {   
+        $faker = Faker::create();
+        $client = array();
+        for ($i = 0; $i < 11; $i++) {
+            $client[$i] = [ 'imgNo'   =>  rand(1,8),
+                            'name'    =>  $faker->name,
+                            'company' =>  $faker->company,
+                            'email'   =>  $faker->email];
+
+        }
+        return view('client',['client'=>$client]);
     }
 
     /**

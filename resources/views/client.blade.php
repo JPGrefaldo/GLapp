@@ -3,6 +3,7 @@
 @section('title', 'Client')
 
 @section('styles')
+{!! Html::script('css/plugins/toastr/toastr.min.css') !!}
 <style>
     .nopads{
         padding:0;
@@ -29,22 +30,72 @@
 @endsection
 
 @section('content')
-
+ <!-- Top bar/BreadCrumbs -->
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-8">
-        <h2>Home</h2>
+    <div class="col-lg-12">
+        <h2>Client's Info</h2>
         <ol class="breadcrumb">
             <li class="active">
-                <a href="/"><strong>Dashboard</strong></a>
+                <a href="/"><strong>Clients</strong></a>
             </li>
         </ol>
     </div>
 </div>
+ <!-- Top end -->
 
+
+ <!-- Main Content  -->
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h2><i class="fa fa-user"></i> Clients</h2>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i> Search</button>
+                                </span>
+                                <input type="text" placeholder="Search client " class="input form-control">
+                                <span class="input-group-btn">
+                                        <button class="btn btn-primary " type="button"><i class="fa fa-user-o"></i>&nbsp;Add</button>
+                                </span>
+                            </div>
+                            <div class="clients-list">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                @foreach($client as $var)
+                                                <tr>
+                                                    <td class="client-avatar"><img alt="image" src="img/a{{ $var['imgNo'] }}.jpg"> </td>
+                                                    <td><a data-toggle="tab" href="#contact-1" class="client-link">{{ $var['name'] }}</a></td>
+                                                    <td> {{ $var['company'] }}</td>
+                                                    <td class="contact-type"><i class="fa fa-envelope"> </i></td>
+                                                    <td> {{ $var['email'] }}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-circle btn-xm" type="button">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-circle btn-xm" type="button">
+                                                                <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </td 
+                                                </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </div>
-
+ <!-- Main Content End -->
 @endsection
 
 
@@ -53,44 +104,8 @@
 @endsection
 
 @section('scripts')
-
-{!! Html::script('js/plugins/chartJs/Chart.min.js') !!}
-
+{!! Html::script('js/google.js') !!}
 <script>
-        $(document).ready(function() {
-
-            var lineData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(26,179,148,0.5)",
-                        borderColor: "rgba(26,179,148,0.7)",
-                        pointBackgroundColor: "rgba(26,179,148,1)",
-                        pointBorderColor: "#fff",
-                        data: [48, 48, 60, 39, 56, 37, 30]
-                    },
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(220,220,220,0.5)",
-                        borderColor: "rgba(220,220,220,1)",
-                        pointBackgroundColor: "rgba(220,220,220,1)",
-                        pointBorderColor: "#fff",
-                        data: [65, 59, 40, 51, 36, 25, 40]
-                    }
-                ]
-            };
-
-            var lineOptions = {
-                responsive: true
-            };
-
-
-            var ctx = document.getElementById("lineChart").getContext("2d");
-            new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
-
-
-        });
-    </script>
-
+    
+</script>
 @endsection
