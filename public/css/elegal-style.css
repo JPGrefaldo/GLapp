@@ -5,5 +5,74 @@
 }
 
 .input-group-select {
-    width: 15% !important;
+    width: 74% !important;
+}
+
+.permission-box {
+    margin-bottom: 20px;
+}
+
+.permission-box dd {
+    margin-left: 40px;
+}
+
+.permission-box dt, .permission-box dd {
+    padding: 5px 0;
+}
+
+.img-preview-sm {
+    height: 200px;
+}
+
+.define-contract .list-a {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.define-contract .list-a li ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.define-contract .list-a li:not(:last-child) ul {
+    border-bottom: 1px solid #ddd;
+}
+
+.define-contract .list-a li ul li:not(:last-child) {
+    border-right: 1px solid #ddd;
+}
+
+.define-contract .list-a li ul li {
+    padding: 10px 5px;
+}
+
+.define-contract .list-a li ul li:nth-child(1)  {
+    width: 100px;
+}
+
+.define-contract .list-a.two-col li ul li:nth-child(2)  {
+    width: calc(100% - 100px);
+}
+
+.define-contract .list-a.five-col li ul li:nth-child(2)  {
+    width: calc(100% - 450px);
+}
+
+.define-contract .list-a.five-col li ul li:nth-child(3)  {
+    width: 150px;
+}
+
+.define-contract .list-a.five-col li ul li:nth-child(4)  {
+    width: 150px;
+}
+
+.define-contract .list-a.five-col li ul li:nth-child(5)  {
+    width: 50px;
+}
+
+.define-contract .list-a  {
+
 }

@@ -22,6 +22,7 @@ class CreateProfilesTable extends Migration
             $table->string('lastname');
             $table->string('status');
             $table->string('blood_type');
+            $table->string('image');
             $table->date('dob');
             $table->timestamps();
 

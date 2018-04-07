@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
@@ -37,15 +38,33 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $permissions2 = Permission::select('table_name')->distinct('table_name')->get();
+        $permissions = Permission::select('table_name')
+            ->distinct('table_name')
+            ->get();
 
-//        $permissions = Permission::select('name')
-//            ->groupBy($permissions2)
-//            ->get();
+        $default = DB::table('role_has_permissions')
+            ->where('role_id',$role->id)
+            ->pluck('permission_id')
+            ->toArray();
 
-        return $permissions2;
+//        return $default;
 
-        return view('admin.role.show', compact('role','permissions'));
+        return view('admin.role.show', compact('role','permissions','default'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $ids = $request->input('permission');
+        $permissions = Permission::whereIn('id', $ids)
+            ->pluck('name')
+            ->toArray();
+
+        $role = Role::find($id);
+
+        $role->syncPermissions($permissions);
+
+//        return $ids;
+        return redirect()->back();
     }
 
 }

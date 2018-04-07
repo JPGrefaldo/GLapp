@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Post page')
+@section('title', 'Profile|Create')
 
 
 @section('content')
@@ -35,7 +35,16 @@
                             <div class="col-sm-6">
                                 <h3 class="m-t-none m-b text-success">Basic Information</h3>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-sm-push-6">
+                                        <div class="form-group">
+                                            <label>Preview image</label>
+                                            <div class="img-preview img-preview-sm"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" id="modal-btn" class="btn btn-primary">Edit Image</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-pull-6">
                                         <div class="form-group">
                                             <label>First Name</label>
                                             {{Form::text('firstname',null, array('class'=>'form-control'))}}
@@ -43,8 +52,6 @@
                                                 <span class="text-danger">{{$errors->first('firstname')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Middle Name</label>
                                             {{Form::text('middlename',null, array('class'=>'form-control'))}}
@@ -52,10 +59,6 @@
                                                 <span class="text-danger">{{$errors->first('middlename')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Last Name</label>
                                             {{Form::text('lastname',null, array('class'=>'form-control'))}}
@@ -63,18 +66,12 @@
                                                 <span class="text-danger">{{$errors->first('lastname')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group" id="data_3">
                                             <label>Date of Birth</label>
                                             <div class="input-group date">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="dob" class="form-control" value="01/13/2000">
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Marital Status</label>
                                             {{Form::select('status', array(
@@ -89,8 +86,6 @@
                                                 <span class="text-danger">{{$errors->first('status')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Blood Type</label>
                                             {{Form::select('blood_type', array(
@@ -250,18 +245,58 @@
         </div>
     </div>
 
+    <div class="modal inmodal fade" id="modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                    <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                </div>
+                <div class="modal-body">
+                    <div class="image-crop">
+                        <img src="img/p3.jpg">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                            <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                            Upload new image
+                        </label>
+                        <label title="Donload image" id="download" class="btn btn-primary">Download</label>
+                        <button class="btn btn-white" id="zoomIn" type="button">Zoom In</button>
+                        <button class="btn btn-white" id="zoomOut" type="button">Zoom Out</button>
+                        <button class="btn btn-white" id="rotateLeft" type="button">Rotate Left</button>
+                        <button class="btn btn-white" id="rotateRight" type="button">Rotate Right</button>
+                        <button class="btn btn-warning" id="setDrag" type="button">New crop</button>
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 
 @section('styles')
     {!! Html::style('css/plugins/datapicker/datepicker3.css') !!}
+    {!! Html::style('css/plugins/cropper/cropper.min.css') !!}
 @endsection
 
 @section('scripts')
     <!-- Data picker -->
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
+    {!! Html::script('js/plugins/cropper/cropper.min.js') !!}
     <script>
         $(document).ready(function(){
+            var modal = $('#modal');
+            $('#modal-btn').on('click',function(){
+                modal.modal({backdrop: 'static', keyboard: false});
+            });
+
             $('#data_3 .input-group.date').datepicker({
                 startView: 2,
                 todayBtn: "linked",
@@ -269,6 +304,7 @@
                 forceParse: false,
                 autoclose: true
             });
+
             $(document).on('click','.add-icoe',function(){
                 $('#icoe-first').clone().appendTo('#icoe-second');
                 $(this).hide();
@@ -279,6 +315,67 @@
                 $('.add-icoe').show();
                 $(this).remove();
             });
+
+            var $image = $(".image-crop > img")
+            $($image).cropper({
+                aspectRatio: 1,
+                preview: ".img-preview",
+                done: function(data) {
+                    // Output the result data for cropping image.
+                }
+            });
+
+            var $inputImage = $("#inputImage");
+            if (window.FileReader) {
+                $inputImage.change(function() {
+                    var fileReader = new FileReader(),
+                        files = this.files,
+                        file;
+
+                    if (!files.length) {
+                        return;
+                    }
+
+                    file = files[0];
+
+                    if (/^image\/\w+$/.test(file.type)) {
+                        fileReader.readAsDataURL(file);
+                        fileReader.onload = function () {
+                            $inputImage.val("");
+                            $image.cropper("reset", true).cropper("replace", this.result);
+                        };
+                    } else {
+                        showMessage("Please choose an image file.");
+                    }
+                });
+            } else {
+                $inputImage.addClass("hide");
+            }
+
+            $("#download").click(function() {
+                window.open($image.cropper("getDataURL"));
+            });
+
+            $("#zoomIn").click(function() {
+                $image.cropper("zoom", 0.1);
+            });
+
+            $("#zoomOut").click(function() {
+                $image.cropper("zoom", -0.1);
+            });
+
+            $("#rotateLeft").click(function() {
+                $image.cropper("rotate", 45);
+            });
+
+            $("#rotateRight").click(function() {
+                $image.cropper("rotate", -45);
+            });
+
+            $("#setDrag").click(function() {
+                $image.cropper("setDragMode", "crop");
+            });
+
         });
     </script>
 @endsection
