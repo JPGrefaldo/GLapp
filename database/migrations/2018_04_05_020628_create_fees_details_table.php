@@ -15,7 +15,7 @@ class CreateFeesDetailsTable extends Migration
     {
         Schema::create('fees_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('chargeable_id')->reference('id')->on('chargeables');
+            $table->integer('chargeable_id')->unsigned()->nullable();
             $table->decimal('rate');
             $table->decimal('amount');
             $table->boolean('cap');
@@ -28,6 +28,10 @@ class CreateFeesDetailsTable extends Migration
             $table->decimal('rate_1');
             $table->decimal('rate_2');
             $table->timestamps();
+
+            $table->foreign('chargeable_id')
+            ->references('id')
+            ->on('chargeables');
         });
     }
 

@@ -15,8 +15,8 @@ class CreateBillingsTable extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('counsel_id')->reference('id')->on('counsel');
-            $table->foreign('client_id')->reference('id')->on('clients');
+            $table->integer('counsel_id')->unsigned()->nullable();
+            $table->integer('client_id')->unsigned()->nullable();
             $table->decimal('billing_number');
             $table->date('billing_date');
             $table->decimal('unpaid_balance');
@@ -37,6 +37,15 @@ class CreateBillingsTable extends Migration
             $table->integer('excess_hrs');
             $table->integer('total_sr');
             $table->timestamps();
+
+
+            $table->foreign('counsel_id')
+            ->references('id')
+            ->on('counsels');
+            
+            $table->foreign('client_id')
+            ->references('id')
+            ->on('clients');
         });
     }
 

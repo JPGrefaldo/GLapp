@@ -16,11 +16,24 @@ class CreateServiceReportsTable extends Migration
         Schema::create('service_reports', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date_render');
-            $table->foreign('contract_id')->reference('id')->on('contracts');
-            $table->foreign('counsel_id')->reference('id')->on('case_managements');
-            $table->foreign('fees_detail_id')->rerference('id')->on('fees_details');
+            $table->integer('contract_id')->unsigned()->nullable();
+            $table->integer('counsel_id')->unsigned()->nullable();
+            $table->integer('fees_detail_id')->unsigned()->nullable();
             $table->text('description');
             $table->timestamps();
+
+
+            $table->foreign('contract_id')
+            ->references('id')
+            ->on('contracts');
+
+            $table->foreign('counsel_id')
+            ->references('id')
+            ->on('case_managements');
+
+            $table->foreign('fees_detail_id')
+            ->references('id')
+            ->on('fees_details');
         });
     }
 

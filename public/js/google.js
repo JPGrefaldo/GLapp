@@ -23,7 +23,9 @@
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-            {types: ['geocode']});
+            {types: ['geocode'],
+            componentRestrictions: {country: 'ph'}
+          });
 
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
@@ -33,12 +35,8 @@
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-        console.log(place);
-
-        for (var component in componentForm) {
-          document.getElementsByClassName(component)[0].value = '';
-          document.getElementsByClassName(component)[0].disabled = false;
-        }
+        
+        toggle();
 
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
@@ -55,18 +53,18 @@
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
-      function geolocate() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-          });
-        }
-      }
+      // function geolocate() {
+      //   if (navigator.geolocation) {
+      //     navigator.geolocation.getCurrentPosition(function(position) {
+      //       var geolocation = {
+      //         lat: position.coords.latitude,
+      //         lng: position.coords.longitude
+      //       };
+      //       var circle = new google.maps.Circle({
+      //         center: geolocation,
+      //         radius: position.coords.accuracy
+      //       });
+      //       autocomplete.setBounds(circle.getBounds());
+      //     });
+      //   }
+      // }

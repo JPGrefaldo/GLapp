@@ -15,13 +15,18 @@ class CreateBusinessesTable extends Migration
     {
         Schema::create('businesses', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('client_id')->reference('id')->on('clients');
+            $table->integer('client_id')->unsigned()->nullable();
             $table->string('name');
             $table->boolean('billing')->default(0);
             $table->string('oic');
             $table->string('contact');
             $table->string('country');
             $table->timestamps();
+
+
+            $table->foreign('client_id')
+            ->references('id')
+            ->on('clients');
         });
     }
 

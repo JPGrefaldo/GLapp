@@ -15,8 +15,12 @@ class CreateChargesGroupsTable extends Migration
     {
         Schema::create('charges_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('fees_detail_id')->reference('id')->on('fees_details');
+            $table->integer('fees_detail_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('fees_detail_id')
+            ->references('id')
+            ->on('fees_details');
         });
     }
 
