@@ -68,7 +68,7 @@
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href=""><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
+                    <a href="/client"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">

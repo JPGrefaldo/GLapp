@@ -15,7 +15,20 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('client_id')->unsigned()->nullable();
+            $table->integer('contract_number');
+            $table->date('contract_date');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->boolean('status');
+            $table->decimal('amount_cost');
+            $table->text('other_conditions');
             $table->timestamps();
+            
+
+            $table->foreign('client_id')
+            ->references('id')
+            ->on('clients');
         });
     }
 

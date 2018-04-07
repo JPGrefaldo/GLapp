@@ -17,6 +17,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/client', 'ClientController@index');
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('role', 'RoleController@index')->name('role');
@@ -35,11 +36,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:admin|council|para-legal']], function () {
-        Route::get('profile', 'UserController@userProfileShow')->name('profile');
-        Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
-        Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
-        Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
-        Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
+
+    Route::get('profile', 'UserController@userProfileShow')->name('profile');
+    Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
+    Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
+    Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
+    Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
+    Route::view('googleapi','googleapi');
+
+    Route::group(['middleware' => ['role:admin']], function () {
+
+
+
     });
 
 });

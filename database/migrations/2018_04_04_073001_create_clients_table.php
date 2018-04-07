@@ -15,6 +15,17 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('fname');
+            $table->string('lname');
+            $table->string('mname');
+            $table->enum('plaintiff',['Respondent','Complainant','Defendant']);
+            $table->string('business_nature');
+            $table->string('email');
+            $table->string('country');
+            $table->string('state');
+            $table->string('city');
+            $table->string('town');
+            $table->string('street');
             $table->timestamps();
         });
     }
