@@ -36,17 +36,15 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:admin|council|para-legal']], function () {
-
-    Route::get('profile', 'UserController@userProfileShow')->name('profile');
-    Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
-    Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
-    Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
-    Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
-    Route::view('googleapi','googleapi');
+        Route::get('profile', 'UserController@userProfileShow')->name('profile');
+        Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
+        Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
+        Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
+        Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
+        Route::view('googleapi','googleapi');
+    });
 
     Route::group(['middleware' => ['role:admin']], function () {
-
-
 
     });
 
