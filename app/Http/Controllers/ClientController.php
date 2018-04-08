@@ -24,7 +24,7 @@ class ClientController extends Controller
                             'email'   =>  $faker->email];
 
         }
-        return view('client',['client'=>$client]);
+        return view('client',['data'=>$client]);
     }
 
     /**
