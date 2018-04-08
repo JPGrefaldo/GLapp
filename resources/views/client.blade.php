@@ -34,6 +34,9 @@
         background-color: #eaeaea;
         box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     }
+    .pac-container {
+        z-index: 10000 !important;
+    }
     /* @media (min-width: 1500px) {
     .modal-lg {
         width: 80%;
@@ -43,7 +46,10 @@
 </style>
 @endsection
 
+
+
 @section('content')
+
  <!-- Top bar/BreadCrumbs -->
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="rmrt col-lg-1" style="width: 6%; text-align:center;">
@@ -93,9 +99,6 @@
                                         <td class="contact-type"><i class="fa fa-envelope"> </i></td>
                                         <td> {{ $var['email'] }}</td>
                                         <td>
-                                            <button class="btn btn-primary btn-circle btn-xm" type="button">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                             <button class="btn btn-danger btn-circle btn-xm" type="button">
                                                     <i class="fa fa-times"></i>
                                             </button>
@@ -172,8 +175,8 @@
                                         <div class=" col-lg-12">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon bg-primary">Search</span>
-                                            <input id="autocomplete" placeholder="Enter your address" onfocus="" type="text" class="form-control" autocomplete="off">
-                                            {{-- <input id="autocomplete" placeholder="Enter your address" onfocus="geolocate()" type="text" class="form-control" autocomplete="off"> --}}
+                                            <input id="acInput1" placeholder="Enter your address" onfocus="" type="text" class="form-control autocomplete" autocomplete="off">
+
                                             <span class="input-group-btn" id="toggle">
                                                     <input type="checkbox" data-toggle="toggle" onchange="toggle()">
                                             </span>
@@ -181,20 +184,33 @@
                                         <div class="input-group m-b">
                                             <span class="input-group-addon bg-primary">Street Address</span>
                                             <div class="row">
-                                                <div class="col-lg-3"><input type="text" class="form-control street_number" disabled></div>
-                                                <div class="rmlt col-lg-9"><input type="text" class="form-control route" disabled></div>
+                                                <div class="col-lg-3"><input type="text" class="form-control street_number_acInput1" disabled></div>
+                                                <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput1" disabled></div>
                                             </div>
                                         </div>
-                                        <div class="input-group m-b"><span class="input-group-addon bg-primary">Barangay/Town</span><input type="text" class="form-control neighborhood administrative_area_level_5" disabled></div>
-                                        <div class="input-group m-b"><span class="input-group-addon bg-primary">Municipality/City</span><input type="text" class="form-control locality" disabled></div>
-                                        <div class="input-group m-b"><span class="input-group-addon bg-primary">Province/Conurbation</span><input type="text" class="form-control administrative_area_level_1 administrative_area_level_2" disabled></div>
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon bg-primary">Barangay/Town</span>
+                                            <input type="text" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" disabled>
+                                        </div>
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon bg-primary">Municipality/City</span>
+                                            <input type="text" class="form-control locality_acInput1" disabled>
+                                        </div>
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon bg-primary">Province/Conurbation</span>
+                                            <input type="text" class="form-control administrative_area_level_1_acInput1 administrative_area_level_2_acInput1" disabled>
+                                        </div>
                                         
                                         <div class="row">
                                                 <div class="col-lg-7">
-                                                    <div class="input-group m-b"><span class="input-group-addon bg-primary">Country</span><input type="text" class="form-control  country" disabled></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon bg-primary">Country</span>
+                                                        <input type="text" class="form-control  country_acInput1" disabled></div>
                                                 </div>
                                                 <div class="col-lg-5">
-                                                        <div class="input-group m-b"><span class="input-group-addon bg-primary">Zip Code</span><input type="text" class="form-control  postal_code" disabled></div>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon bg-primary">Zip Code</span>
+                                                            <input type="text" class="form-control  postal_code_acInput1" disabled></div>
                                                 </div>
                                         </div>
                                         </div>
@@ -233,7 +249,7 @@
                                         <div class=" col-lg-12">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Search</span>
-                                                <input id="autocomplete" placeholder="Enter your address" onfocus="" type="text" class="form-control" autocomplete="off">
+                                                <input id="acInput2" placeholder="Enter your address" onfocus="" type="text" class="form-control autocomplete" autocomplete="off">
                                                 <span class="input-group-btn"><button type="button" class="btn btn-primary"><i class="fa fa-paste"></i></button></span>
                                             </div>
                                             <div class="input-group m-b">
@@ -241,15 +257,15 @@
                                                     <button type="button" class="btn btn-primary">Street Address</button>
                                                 </span>
                                                 <div class="row">
-                                                    <div class="col-lg-3"><input type="text" class="form-control street_number_2" ></div>
-                                                    <div class="rmlt col-lg-9"><input type="text" class="form-control route_2" ></div>
+                                                    <div class="col-lg-3"><input type="text" class="form-control street_number_acInput2" ></div>
+                                                    <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput2" ></div>
                                                 </div>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-btn bg-primary">
                                                     <button type="button" class="btn btn-primary">Barangay/Town</button>
                                                 </span>
-                                                <input type="text" class="form-control neighborhood_2 administrative_area_level_5_2" >
+                                                <input type="text" class="form-control neighborhood_acInput2 administrative_area_level_5_acInput2" >
                                             </div>
 
                 
@@ -258,13 +274,13 @@
                                                 <span class="input-group-btn bg-primary">
                                                     <button type="button" class="btn btn-primary">Municipality/City</button>
                                                 </span>
-                                                <input type="text" class="form-control locality_2" >
+                                                <input type="text" class="form-control locality_acInput2" >
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-btn bg-primary">
                                                     <button type="button" class="btn btn-primary">Province/Conurbation</button>
                                                 </span>
-                                                <input type="text" class="form-control administrative_area_level_1_2 administrative_area_level_2_2" >
+                                                <input type="text" class="form-control administrative_area_level_1_acInput2 administrative_area_level_2_acInput2" >
                                             </div>
                                             
                                             <div class="row">
@@ -273,7 +289,7 @@
                                                         <span class="input-group-btn bg-primary">
                                                             <button type="button" class="btn btn-primary">Country</button> 
                                                         </span>
-                                                        <input type="text" class="form-control  country_2" >
+                                                        <input type="text" class="form-control  country_acInput2" >
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
@@ -281,7 +297,7 @@
                                                         <span class="input-group-btn bg-primary">
                                                             <button type="button" class="btn btn-primary">Zip Code</button>
                                                         </span>
-                                                        <input type="text" class="form-control  postal_code_2" >
+                                                        <input type="text" class="form-control  postal_code_acInput2" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,6 +315,7 @@
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -309,33 +326,34 @@
 @endsection
 
 @section('scripts')
-{!! Html::script('js/google.js') !!}
-{!! Html::script('js/plugins/bootstrap-toggle-master/bootstrap-toggle.min.js') !!}
 
+{!! Html::script('js/plugins/bootstrap-toggle-master/bootstrap-toggle.min.js') !!}
+@yield('greetings')
 
 <script>
-document.querySelectorAll("tr").forEach((tr) => {
-        tr.addEventListener('click', function(e) {
-        e = e || window.event;
-        var target = e.target || e.srcElement;
-            // text = target.textContent || text.innerText;
-            console.log(target);   
-}, false);});
+
+// document.querySelectorAll("tr").forEach((tr) => {
+//         tr.addEventListener('click', function(e) {
+//         e = e || window.event;
+//         var target = e.target || e.srcElement;
+//             // text = target.textContent || text.innerText;
+//             console.log(target);   
+// }, false);});
 
 let data = {
     name: "John Paul Grefaldo",
     age: "19"
 }
 
-function toggle() {
+function toggle(acInput) {
     for (var component in componentForm){
-        document.getElementsByClassName(component)[0].value = '';
-        document.getElementsByClassName(component)[0].disabled = false;}
+        document.getElementsByClassName(`${component}_${acInput}`)[0].value = '';
+        document.getElementsByClassName(`${component}_${acInput}`)[0].disabled = false;}
         document.getElementById("toggle").children[0].disabled = true;
         document.getElementById("toggle").children[0].click();
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"
 async defer></script>
-<script src="./js/google.js"></script>
+{!! Html::script('js/google.js') !!}
 @endsection
