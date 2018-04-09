@@ -41,7 +41,9 @@
         // Get the place details from the autocomplete object.
         var place = whichForm;
 
-        toggle(acInput);
+      for (var component in componentForm){
+          document.getElementsByClassName(`${component}_${acInput}`)[0].value = "";
+      }
 
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.

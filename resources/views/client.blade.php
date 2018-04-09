@@ -39,9 +39,8 @@
     }
 }
 </style>
+
 @endsection
-
-
 
 @section('content')
 
@@ -51,9 +50,9 @@
  <!-- Main Content  -->
 <div class="wrapper wrapper-content animated fadeInUp">
 
-@include('client.list')
+    @include('client.list')
 
-@include('client.modal')
+    @include('client.modal')
 
 </div>
 
@@ -64,9 +63,9 @@
 
 {!! Html::script('js/plugins/bootstrap-toggle-master/bootstrap-toggle.min.js') !!}
 
-
 <script>
-
+    
+var data = {!! $data !!};
 // document.querySelectorAll("tr").forEach((tr) => {
 //         tr.addEventListener('click', function(e) {
 //         e = e || window.event;
@@ -77,20 +76,6 @@
 
 
 
-let data = {
-    name: "John Paul Grefaldo",
-    age: "19"
-}
-
-function toggle(acInput) {
-    
-    for (var component in componentForm){
-        document.getElementsByClassName(`${component}_${acInput}`)[0].value = '';
-        document.getElementsByClassName(`${component}_${acInput}`)[0].disabled = false;
-        document.getElementById("toggle").children[0].disabled = true;
-        document.getElementById("toggle").children[0].click();
-    }
-}
 
 function pasteAll(){
     for (component in componentForm){
@@ -101,15 +86,47 @@ function pasteAll(){
 function paste(elem){
 	if(typeof elem === 'object'){
 		for(item of elem){
-		getElem(`${item}_acInput2`).value = getElem(`${item}_acInput1`).value
-	}
-}else{
-	getElem(`${elem}_acInput2`).value = getElem(`${elem}_acInput1`).value
-} 
+		getElem(`${item}_acInput2`).value = getElem(`${item}_acInput1`).value}
+    }else{
+        getElem(`${elem}_acInput2`).value = getElem(`${elem}_acInput1`).value
+    } 
 }
 
-function getElem(elem){return document.getElementsByClassName(elem)[0]}
+function delClient(elem){
+    
+    tr = elem.parentElement.parentElement
+    tr.addEventListener('click',function(event){ event.stopImmediatePropagation();
+        event.stopPropagation();
+        event.cancelBubble = true;
+        event.preventDefault();
+});
+
+	tr.remove();
+
+}
+
+function getData(elem){
+	dataId = elem.getAttribute("id");
+    for(component in data[dataId]){
+        document.querySelectorAll(`[name=${component}]`)
+        inputText = document.querySelectorAll(`[name=${component}]`)[0];
+        if (inputText){
+            inputText.value = data[dataId][component];
+        }
+        
+    }
+
+
+    }
+
+
+function getElem(elem){
+    return document.getElementsByClassName(elem)[0];
+}
+
 </script>
+
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"
 async defer></script>
 {!! Html::script('js/google.js') !!}

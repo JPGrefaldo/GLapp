@@ -21,15 +21,21 @@
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
                                             <div class="col-lg-6">
-                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">First Name</span><input type="text" class="form-control"></div>
-                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">Middle Name</span><input type="text" class="form-control"></div>
-                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">Last Name</span><input type="text" class="form-control"></div>
+                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">First Name</span>
+                                                    <input name="fname" type="text" class="form-control">
+                                                </div>
+                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">Middle Name</span>
+                                                    <input name="mname" type="text" class="form-control">
+                                                </div>
+                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">Last Name</span>
+                                                    <input name="lname" type="text" class="form-control">
+                                                </div>
                                             </div>
     
                                             <div class=" col-lg-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Tel. No</span>
-                                                    <input type="text" class="form-control">
+                                                    <input name="" type="text" class="form-control">
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Plaintiff Type</span>
@@ -59,40 +65,37 @@
                                                 <span class="input-group-addon bg-primary">Search</span>
                                                 <input id="acInput1" placeholder="Enter your address" onfocus="" type="text" class="form-control autocomplete" autocomplete="off">
     
-                                                <span class="input-group-btn" id="toggle">
-                                                        <input type="checkbox" data-toggle="toggle" onchange="toggle('acInput1')">
-                                                </span>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Street Address</span>
                                                 <div class="row">
-                                                    <div class="col-lg-3"><input type="text" class="form-control street_number_acInput1" disabled></div>
-                                                    <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput1" disabled></div>
+                                                    <div class="col-lg-3"><input type="text" class="form-control street_number_acInput1" ></div>
+                                                    <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput1" ></div>
                                                 </div>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Barangay/Town</span>
-                                                <input type="text" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" disabled>
+                                                <input type="text" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" >
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Municipality/City</span>
-                                                <input type="text" class="form-control locality_acInput1" disabled>
+                                                <input type="text" class="form-control locality_acInput1" >
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Province/Conurbation</span>
-                                                <input type="text" class="form-control administrative_area_level_1_acInput1 administrative_area_level_2_acInput1" disabled>
+                                                <input type="text" class="form-control administrative_area_level_1_acInput1 administrative_area_level_2_acInput1" >
                                             </div>
                                             
                                             <div class="row">
                                                     <div class="col-lg-7">
                                                         <div class="input-group m-b">
                                                             <span class="input-group-addon bg-primary">Country</span>
-                                                            <input type="text" class="form-control  country_acInput1" disabled></div>
+                                                            <input type="text" class="form-control  country_acInput1" ></div>
                                                     </div>
                                                     <div class="col-lg-5">
                                                             <div class="input-group m-b">
                                                                 <span class="input-group-addon bg-primary">Zip Code</span>
-                                                                <input type="text" class="form-control  postal_code_acInput1" disabled></div>
+                                                                <input type="text" class="form-control  postal_code_acInput1" ></div>
                                                     </div>
                                             </div>
                                             </div>
