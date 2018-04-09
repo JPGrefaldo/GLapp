@@ -17,7 +17,6 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
-    Route::get('/client', 'ClientController@index');
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('role', 'RoleController@index')->name('role');
@@ -29,6 +28,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-list', 'UserController@getList')->name('user-list');
 
         Route::resource('contract', 'ContractController');
+
+
+
+        Route::get('/client', 'ClientController@index');
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {
