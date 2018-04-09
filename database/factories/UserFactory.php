@@ -21,3 +21,19 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Client::class, function (Faker $faker) {
+    return [
+        "fname" => $faker->firstName,
+        "lname" => $faker->lastName,
+        "mname" => $faker->lastName,
+        "plaintiff" => rand(1,3),
+        "business_nature" => $faker->company,
+        "email" => $faker->email,
+        "country" => "Philippines",
+        "state" => $faker->state,
+        "city" => $faker->city,
+        "town" => $faker->address,
+        "street" => $faker->streetName,
+    ];
+});
