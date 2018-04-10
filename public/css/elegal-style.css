@@ -37,6 +37,10 @@
     flex-direction: row;
 }
 
+.define-contract .list-a > li:first-child {
+    background: #f5f5f5;
+}
+
 .define-contract .list-a li:not(:last-child) ul {
     border-bottom: 1px solid #ddd;
 }
@@ -58,19 +62,24 @@
 }
 
 .define-contract .list-a.five-col li ul li:nth-child(2)  {
-    width: calc(100% - 450px);
+    width: calc(100% - 380px);
 }
 
 .define-contract .list-a.five-col li ul li:nth-child(3)  {
-    width: 150px;
+    width: 115px;
 }
 
 .define-contract .list-a.five-col li ul li:nth-child(4)  {
-    width: 150px;
+    width: 115px;
+}
+
+.define-contract .list-a.five-col li:not(:first-child) ul li:nth-child(3), .define-contract .list-a.five-col li:not(:first-child) ul li:nth-child(4)  {
+    text-align: right;
 }
 
 .define-contract .list-a.five-col li ul li:nth-child(5)  {
     width: 50px;
+    text-align: center;
 }
 
 .define-contract .list-a  {

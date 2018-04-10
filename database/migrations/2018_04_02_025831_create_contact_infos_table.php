@@ -13,12 +13,14 @@ class CreateContactInfosTable extends Migration
      */
     public function up()
     {
+
         Schema::create('contact_infos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('profile_id')->unsigned()->nullable();
             $table->integer('icoe_id')->unsigned()->nullable();
             $table->integer('secqa_id')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('counsel_id')->unsigned()->nullable();
             $table->enum('type',array('present_address','permanent_address','telephone','mobile','fax'));
             $table->text('description');
             $table->timestamps();
@@ -37,6 +39,10 @@ class CreateContactInfosTable extends Migration
 
             $table->foreign('company_id')
                 ->references('id')->on('companies')
+                ->onDelete('cascade');
+
+            $table->foreign('counsel_id')
+                ->references('id')->on('counsels')
                 ->onDelete('cascade');
         });
     }

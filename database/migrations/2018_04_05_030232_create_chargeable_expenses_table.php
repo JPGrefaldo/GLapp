@@ -23,7 +23,7 @@ class CreateChargeableExpensesTable extends Migration
             $table->date('date_rendered');
             $table->text('description');
             $table->decimal('amount');
-            $table->decimal('trsut_fund');
+            $table->decimal('trust_fund');
             $table->string('type');
             $table->text('explanation');
             $table->timestamps();
