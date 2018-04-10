@@ -30,10 +30,15 @@ $factory->define(App\Client::class, function (Faker $faker) {
         "plaintiff" => rand(1,3),
         "business_nature" => $faker->company,
         "email" => $faker->email,
-        "country" => "Philippines",
-        "state" => $faker->state,
-        "city" => $faker->city,
-        "town" => $faker->address,
-        "street" => $faker->streetName,
+        
+    ];
+});
+
+$factory->define(App\ContactInfo::class, function ($faker) {
+
+    return [
+        "client_id" => factory('App\Client')->create()->id,
+        'type' => 1,
+        'description' => 'test'
     ];
 });
