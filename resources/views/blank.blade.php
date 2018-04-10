@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <h2>Blank</h2>
             <ol class="breadcrumb">
                 <li>
@@ -17,8 +17,10 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
+        <div class="col-lg-4">
+            <div class="title-action">
+                <button type="submit" class="btn btn-primary">Button</button>
+            </div>
         </div>
     </div>
 

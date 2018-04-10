@@ -181,8 +181,8 @@
                                             <ul>
                                                 <li>01</li>
                                                 <li>Acceptance Fee</li>
-                                                <li>5,000.00</li>
-                                                <li>50,000.00</li>
+                                                <li>1,000,000,000.00</li>
+                                                <li>1,000,000,000.00</li>
                                                 <li>Y</li>
                                             </ul>
                                         </li>
@@ -212,6 +212,27 @@
         </div>
     </div>
 
+    <div class="modal inmodal fade" id="modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                    <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                </div>
+                <div class="modal-body">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 
@@ -225,6 +246,11 @@
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
     <script>
         $(document).ready(function(){
+            var modal = $('#modal');
+            $('#modal-btn').on('click',function(){
+                modal.modal({backdrop: 'static', keyboard: false});
+            });
+
             $('.input-group.date').datepicker({
                 startView: 2,
                 todayBtn: "linked",

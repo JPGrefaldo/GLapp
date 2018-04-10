@@ -71,16 +71,20 @@
                     <a href="/client"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('contract*')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-book"></i> <span class="nav-label">Contracts</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.create') !!}">Create</a></li>
+                        <li class="{!! if_uri_pattern(array('contract/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.create') !!}">Create</a></li>
                         <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.index') !!}">List</a></li>
                     </ul>
                 </li>
 
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href=""><i class="fa fa-users"></i> <span class="nav-label">Council</span></a>
+                <li class="{!! if_uri_pattern(array('counsel*')) == 1 ? 'active' : '' !!}">
+                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Counsel</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="{!! if_uri_pattern(array('counsel/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('counsel.create') !!}">Create</a></li>
+                        <li class="{!! if_uri_pattern(array('counsel')) == 1 ? 'active' : '' !!}"><a href="{!! route('counsel.index') !!}">List</a></li>
+                    </ul>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">

@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('contract', 'ContractController');
 
+        Route::resource('counsel', 'CounselController');
+        Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
+
 
 
         Route::get('client', 'ClientController@index');
@@ -40,11 +43,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:admin|council|para-legal']], function () {
+        Route::post('upload-image',array('as'=>'upload-image','uses'=>'ImageController@imageUpload'));
+
         Route::get('profile', 'UserController@userProfileShow')->name('profile');
         Route::get('profile-create', 'UserController@userProfileCreate')->name('profile-create');
         Route::get('profile-edit', 'UserController@userProfileEdit')->name('profile-edit');
         Route::post('profile-update', 'UserController@userProfileUpdate')->name('profile-update');
         Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
+
         Route::view('googleapi','googleapi');
     });
 
