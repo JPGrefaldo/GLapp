@@ -5,7 +5,7 @@
 @section('styles')
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/bootstrap-toggle-master/bootstrap-toggle.min.css') !!}
-{!! Html::style('css/dataTables.min.css') !!}
+{!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
 <style>
     .nopads{
         padding:0;
@@ -28,13 +28,13 @@
     .fixwidth {
         width: 19%;
     }
-    tr:hover {
+    /* tr:hover {
         cursor: pointer;
     }
     tr:active {
         background-color: #eaeaea;
         box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    }
+    } */
     .pac-container {
         z-index: 10000 !important;
     }
@@ -55,25 +55,80 @@
 
     @include('client.modal')
 
-</div>
 
+
+</div>
  <!-- Main Content End -->
 @endsection
 
 @section('scripts')
 
-{!! Html::script('js/plugins/bootstrap-toggle-master/bootstrap-toggle.min.js') !!}
-{!! Html::script('js/dataTables.min.js') !!}
+
+{!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
 <script>
+var data;
+$.ajax({
+    url: `${window.location}/list`, 
+    success: function(result){
+        popData(result);
+        data = result;
+    }
+});
 
-$(document).ready(function() {
-    $('#example').DataTable( {
-        ajax: '../ajax/data/arrays.txt'
+function popData(data){
+
+    $('.table-striped').dataTable( {
+        "autoWidth": false,//Disable autwidth for responsive table
+        "dom": '<"html5buttons"B>lTfgitp',
+            "buttons": [
+                        {"extend": 'copy'},
+                        {"extend": 'csv'},
+                        {"extend": 'excel', title: 'ExampleFile'},
+                        {"extend": 'pdf', title: 'ExampleFile'},
+
+                        {"extend": 'print',
+                        customize: function (win){
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                        }
+                        }
+                    ],
+        "data":data,
+        "columnDefs": [{
+            
+            "targets": 0,
+            "data": null,
+            "render": function (row) {
+                return row.fname + " " + row.lname;} },{
+
+            "targets": 1,
+            "data": "plaintiff"},{
+
+            "targets": 2,
+            "data": null,
+            "render":function(row){
+                return `${row.email}`
+            }},{
+
+            "targets": 3,
+            "data": null,
+            "className": "text-right",
+            "render": function (row) {
+                return  `<div class="btn-group">
+                            <button class="btn-success btn btn-xs">Contract</button>
+                            <button class="btn-primary btn btn-xs" id=${row.id}>View</button>
+                            <button class="btn-danger btn btn-xs" id=${row.id}>Delete</button>
+                        </div>`;}}
+            
+        ]
     } );
-} );
 
+}
 
-var data = {!! $data !!};
 
 function pasteAll(){
     for (component in componentForm){

@@ -1,4 +1,4 @@
-<div class="row">
+{{-- <div class="row">
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-content">
@@ -8,16 +8,13 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <tbody>
-                                @foreach($data as $key=>$person)
-                                    <tr data-toggle="modal" data-target="#myModal5" id="{{$key}}" onclick="getData(this)">
+                                    <tr data-toggle="modal" data-target="#myModal5" id="" onclick="getData(this)">
 
-                                        <td class="client-avatar"><img alt="image" src="img/a{{ $person['imgNo'] }}.jpg"> </td>
-                                        <td ><a data-toggle="tab" href="#contact-1" class="client-link">{{ 
-                                        $person['fname']." ".$person['lname']
-                                         }}</a></td>
-                                        <td> {{ $person['business_nature'] }}</td>
+                                        <td class="client-avatar"><img alt="image" src="img/a1.jpg"> </td>
+                                        <td><a data-toggle="tab" href="#contact-1" class="client-link"></a></td>
+                                        <td></td>
                                         <td class="contact-type"><i class="fa fa-envelope"> </i></td>
-                                        <td > {{ $person['email'] }}</td>
+                                        <td></td>
 
                                         <td>
                                         <button class="btn btn-danger btn-circle btn-xm" type="button" onclick="delClient(this)">
@@ -25,13 +22,40 @@
                                             </button>
                                         </td>
                                     </tr>
-                                @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+
+            <div class="ibox-content">
+            <div class="full-height-scroll">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" >
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Plaintiff</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             </div>
         </div>
     </div>
