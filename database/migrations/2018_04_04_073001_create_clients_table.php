@@ -26,6 +26,7 @@ class CreateClientsTable extends Migration
             $table->string('city');
             $table->string('town');
             $table->string('street');
+            $table->string('route')->nullable();
             $table->timestamps();
         });
     }

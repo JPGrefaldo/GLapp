@@ -15,16 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {   
-        $faker = Faker::create();
-        $client = array();
-        for ($i = 0; $i < 11; $i++) {
-            $client[$i] = [ 'imgNo'   =>  rand(1,8),
-                            'name'    =>  $faker->name,
-                            'company' =>  $faker->company,
-                            'email'   =>  $faker->email];
-
-        }
-        return view('client',['client'=>$client]);
+        $client = Client::all();
+        return view('client',['data'=>$client]);
     }
 
     /**
