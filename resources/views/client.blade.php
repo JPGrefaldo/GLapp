@@ -5,6 +5,7 @@
 @section('styles')
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/bootstrap-toggle-master/bootstrap-toggle.min.css') !!}
+{!! Html::style('css/dataTables.min.css') !!}
 <style>
     .nopads{
         padding:0;
@@ -62,20 +63,17 @@
 @section('scripts')
 
 {!! Html::script('js/plugins/bootstrap-toggle-master/bootstrap-toggle.min.js') !!}
-
+{!! Html::script('js/dataTables.min.js') !!}
 <script>
-    
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        ajax: '../ajax/data/arrays.txt'
+    } );
+} );
+
+
 var data = {!! $data !!};
-// document.querySelectorAll("tr").forEach((tr) => {
-//         tr.addEventListener('click', function(e) {
-//         e = e || window.event;
-//         var target = e.target || e.srcElement;
-//             // text = target.textContent || text.innerText;
-//             console.log(target);   
-// }, false);});
-
-
-
 
 function pasteAll(){
     for (component in componentForm){
@@ -86,6 +84,7 @@ function pasteAll(){
 function paste(elem){
 	if(typeof elem === 'object'){
 		for(item of elem){
+
 		getElem(`${item}_acInput2`).value = getElem(`${item}_acInput1`).value}
     }else{
         getElem(`${elem}_acInput2`).value = getElem(`${elem}_acInput1`).value

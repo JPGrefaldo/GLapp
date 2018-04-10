@@ -169,7 +169,7 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
-//                $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-check text-success"></i> Edit</button>';
+//              $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-check text-success"></i> Edit</button>';
                 $menu[] = '<a href="'. route('user.edit',array('user'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
