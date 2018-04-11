@@ -28,7 +28,7 @@ $factory->define(App\Client::class, function (Faker $faker) {
         "lname" => $faker->lastName,
         "mname" => $faker->lastName,
         "plaintiff" => rand(1,3),
-        "business_nature" => $faker->company,
+        "business_nature" => rand(1,18),
         "email" => $faker->email,
         
     ];

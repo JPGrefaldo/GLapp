@@ -39,18 +39,35 @@
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Plaintiff Type</span>
-                                                    <select type="text" placeholder="Username" class="form-control">
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
+                                                    <select name="plaintiff" type="text" placeholder="Username" class="form-control"> 
+                                                        <option disabled selected></option>                                   
+                                                        <option value="1">Respondent</option>
+                                                        <option value="2">Complainant</option>
+                                                        <option value="3">Defendant</option>
                                                     </select>
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Business Type</span>
-                                                    <select type="text" placeholder="Username" class="form-control">
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
+                                                    <select name="business_nature" type="text" placeholder="Username" class="form-control">
+                                                        <option disabled selected></option>
+                                                        <option value="1">Corporate</option>
+                                                        <option value="2">Infrastructure</option>
+                                                        <option value="3">advertising</option>
+                                                        <option value="4">Media broadcasting</option>
+                                                        <option value="5">Contraction</option>
+                                                        <option value="6">Consulting</option>
+                                                        <option value="7">IT/Telco</option>
+                                                        <option value="8">transportation</option>
+                                                        <option value="9">Logistics</option>
+                                                        <option value="10">Finance</option>
+                                                        <option value="11">entertainment</option>
+                                                        <option value="12">Clothing</option>
+                                                        <option value="13">Cosmetics</option>
+                                                        <option value="14">Agriculture</option>
+                                                        <option value="15">Hospitality/Tourism</option>
+                                                        <option value="16">NGO</option>
+                                                        <option value="17">LGU</option>
+                                                        <option value="18">Others</option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -1,104 +1,88 @@
-@extends('layouts.master')
-
-@section('title', 'Client')
-
-@section('styles')
-{!! Html::style('css/plugins/toastr/toastr.min.css') !!}
-{!! Html::style('css/plugins/bootstrap-toggle-master/bootstrap-toggle.min.css') !!}
-{!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
-<style>
-    .nopads{
-        padding:0;
-    }
-    .rmlt{
-        padding-left:0;
-    }
-    .rmrt{
-        padding-right:0;
-    }
-    .rmbt{
-        padding-bottom:0;
-    }
-    .rmtp{
-        padding-top:0;
-    }
-    .rmgin{
-        margin:0;
-    }
-    .fixwidth {
-        width: 19%;
-    }
-    /* tr:hover {
-        cursor: pointer;
-    }
-    tr:active {
-        background-color: #eaeaea;
-        box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    } */
-    .pac-container {
-        z-index: 10000 !important;
-    }
+let data;
+const plaintiff = {
+    "Respondent":1,
+    "Complainant":2,
+    "Defendant":3
 }
-</style>
 
-@endsection
+const busType ={
+    "Corporate":1,
+    "Infrastructure":2,
+    "advertising":3,
+    "Media broadcasting":4,
+    "Contraction":5,
+    "Consulting":6,
+    "IT/Telco":7,
+    "transportation":8,
+    "Logistics":9,
+    "Finance":10,
+    "entertainment":11,
+    "Clothing":12,
+    "Cosmetics":13,
+    "Agriculture":14,
+    "Hospitality/Tourism":15,
+    "NGO":16,
+    "LGU":17,
+    "Others":18
+}
 
-@section('content')
+window.onload = fetchData();
 
-@include('layouts.breadcrumb')
+function fetchData(){
+    $.ajax({
+        url: `${location.pathname}/list`,
+        success: function(result){
+            popData(result);
+            data = result;
+        }
+    });
+}
+
+function buildForm() {
+        return [
+          $('input[name=fname]').val(),
+          $('input[name=lname]').val(),
+          $('input[name=mname]').val(),
+          $('input[name=plaintiff]').val(),
+          $('input[name=business_nature]').val(),
+          $('input[name=email]').val(),
+        ];
+      }
 
 
- <!-- Main Content  -->
-<div class="wrapper wrapper-content">
-
-    @include('client.list')
-
-    @include('client.modal')
-
-
-
-</div>
- <!-- Main Content End -->
-@endsection
-
-@section('scripts')
-
-
-{!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
-<script>
-
-var data;
-
-$.ajax({
-    url: `${location.pathname}/list`,
-    success: function(result){
-        popData(result);
-        data = result;
-    }
-});
+function post(){
+    $.post(`${location.pathname}/update`,{
+        "_token": $("#_token").attr("value"),
+        "fname" : "John Paul",
+        "lname" : "Grefaldo",
+        "mname" : "L",
+        "plaintiff" : "1",
+        "business_nature" : "Under Nature",
+        "email" : "fake@email.com",
+}).done(function(data){console.log(data);fetchData();});
+}
 
 function popData(data){
 
-    $('.table-striped').dataTable( {
+const dataTable = $('.table-striped').dataTable( {
         "autoWidth": false,//Disable autowidth for responsive table
         "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [
-                        {"extend": 'copy'},
-                        {"extend": 'csv'},
-                        {"extend": 'excel', title: 'ExampleFile'},
-                        {"extend": 'pdf', title: 'ExampleFile'},
+                {"extend": 'copy'},
+                {"extend": 'csv'},
+                {"extend": 'excel', title: 'ExampleFile'},
+                {"extend": 'pdf', title: 'ExampleFile'},
 
-                        {"extend": 'print',
-                        customize: function (win){
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
+                {"extend": 'print',
+                customize: function (win){
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
 
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                        }
-                        }
-                    ],
+                        $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                }
+                }],
         "data": data,
         "columnDefs": [{
             
@@ -109,14 +93,17 @@ function popData(data){
 
             "targets": 1,
             "data": "plaintiff"},{
-
+            
             "targets": 2,
+            "data": "business_nature"},{
+
+            "targets": 3,
             "data": null,
             "render":function(row){
                 return `${row.email}`
             }},{
 
-            "targets": 3,
+            "targets": 4,
             "data": null,
             "className": "text-right",
             "render": function (row) {
@@ -177,12 +164,23 @@ function getData(id){
         let found; // Toggle if match found
         let address; 
 
-        for(row in component){          
+        for(row in component){     
             if (component.id == id){ found = 1;
                 address = {...component.address[0]};      
             inputText = document.querySelectorAll(`[name=${row}]`)[0];
+
             if (inputText){
-                inputText.value = component[row];
+                switch (row){
+                    case 'plaintiff':
+                        inputText.value = plaintiff[component[row]];
+                        break;
+                    case 'business_nature':
+
+                        inputText.value = busType[component[row]];
+                        break;
+                    default:
+                    inputText.value = component[row];
+                }                
             }}
         }
 
@@ -195,7 +193,6 @@ function fillAddress(address){
         inputText = document.getElementsByClassName(`${item}_acInput${address.address + 1}`)[0];
         if(inputText){
             inputText.value = address[item];
-            console.log(inputText);
         }
     }
 }
@@ -204,11 +201,3 @@ function fillAddress(address){
 function getElem(elem){
     return document.getElementsByClassName(elem)[0];
 }
-
-</script>
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"
-async defer></script>
-{!! Html::script('js/google.js') !!}
-@endsection
