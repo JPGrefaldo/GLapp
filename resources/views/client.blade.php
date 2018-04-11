@@ -49,7 +49,7 @@
 
 
  <!-- Main Content  -->
-<div class="wrapper wrapper-content animated fadeInUp">
+<div class="wrapper wrapper-content">
 
     @include('client.list')
 
@@ -162,19 +162,43 @@ function delClient(elem){
 
 }
 
+function clearInputs(){
+for (i=1; i < 3; i++){
+    for (var component in componentForm){
+        document.getElementsByClassName(`${component}_acInput${i}`)[0].value = "";
+        document.getElementsByClassName('autocomplete')[i-1].value = "";
+    }
+}}
+
 function getData(id){
-for (component of data){
-    for(row in component){
-       
-        if (component.id == id){            
-        inputText = document.querySelectorAll(`[name=${row}]`)[0];
-        if (inputText){
-            inputText.value = component[row];
-        }}
+    clearInputs();
+    for (component of data){
+
+        let found; // Toggle if match found
+        let address; 
+
+        for(row in component){          
+            if (component.id == id){ found = 1;
+                address = {...component.address[0]};      
+            inputText = document.querySelectorAll(`[name=${row}]`)[0];
+            if (inputText){
+                inputText.value = component[row];
+            }}
+        }
+
+        if (found) {fillAddress(address);break;} // prevent d' loop on going if the match is found early & call the function
+    }}
+
+function fillAddress(address){
+    
+    for(item in address){
+        inputText = document.getElementsByClassName(`${item}_acInput${address.address + 1}`)[0];
+        if(inputText){
+            inputText.value = address[item];
+            console.log(inputText);
+        }
     }
 }
-
-    }
 
 
 function getElem(elem){

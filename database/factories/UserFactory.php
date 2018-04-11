@@ -34,11 +34,17 @@ $factory->define(App\Client::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\ContactInfo::class, function ($faker) {
+$factory->define(App\Address::class, function ($faker) {
 
     return [
         "client_id" => factory('App\Client')->create()->id,
-        'type' => 1,
-        'description' => 'test'
+        'street_number' => $faker->buildingNumber,
+        'route' => $faker->streetName,
+        'neighborhood' => $faker->streetSuffix,
+        'locality' => $faker->city,
+        'administrative_area_level_1' => $faker->state,
+        'country' => $faker->country,
+        'postal_code' => $faker->postcode,
+        'address' => rand(0,1)
     ];
 });
