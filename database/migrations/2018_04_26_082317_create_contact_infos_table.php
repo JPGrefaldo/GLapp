@@ -13,10 +13,10 @@ class CreateContactInfosTable extends Migration
      */
     public function up()
     {
-
         Schema::create('contact_infos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('profile_id')->unsigned()->nullable();
+            $table->integer('client_id')->unsigned()->nullable();
             $table->integer('icoe_id')->unsigned()->nullable();
             $table->integer('secqa_id')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
@@ -39,6 +39,10 @@ class CreateContactInfosTable extends Migration
 
             $table->foreign('company_id')
                 ->references('id')->on('companies')
+                ->onDelete('cascade');
+
+            $table->foreign('client_id')
+                ->references('id')->on('clients')
                 ->onDelete('cascade');
 
             $table->foreign('counsel_id')

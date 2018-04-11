@@ -21,13 +21,8 @@ class CreateClientsTable extends Migration
             $table->enum('plaintiff',['Respondent','Complainant','Defendant']);
             $table->string('business_nature');
             $table->string('email');
-            $table->string('country');
-            $table->string('state');
-            $table->string('city');
-            $table->string('town');
-            $table->string('street');
-            $table->string('route')->nullable();
             $table->timestamps();
+
         });
     }
 
