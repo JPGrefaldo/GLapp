@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-list', 'UserController@getList')->name('user-list');
 
         Route::resource('contract', 'ContractController');
+        Route::get('contract-create/{id}', 'ContractController@createClientContract')->name('contract-create');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');

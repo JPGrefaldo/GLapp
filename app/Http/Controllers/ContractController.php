@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Contract;
 use Illuminate\Http\Request;
 
@@ -82,4 +83,11 @@ class ContractController extends Controller
     {
         //
     }
+
+    public function createClientContract($id)
+    {
+        $client = Client::find($id);
+        return view('user.contract.create', compact('client'));
+    }
+
 }
