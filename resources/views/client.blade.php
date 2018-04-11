@@ -119,7 +119,7 @@ function popData(data){
             "className": "text-right",
             "render": function (row) {
                 return  `<div class="btn-group">
-                            <button class="btn-success btn btn-xs">Contract</button>
+                            <button class="btn-success btn btn-xs" id=${row.id}>Contract</button>
                             <button class="btn-primary btn btn-xs" id=${row.id}>View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id}>Delete</button>
                         </div>`;}}
