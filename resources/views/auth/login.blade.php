@@ -37,7 +37,7 @@
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="{{ route('register') }}">Create an account</a>
             </form>
-            <p class="m-t"> <a href="#"><small>made by <strong>Pacific Blue IT</strong> &copy; {{Date("Y")}}</small></a> </p>
+            <p class="m-t"> <a href="#"><small>Powered by <strong>Pacific Blue IT</strong> &copy; {{Date("Y")}}</small></a> </p>
         </div>
     </div>
 @endsection

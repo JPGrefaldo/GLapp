@@ -239,7 +239,7 @@
 
         <div class="footer">
             <div>
-                <strong>Copyright</strong> <a href="https://www.pacificblueit.com" target="_blank" >Pacific Blue I.T. &copy; {{ Date('Y') }}</a>
+                <strong>Powered By:</strong> <a href="https://www.pacificblueit.com" target="_blank" >Pacific Blue I.T. &copy; {{ Date('Y') }}</a>
             </div>
         </div>
     </div>
