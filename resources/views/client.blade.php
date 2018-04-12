@@ -66,9 +66,11 @@
 
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
 <script>
+
 var data;
+
 $.ajax({
-    url: `${window.location}/list`, 
+    url: `${location.pathname}/list`,
     success: function(result){
         popData(result);
         data = result;
@@ -78,7 +80,7 @@ $.ajax({
 function popData(data){
 
     $('.table-striped').dataTable( {
-        "autoWidth": false,//Disable autwidth for responsive table
+        "autoWidth": false,//Disable autowidth for responsive table
         "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [
                         {"extend": 'copy'},
@@ -97,7 +99,7 @@ function popData(data){
                         }
                         }
                     ],
-        "data":data,
+        "data": data,
         "columnDefs": [{
             
             "targets": 0,
@@ -119,8 +121,9 @@ function popData(data){
             "className": "text-right",
             "render": function (row) {
                 return  `<div class="btn-group">
-                            <button class="btn-success btn btn-xs" id=${row.id}>Contract</button>
-                            <button class="btn-primary btn btn-xs" id=${row.id}>View</button>
+                            <a class="btn-success btn btn-xs" href="contract/create?id=${row.id}">Contract</a>
+                            <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this.id)">
+                            View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id}>Delete</button>
                         </div>`;}}
             
@@ -159,17 +162,17 @@ function delClient(elem){
 
 }
 
-function getData(elem){
-	dataId = elem.getAttribute("id");
-    for(component in data[dataId]){
-        document.querySelectorAll(`[name=${component}]`)
-        inputText = document.querySelectorAll(`[name=${component}]`)[0];
+function getData(id){
+for (component of data){
+    for(row in component){
+       
+        if (component.id == id){            
+        inputText = document.querySelectorAll(`[name=${row}]`)[0];
         if (inputText){
-            inputText.value = data[dataId][component];
-        }
-        
+            inputText.value = component[row];
+        }}
     }
-
+}
 
     }
 

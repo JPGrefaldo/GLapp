@@ -16,8 +16,9 @@ class CreateFeesTable extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('display_name');
             $table->text('description');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

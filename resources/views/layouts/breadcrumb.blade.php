@@ -11,15 +11,9 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-6 pull-right">
-        <div class="input-group" style="margin-top:40px;">
-            <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i> Search</button>
-            </span>
-            <input type="text" placeholder="Search client" class="input form-control">
-            <span class="input-group-btn">
-                    <button class="btn btn-primary " type="button"><i class="fa fa-user-o"></i>&nbsp;Add</button>
-            </span>
+    <div class="col-lg-10 pull-right">
+        <div class="title-action"
+            <button class="btn btn-primary " type="button"><i class="fa fa-user-o"></i>&nbsp;Add</button>
         </div>
     </div>
 </div>

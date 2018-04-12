@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta id="_token" value="{!! csrf_token() !!}">
 
-    <title>@yield('title')</title>
+    <title>E-Legal | @yield('title')</title>
 
     {!! Html::style('css/bootstrap.min.css') !!}
     {!! Html::style('font-awesome/css/font-awesome.css') !!}
@@ -239,7 +239,7 @@
 
         <div class="footer">
             <div>
-                <strong>Copyright</strong> <a href="https://www.pacificblueit.com" target="_blank" >Pacific Blue I.T. &copy; {{ Date('Y') }}</a>
+                <strong>Powered By:</strong> <a href="https://www.pacificblueit.com" target="_blank" >Pacific Blue I.T. &copy; {{ Date('Y') }}</a>
             </div>
         </div>
     </div>
@@ -258,6 +258,7 @@
 <!-- Custom and plugin javascript -->
 {!! Html::script('js/inspinia.js') !!}
 {!! Html::script('js/plugins/pace/pace.min.js') !!}
+{!! Html::script('js/elegal-script.js') !!}
 @yield('scripts')
 
 </body>
