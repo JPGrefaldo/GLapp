@@ -28,6 +28,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-list', 'UserController@getList')->name('user-list');
 
         Route::resource('contract', 'ContractController');
+        Route::get('contract-create/{id}', 'ContractController@createClientContract')->name('contract-create');
+        Route::post('transaction-fee-detail-store', 'ContractController@transactionFeeDetailStore')->name('transaction-fee-detail-store');
+        Route::get('transaction-fee-detail-get', 'ContractController@transactionFeeDetailGet')->name('transaction-fee-detail-get');
+        Route::get('transaction-fee-detail-remove', 'ContractController@transactionFeeDetailRemove')->name('transaction-fee-detail-remove');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
@@ -54,10 +58,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('profile-store', 'UserController@userProfileStore')->name('profile-store');
 
         Route::view('googleapi','googleapi');
-    });
-
-    Route::group(['middleware' => ['role:admin']], function () {
-
     });
 
 });

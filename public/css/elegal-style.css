@@ -24,64 +24,29 @@
     height: 200px;
 }
 
-.define-contract .list-a {
-    padding: 0;
-    list-style: none;
-    margin: 0;
+.fee-name h1 {
+    text-transform: uppercase;
+    margin: 15px 0 30px 0;
+    font-weight: bold;
+    font-size: 50px;
 }
 
-.define-contract .list-a li ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
+.textarea-group > .textarea-group-addon {
+    display: block;
+    border: 1px solid #E5E6E7;
+    border-bottom: none;
+    border-radius: 1px;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    padding: 9px 12px;
 }
 
-.define-contract .list-a > li:first-child {
-    background: #f5f5f5;
+.panel .panel-heading > label {
+    font-size: 14px;
 }
 
-.define-contract .list-a li:not(:last-child) ul {
-    border-bottom: 1px solid #ddd;
-}
-
-.define-contract .list-a li ul li:not(:last-child) {
-    border-right: 1px solid #ddd;
-}
-
-.define-contract .list-a li ul li {
-    padding: 10px 5px;
-}
-
-.define-contract .list-a li ul li:nth-child(1)  {
-    width: 100px;
-}
-
-.define-contract .list-a.two-col li ul li:nth-child(2)  {
-    width: calc(100% - 100px);
-}
-
-.define-contract .list-a.five-col li ul li:nth-child(2)  {
-    width: calc(100% - 380px);
-}
-
-.define-contract .list-a.five-col li ul li:nth-child(3)  {
-    width: 115px;
-}
-
-.define-contract .list-a.five-col li ul li:nth-child(4)  {
-    width: 115px;
-}
-
-.define-contract .list-a.five-col li:not(:first-child) ul li:nth-child(3), .define-contract .list-a.five-col li:not(:first-child) ul li:nth-child(4)  {
-    text-align: right;
-}
-
-.define-contract .list-a.five-col li ul li:nth-child(5)  {
-    width: 50px;
-    text-align: center;
-}
-
-.define-contract .list-a  {
-
+.span-btn {
+    cursor: pointer;
 }

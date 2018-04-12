@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionDetailsTable extends Migration
+class CreateTransactionFeeDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,26 @@ class CreateTransactionDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_details', function (Blueprint $table) {
+        Schema::create('transaction_fee_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('transaction_id');
-            $table->integer('contract_id');
-            $table->integer('charge_id');
-            $table->decimal('rate',10,2);
-            $table->decimal('amount',10,2);
-            $table->boolean('cap');
-            $table->decimal('cap_value',10,2);
+            $table->integer('transaction_id')->unsigned();
+            $table->integer('fee_id');
             $table->enum('charge_type',['Standard','Special','Installment']);
             $table->integer('free_page');
             $table->decimal('charge_doc',10,2);
-            $table->integer('consumable_time');
-            $table->decimal('excess_rate',10,2);
             $table->decimal('rate_1',10,2);
             $table->decimal('rate_2',10,2);
+            $table->decimal('rate',10,2);
+            $table->integer('consumable_time');
+            $table->decimal('excess_rate',10,2);
+            $table->decimal('amount',10,2);
+            $table->boolean('cap')->default(0);
+            $table->decimal('cap_value',10,2);
             $table->timestamps();
+
+            $table->foreign('transaction_id')
+                ->references('id')
+                ->on('transactions');
         });
     }
 
@@ -40,6 +43,6 @@ class CreateTransactionDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_details');
+        Schema::dropIfExists('transaction_fee_details');
     }
 }
