@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
+        <div id="app">
+            
     <div class="modal inmodal" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content animated fadeInUp">
@@ -15,31 +17,35 @@
                                     <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">Office Address</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">Billing Info</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">Billing Address</a></li>
+                                    <modal title="Hello World"></modal>
                                 </ul>
-                                <div class="tab-content">
-    
+                                <div class="tab-content" >
+                                    <input id="id" name="id" type="text" hidden>
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
+                                            <form class="" onsubmit="updateData()">
+                                            <div class=" form-group">
                                             <div class="col-lg-6">
-                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">First Name</span>
-                                                    <input name="fname" type="text" class="form-control">
+                                                <div class="input-group m-b"><span class="input-group-addon bg-primary" >First Name</span>
+                                                    <input name="fname" type="text" class="form-control" required>
                                                 </div>
                                                 <div class="input-group m-b"><span class="input-group-addon bg-primary">Middle Name</span>
-                                                    <input name="mname" type="text" class="form-control">
+                                                    <input name="mname" type="text" class="form-control" required>
                                                 </div>
                                                 <div class="input-group m-b"><span class="input-group-addon bg-primary">Last Name</span>
-                                                    <input name="lname" type="text" class="form-control">
+                                                    <input name="lname" type="text" class="form-control" required>
                                                 </div>
                                             </div>
-    
+                                            </div>
+                                        
                                             <div class=" col-lg-6">
                                                 <div class="input-group m-b">
-                                                    <span class="input-group-addon bg-primary">Tel. No</span>
-                                                    <input name="" type="text" class="form-control">
+                                                    <span class="input-group-addon bg-primary">Email</span>
+                                                    <input name="email" type="text" class="form-control" required>
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Plaintiff Type</span>
-                                                    <select name="plaintiff" type="text" placeholder="Username" class="form-control"> 
+                                                    <select name="plaintiff" type="text"  class="form-control"> 
                                                         <option disabled selected></option>                                   
                                                         <option value="1">Respondent</option>
                                                         <option value="2">Complainant</option>
@@ -48,7 +54,7 @@
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Business Type</span>
-                                                    <select name="business_nature" type="text" placeholder="Username" class="form-control">
+                                                    <select name="business_nature" type="text" class="form-control">
                                                         <option disabled selected></option>
                                                         <option value="1">Corporate</option>
                                                         <option value="2">Infrastructure</option>
@@ -71,7 +77,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-    
+                                        
                                         </div>
                                     </div>
     
@@ -83,36 +89,37 @@
                                                 <input id="acInput1" placeholder="Enter your address" onfocus="" type="text" class="form-control autocomplete" autocomplete="off">
     
                                             </div>
+                                        
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Street Address</span>
                                                 <div class="row">
-                                                    <div class="col-lg-3"><input type="text" class="form-control street_number_acInput1" ></div>
-                                                    <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput1" ></div>
+                                                    <div class="col-lg-3"><input name="street_number[0]" type="text" class="form-control street_number_acInput1" required></div>
+                                                    <div class="rmlt col-lg-9"><input name="route[0]" type="text" class="form-control route_acInput1" required></div>
                                                 </div>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Barangay/Town</span>
-                                                <input type="text" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" >
+                                                <input type="text"  name="neighborhood[0]" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" required>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Municipality/City</span>
-                                                <input type="text" class="form-control locality_acInput1" >
+                                                <input name="locality[0]" type="text" class="form-control locality_acInput1" required>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Province/Conurbation</span>
-                                                <input type="text" class="form-control administrative_area_level_1_acInput1 administrative_area_level_2_acInput1" >
+                                                <input name="administrative_area_level_1[0]" type="text" class="form-control administrative_area_level_1_acInput1 administrative_area_level_2_acInput1" required>
                                             </div>
                                             
                                             <div class="row">
                                                     <div class="col-lg-7">
                                                         <div class="input-group m-b">
                                                             <span class="input-group-addon bg-primary">Country</span>
-                                                            <input type="text" class="form-control  country_acInput1" ></div>
+                                                            <input name="country[0]"  type="text" class="form-control  country_acInput1" required></div>
                                                     </div>
                                                     <div class="col-lg-5">
                                                             <div class="input-group m-b">
                                                                 <span class="input-group-addon bg-primary">Zip Code</span>
-                                                                <input type="text" class="form-control  postal_code_acInput1" ></div>
+                                                                <input name="postal_code[0]" type="text" class="form-control  postal_code_acInput1" required></div>
                                                     </div>
                                             </div>
                                             </div>
@@ -124,7 +131,7 @@
                                             <div class="col-lg-6">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Contact No.</span>
-                                                    <input type="text" class="form-control" >
+                                                    <input type="text" class="form-control">
                                                 </div>
                 
                                                 <div class="input-group m-b">
@@ -156,33 +163,32 @@
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-btn bg-primary">
-                                                        <button type="button" class="btn btn-primary" onclick="paste(['street_number', 'route'])">Street Address</button>
+                                                        <button  type="button" class="btn btn-primary" onclick="paste(['street_number', 'route'])">Street Address</button>
                                                     </span>
                                                     <div class="row">
-                                                        <div class="col-lg-3"><input type="text" class="form-control street_number_acInput2" ></div>
-                                                        <div class="rmlt col-lg-9"><input type="text" class="form-control route_acInput2" ></div>
+                                                        <div  class="col-lg-3">
+                                                            <input name="street_number[1]" type="text" class="form-control street_number_acInput2" required></div>
+                                                        <div  class="rmlt col-lg-9">
+                                                            <input name="route[1]" type="text" class="form-control route_acInput2" required></div>
                                                     </div>
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-btn bg-primary">
                                                         <button type="button" class="btn btn-primary" onclick="paste('neighborhood')">Barangay/Town</button>
                                                     </span>
-                                                    <input type="text" class="form-control neighborhood_acInput2 administrative_area_level_5_acInput2" >
+                                                    <input name="neighborhood[1]" type="text" class="form-control neighborhood_acInput2 administrative_area_level_5_acInput2" required>
                                                 </div>
-    
-                    
-    
                                                 <div class="input-group m-b">
                                                     <span class="input-group-btn bg-primary">
                                                         <button type="button" class="btn btn-primary" onclick="paste('locality')">Municipality/City</button>
                                                     </span>
-                                                    <input type="text" class="form-control locality_acInput2" >
+                                                    <input name="locality[1]" type="text" class="form-control locality_acInput2" required>
                                                 </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-btn bg-primary">
                                                         <button type="button" class="btn btn-primary" onclick="paste('administrative_area_level_1')">Province/Conurbation</button>
                                                     </span>
-                                                    <input type="text" class="form-control administrative_area_level_1_acInput2 administrative_area_level_2_acInput2" >
+                                                    <input name="administrative_area_level_1[1]" type="text" class="form-control administrative_area_level_1_acInput2 administrative_area_level_2_acInput2" required>
                                                 </div>
                                                 
                                                 <div class="row">
@@ -191,7 +197,7 @@
                                                             <span class="input-group-btn bg-primary">
                                                                 <button type="button" class="btn btn-primary" onclick="paste('country')">Country</button> 
                                                             </span>
-                                                            <input type="text" class="form-control  country_acInput2" >
+                                                            <input name="country[1]" type="text" class="form-control  country_acInput2"required >
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-5">
@@ -199,7 +205,7 @@
                                                             <span class="input-group-btn bg-primary">
                                                                 <button type="button" class="btn btn-primary" onclick="paste('postal_code')">Zip Code</button>
                                                             </span>
-                                                            <input type="text" class="form-control  postal_code_acInput2" >
+                                                            <input name="postal_code[1]" type="text" class="form-control  postal_code_acInput2" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,11 +220,13 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
+                </form>
                 </div>
     
             </div>
         </div>
+    </div>
     </div>
 </div>

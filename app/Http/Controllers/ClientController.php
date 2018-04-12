@@ -26,9 +26,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-
-        return $client->with('address')->get();
-     
+       return $client->with('address')->get();
     }
 
     /**
@@ -40,7 +38,29 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-       return $client->addClient($request->except('_token'));
+
+    $clientId = $client->addClient([
+        'id'              => $request['id'],
+        'fname'           => $request['fname'],
+        'lname'           => $request['lname'],
+        'mname'           => $request['mname'],
+        'business_nature' => $request['business_nature'],
+        'plaintiff'       => $request['plaintiff'],
+        'email'           => $request['email']]);
+
+    for ($i = 0;$i < 2; $i++){
+    $client->addAddress([
+        "client_id"                     => $clientId,
+        "address"                       => $i,
+        "street_number"                 => $request["street_number"][$i],
+        "route"                         => $request["route"][$i],
+        "neighborhood"                  => $request["neighborhood"][$i],
+        "locality"                      => $request["locality"][$i],
+        "administrative_area_level_1"   => $request["administrative_area_level_1"][$i],
+        "country"                       => $request["country"][$i],
+        "postal_code"                   => $request["postal_code"][$i]]);}
+
+        return "Success!";
     }
 
     /**
@@ -49,8 +69,9 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy(Request $request)
     {
-        //
+
+        return Client::destroy($request['id']);
     }
 }
