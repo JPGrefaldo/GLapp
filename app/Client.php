@@ -2,11 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Client extends Model
 {
-    public function contact(){
-        return $this->hasMany(ContactInfo::class);
+    public function address(){
+        return $this->hasMany('App\Address');
+    }
+    
+    public function addClient($info){
+
+        $this->create($info);
+
     }
 }

@@ -28,17 +28,23 @@ $factory->define(App\Client::class, function (Faker $faker) {
         "lname" => $faker->lastName,
         "mname" => $faker->lastName,
         "plaintiff" => rand(1,3),
-        "business_nature" => $faker->company,
+        "business_nature" => rand(1,18),
         "email" => $faker->email,
         
     ];
 });
 
-$factory->define(App\ContactInfo::class, function ($faker) {
+$factory->define(App\Address::class, function ($faker) {
 
     return [
         "client_id" => factory('App\Client')->create()->id,
-        'type' => 1,
-        'description' => 'test'
+        'street_number' => $faker->buildingNumber,
+        'route' => $faker->streetName,
+        'neighborhood' => $faker->streetSuffix,
+        'locality' => $faker->city,
+        'administrative_area_level_1' => $faker->state,
+        'country' => $faker->country,
+        'postal_code' => $faker->postcode,
+        'address' => rand(0,1)
     ];
 });

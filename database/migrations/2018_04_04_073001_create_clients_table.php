@@ -19,7 +19,23 @@ class CreateClientsTable extends Migration
             $table->string('lname');
             $table->string('mname');
             $table->enum('plaintiff',['Respondent','Complainant','Defendant']);
-            $table->string('business_nature');
+            $table->enum('business_nature',['Corporate','Infrastructure',
+                                            'advertising',
+                                            'Media broadcasting',
+                                            'Contraction',
+                                            'Consulting',
+                                            'IT/Telco',
+                                            'transportation',
+                                            'Logistics',
+                                            'Finance',
+                                            'entertainment',
+                                            'Clothing',
+                                            'Cosmetics',
+                                            'Agriculture',
+                                            'Hospitality/Tourism',
+                                            'NGO',
+                                            'LGU',
+                                            'Others']);
             $table->string('email');
             $table->timestamps();
 

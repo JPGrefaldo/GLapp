@@ -15,28 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {   
-        return view('client');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('client.index');
     }
 
     /**
@@ -48,19 +27,8 @@ class ClientController extends Controller
     public function show(Client $client)
     {
 
-        return $client->with('contact')->get();
+        return $client->with('address')->get();
      
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Client $client)
-    {
-        //
     }
 
     /**
@@ -72,7 +40,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+       return $client->addClient($request->except('_token'));
     }
 
     /**
