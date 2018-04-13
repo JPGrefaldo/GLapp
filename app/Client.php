@@ -22,3 +22,8 @@ class Client extends Model
 
     }
 }
+
+ function $1()
+{
+
+}

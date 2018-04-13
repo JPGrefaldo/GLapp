@@ -105,7 +105,7 @@ table = $('.table-striped').dataTable( {
             "className": "text-right",
             "render": function (row) {
                 return  `<div class="btn-group">
-                            <a class="btn-success btn btn-xs" href="contract/create?id=${row.id}">Contract</a>
+                            <a class="btn-success btn btn-xs" href="contract/create/${row.id}">Contract</a>
                             <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this.id)">
                             View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id} onclick="destroy(this.id)">Delete</button>
@@ -199,7 +199,7 @@ function getElem(elem){
     return document.getElementsByClassName(elem)[0];
 }
 
-$("form").submit(function(e){
+$("form").submit(function(){
     return false;
 });
 
