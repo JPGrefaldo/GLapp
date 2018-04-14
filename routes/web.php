@@ -36,12 +36,14 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
 
-
-
         Route::get('client', 'ClientController@index');
         Route::get('client/list','ClientController@show');
         Route::post('client/update','ClientController@update');
         Route::post('client/destroy','ClientController@destroy');
+
+        /* Service Report Route */
+        Route::get('service-report','ServiceReportController@index');
+        Route::post('service-report','ServiceReportController@ajaxValidate'); 
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

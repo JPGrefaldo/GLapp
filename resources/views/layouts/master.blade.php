@@ -92,7 +92,7 @@
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href=""><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
+                    <a href="/service-report"><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
