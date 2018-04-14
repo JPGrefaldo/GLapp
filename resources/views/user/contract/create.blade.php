@@ -19,12 +19,12 @@
         </div>
         <div class="col-lg-4">
             <div class="title-action">
-                <button type="button" class="btn btn-primary">Save as Ongoing Contract</button>
+                <button type="button" id="reload" class="btn btn-primary">Save as Ongoing Contract</button>
             </div>
         </div>
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight define-contract">
+    <div class="wrapper wrapper-content animated define-contract">
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -145,93 +145,67 @@
                                     <div class="panel-heading">
                                         <label>Fees List</label>
                                     </div>
-                                    <table class="footable table table-stripped toggle-arrow-tiny">
-                                        <thead>
-                                        <tr>
-                                            <th data-toggle="true">Code</th>
-                                            <th data-sortable="false">Description</th>
-                                            <th data-hide="all">Specification</th>
-                                            <th class="text-right" data-sortable="false"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($fees as $fee)
-                                        <tr>
-                                            <td>{!! $fee->code !!}</td>
-                                            <td>{!! $fee->display_name !!}</td>
-                                            <td>{!! $fee->description !!}</td>
-                                            <td class="text-right"><a href="#" class="fee-btn" data-id="{!! $fee->id !!}" data-name="{!! $fee->display_name !!}"><i class="fa fa-plus text-navy"></i></a></td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="5">
-                                                <ul class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                    </table>
+                                    <div class="table-box">
+                                        <table id="fee-list-table" class="table table-stripped dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Code</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="panel panel-default table-box">
                                     <div class="panel-heading">
                                         <label>Fees Detail</label>
                                     </div>
-                                    <table class="footable table table-stripped" id="table-fee-detail">
-                                        <thead>
-                                        <tr>
-                                            <th data-sortable="false">Code</th>
-                                            <th data-sortable="false">Description</th>
-                                            <th data-sortable="false">Rate</th>
-                                            <th data-sortable="false">Amount</th>
-                                            <th data-sortable="false">Cap</th>
-                                            <th class="text-right"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="6">
-                                                <ul class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                    <table id="fee-detail-table" class="table table-striped dt-responsive nowrap" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Code</th>
+                                                    <th>Description</th>
+                                                    <th>Charge Type</th>
+                                                    <th>Free Pages</th>
+                                                    <th>First 5 Pages</th>
+                                                    <th>Rate No. 1</th>
+                                                    <th>Rate No. 2</th>
+                                                    <th>Fixed Amount</th>
+                                                    <th>Consumable | Min</th>
+                                                    <th>Excess Rate</th>
+                                                    <th>Fixed Amount</th>
+                                                    <th>W/ CAP or Ceiling</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="panel panel-default table-box">
                                     <div class="panel-heading">
                                         <label>Case Management</label>
+                                        <div class="btn-group pull-right">
+                                            <button type="button" id="counsel-btn-create" class="btn-success btn btn-xs"><i class="fa fa-plus"></i> Add</button>
+                                        </div>
                                     </div>
-                                    <table class="footable table table-stripped">
-                                        <thead>
-                                        <tr>
-                                            <th data-sortable="false">Docket No.</th>
-                                            <th data-sortable="false">Description</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="5">
-                                                <ul class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                    <div class="table-box">
+                                        <table id="case-table" class="table table-stripped dt-responsive nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Docket No.</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -265,13 +239,13 @@
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Free Pages:</span>
-                                    <input type="text" name="free_page" value="0" class="form-control">
+                                    <input type="text" name="free_page" value="0" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">First 5 Pages:</span>
-                                    <input type="text" name="charge_doc" value="0" class="form-control numonly">
+                                    <input type="text" name="charge_doc" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                         </div>
@@ -279,19 +253,19 @@
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Rate No. 1:</span>
-                                    <input type="text" name="rate_1" value="0" class="form-control numonly">
+                                    <input type="text" name="rate_1" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Rate No. 2:</span>
-                                    <input type="text" name="rate_2" value="0" class="form-control numonly">
+                                    <input type="text" name="rate_2" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Fixed Amount</span>
-                                    <input type="text" name="rate" value="0" class="form-control numonly">
+                                    <input type="text" name="rate" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                         </div>
@@ -299,25 +273,25 @@
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Consumable | Min</span>
-                                    <input type="text" name="consumable_time" value="0" class="form-control">
+                                    <input type="text" name="consumable_time" value="0" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Excess Rate</span>
-                                    <input type="text" name="excess_rate" value="0" class="form-control numonly">
+                                    <input type="text" name="excess_rate" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Fixed Amount</span>
-                                    <input type="text" name="amount" value="0" class="form-control numonly">
+                                    <input type="text" name="amount" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">W/ CAP or Ceiling</span>
-                                    <input type="text" name="cap_value" value="0" class="form-control numonly">
+                                    <input type="text" name="cap_value" value="0.00" class="form-control numonly">
                                 </div>
                             </div>
                         </div>
@@ -331,7 +305,7 @@
         </div>
     </div>
 
-    <div class="modal inmodal fade" id="modal2" data-id="0" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal fade" id="case-modal" data-id="0" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 15px;">
@@ -340,9 +314,124 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="textarea-group">
+                                    <span class="textarea-group-addon bg-muted">Case Title:</span>
+                                    <textarea name="" id="" class="form-control resize-vertical"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="textarea-group">
+                                    <span class="textarea-group-addon bg-muted">Venue:</span>
+                                    <textarea name="" id="" class="form-control resize-vertical"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon bg-muted">Contract No:</span>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon bg-muted">Case No:</span>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-muted">Case Classification:</span>
+                                    <div class="input-group-btn input-group-select">
+                                        <select name="class" class="form-control">
+                                            <option value="">Select Status</option>
+                                            <option value="Administrative">Administrative</option>
+                                            <option value="Criminal">Criminal</option>
+                                            <option value="Civil">Civil</option>
+                                            <option value="Collection Retainer">Collection Retainer</option>
+                                            <option value="General Retainer">General Retainer</option>
+                                            <option value="Labor">Labor</option>
+                                            <option value="Special Project">Special Project</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group m-b date">
+                                    <span class="input-group-addon bg-muted">Case Date:</span>
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-muted">Contract No:</span>
+                                    <div class="input-group-btn input-group-select">
+                                        <select name="" class="form-control">
+                                            <option value="">Select Status</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon bg-muted">Cluster:</span>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon bg-muted">Lead Counsel:</span>
+                                    <div class="input-group-btn input-group-select">
+                                        <select name="lead-counsel" class="form-control counsel-select"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-muted">Co-Counsel:</span>
+                                    <div class="input-group-btn input-group-select">
+                                        <select name="select-counsel" class="form-control counsel-select"></select>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary add-counsel">Add</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default table-box">
+                                <div class="panel-heading">
+                                    <label>Co-Counsel List</label>
+                                </div>
+                                <table id="counsel-table" class="table table-stripped">
+                                    <thead>
+                                    <tr>
+                                        <th>Counsel Code.</th>
+                                        <th>Name of Counsel</th>
+                                        <th>Lawyer Forte</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -357,69 +446,165 @@
 
 
 @section('styles')
-    {!! Html::style('css/plugins/footable/footable.core.css') !!}
+{{--    {!! Html::style('css/dataTables.min.css') !!}--}}
+    {!! Html::style('https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css') !!}
+    {!! Html::style('https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap.min.css') !!}
     {!! Html::style('css/plugins/datapicker/datepicker3.css') !!}
 @endsection
 
 @section('scripts')
-    {!! Html::script('js/plugins/footable/footable.all.min.js') !!}
+{{--    {!! Html::script('js/dataTables.min.js') !!}--}}
+    {!! Html::script('https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js') !!}
+    {!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js') !!}
+    {!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js') !!}
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
     <script>
         $(document).ready(function(){
+            var tran_id = '{!! $data->id !!}';
             var modal = $('#modal');
+            var caseModal = $('#case-modal');
+            modal.on('hidden.bs.modal', function () {
+                modal.find('.fee-name').empty();
+                modal.data('id',0);
+            });
+
+            var feeListTable = $('#fee-list-table').DataTable( {
+                processing: true,
+                serverside: true,
+                searching: false,
+                pageLength: 5,
+                ajax: {
+                    url: 'http://'+window.location.host+'/fee-list',
+                    data: function (d) {
+                        d.id = tran_id;
+                    }
+                },
+                columnDefs: [
+                    { width: '20px', 'targets': [ 0,1 ] },
+//                    { className: "text-right", "targets": [ 2 ] }
+                ],
+                columns: [
+                    {data: 'action', name: 'action'},
+                    {data: 'code', name: 'code'},
+                    {data: 'desc', name: 'desc'}
+                ]
+            });
+
+            var feeDetailTable = $('#fee-detail-table').DataTable( {
+                processing: true,
+                serverside: true,
+                searching: false,
+                pageLength: 5,
+                ajax: {
+                    url: 'http://'+window.location.host+'/tran-fee-list',
+                    data: function (d) {
+                        d.id = tran_id;
+                    }
+                },
+                columnDefs: [
+                    { width: '20px', 'targets': 0 },
+                    { className: "text-center", "targets": [ 3,9 ] },
+                    { className: "text-right", "targets": [ 4,5,6,7,8,10,11 ] }
+                ],
+                columns: [
+                    {data: 'action', name: 'action'},
+                    {data: 'code', name: 'code'},
+                    {data: 'desc', name: 'desc'},
+                    {data: 'charge_type', name: 'charge_type'},
+                    {data: 'free_page', name: 'free_page'},
+                    {data: 'charge_doc', name: 'charge_doc'},
+                    {data: 'rate_1', name: 'rate_1'},
+                    {data: 'rate_2', name: 'rate_2'},
+                    {data: 'rate', name: 'rate'},
+                    {data: 'consumable_time', name: 'consumable_time'},
+                    {data: 'excess_rate', name: 'excess_rate'},
+                    {data: 'amount', name: 'amount'},
+                    {data: 'cap_value', name: 'cap_value'}
+                ]
+            });
+
+            var caseTable = $('#case-table').DataTable( {
+                processing: true,
+                serverside: true,
+                searching: false,
+                pageLength: 5,
+                ajax: {
+                    url: 'http://'+window.location.host+'/tran-case-list',
+                    data: function (d) {
+                        d.id = tran_id;
+                    }
+                },
+                columnDefs: [
+                    { width: '20px', 'targets': [ 0,1 ] },
+//                    { className: "text-right", "targets": [ 2 ] }
+                ],
+                columns: [
+                    {data: 'action', name: 'action'},
+                    {data: 'docket', name: 'docket'},
+                    {data: 'desc', name: 'desc'}
+                ]
+            });
 
             $('.input-group.date').datepicker({
                 startView: 2,
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 forceParse: false,
-                autoclose: true
+                autoClose: true
             });
 
-            $('.footable').footable();
+            $(document).on('click','.table-action-btn',function(){
+                var type = $(this).data('type');
+                var id = $(this).data('id');
+                if(type === 'list'){
+                    modal.find('.fee-name').append('<h1>'+ $(this).data('name') +'</h1>');
+                    modal.data('id',id);
+                    modal.modal({backdrop: 'static', keyboard: false});
+                }
+            });
 
-            $(document).on('click','.fee-btn',function(){
-                modal.find('.fee-name').append('<h1>'+ $(this).data('name') +'</h1>');
-                modal.data('id',$(this).data('id'));
-                console.log(modal.data('id'));
+            $(document).on('click','#btn-add-counsel',function(){
                 modal.modal({backdrop: 'static', keyboard: false});
             });
 
-            modal.on('hidden.bs.modal', function () {
-                modal.find('.fee-name').empty();
-                modal.data('id',0);
-            });
-
-            loadFeeDetail();
-            function loadFeeDetail(){
-                $.get('http://'+ window.location.host +'/transaction-fee-detail-get', {
+            $(document).on('click','#counsel-btn-create',function(){
+                $.get('http://'+ window.location.host +'create-case',{
                     _token: '{!! csrf_token() !!}',
-                    id: '{!! $data->id !!}'
+                    id: tran_id
                 },function(data){
                     console.log(data);
-                    var table = $('#table-fee-detail').find('tbody');
-                    table.empty();
-                    for(var a = 0; a < data.length; a++){
-                        table.append('' +
-                            '<tr>' +
-                                '<td>'+ data[a].fee.code +'</td>' +
-                                '<td>'+ data[a].fee.display_name +'</td>' +
-                                '<td>'+ data[a].rate +'</td>' +
-                                '<td>'+ data[a].amount +'</td>' +
-                                '<td>'+ data[a].amount +'</td>' +
-                                '<td class="text-right"><span class="span-btn remove-fee" data-id="'+ data[a].id +'"><i class="fa fa-times text-danger"></i></span></td>' +
-                            '</tr>' +
-                        '');
+                    var counsel_select = $('.counsel-select');
+                    counsel_select.empty().append('<option value="">Select Counsel</option>');
+                    for(var a = 0; a < data[1]; a++){
+                        counsel_select.append('<option value="'+ data[1][a].id +'">'+ data[1][a].fname +'</option>');
                     }
                 });
+                caseModal.modal({backdrop: 'static', keyboard: false});
+            });
+
+            loadFeeTable();
+            function loadFeeTable(type){
+                if(type == 'fee'){
+                    feeListTable.ajax.reload();
+                    feeDetailTable.ajax.reload();
+                }else if(type == 'case'){
+                    caseTable.ajax.reload();
+                }else{
+                    feeListTable.ajax.reload();
+                    feeDetailTable.ajax.reload();
+                    caseTable.ajax.reload();
+                }
+
             }
 
-            $(document).on('click','.remove-fee',function(){
-                $.get('http://'+ window.location.host +'/transaction-fee-detail-remove',{
+            $(document).on('click','.fee-action-btn',function(){
+                $.get('http://'+ window.location.host +'/tran-fee-action',{
                     _token: '{!! csrf_token() !!}',
-                    id: $(this).data('id')
+                    id: $(this).data('id'),
+                    action: $(this).data('action')
                 },function(){
-                    loadFeeDetail();
+                    loadFeeTable('fee');
                 });
             });
 
@@ -439,9 +624,9 @@
                 var amount = parseInt($('input[name="amount"]').val());
                 var cap_value = parseInt($('input[name="cap_value"]').val());
 
-                $.post('http://'+ window.location.host +'/transaction-fee-detail-store', {
+                $.post('http://'+ window.location.host +'/tran-fee-store', {
                     _token: '{!! csrf_token() !!}',
-                    transaction_id: '{!! $data->id !!}',
+                    transaction_id: tran_id,
                     fee_id: modal.data('id'),
                     charge_type: charge_type,
                     free_page: free_page,
@@ -454,7 +639,7 @@
                     amount: amount,
                     cap_value: cap_value
                 },function(data){
-                    loadFeeDetail();
+                    loadFeeTable('fee');
                     modal.modal('toggle');
                 });
             }

@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
-use App\Contract;
-use App\Fee;
-use App\Transaction;
-use App\TransactionDetail;
-use App\TransactionFeeDetail;
+use App\CaseManagement;
+use App\Counsel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ContractController extends Controller
+class CaseManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +15,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return view('user.contract.index');
+        //
     }
 
     /**
@@ -30,7 +25,7 @@ class ContractController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -47,10 +42,10 @@ class ContractController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\CaseManagement  $caseManagement
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show(CaseManagement $caseManagement)
     {
         //
     }
@@ -58,10 +53,10 @@ class ContractController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\CaseManagement  $caseManagement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contract $contract)
+    public function edit(CaseManagement $caseManagement)
     {
         //
     }
@@ -70,10 +65,10 @@ class ContractController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Contract  $contract
+     * @param  \App\CaseManagement  $caseManagement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, CaseManagement $caseManagement)
     {
         //
     }
@@ -81,34 +76,28 @@ class ContractController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\CaseManagement  $caseManagement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(CaseManagement $caseManagement)
     {
         //
     }
 
-    public function createClientContract($id)
+    public function createCase(Request $request)
     {
-        $data = Transaction::where('user_id', Auth::user()->id)
-            ->where('client_id', $id)
-            ->where('status','pending')
-            ->with('client')
+        $data = CaseManagement::where('transaction_id', $request->input('id'))
+            ->where('temp',1)
+            ->with('counsel_list')
             ->first();
         if(!$data){
-            $data = new Transaction();
-            $data->user_id = Auth::user()->id;
-            $data->client_id = $id;
+            $data = new CaseManagement();
+            $data->transaction_id = $request->input('id');
             $data->save();
-            $data = Transaction::with('client')->find($data->id);
+            $data = CaseManagement::find($data->id);
         }
-        $client_id = str_pad($id, 5, 0, STR_PAD_LEFT);
-        return view('user.contract.create', compact('data','client_id'));
+        $data2 = Counsel::get();
+        return response()->json(array($data, $data2));
     }
-
-
-
-
 
 }
