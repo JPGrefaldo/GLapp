@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('client', 'ClientController@index');
         Route::get('client/list','ClientController@show');
         Route::post('client/update','ClientController@update');
+        Route::post('client/destroy','ClientController@destroy');
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

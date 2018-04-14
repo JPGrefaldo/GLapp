@@ -1,4 +1,5 @@
 let data;
+let table;
 const plaintiff = {
     "Respondent":1,
     "Complainant":2,
@@ -29,42 +30,38 @@ const busType ={
 window.onload = fetchData();
 
 function fetchData(){
+    
     $.ajax({
         url: `${location.pathname}/list`,
         success: function(result){
-            popData(result);
-            data = result;
+            table.fnClearTable();
+            
+            if(result.length){
+            table.fnAddData(result);
+            data = result;}
         }
     });
 }
 
-function buildForm() {
-        return [
-          $('input[name=fname]').val(),
-          $('input[name=lname]').val(),
-          $('input[name=mname]').val(),
-          $('input[name=plaintiff]').val(),
-          $('input[name=business_nature]').val(),
-          $('input[name=email]').val(),
-        ];
-      }
 
-
-function post(){
-    $.post(`${location.pathname}/update`,{
-        "_token": $("#_token").attr("value"),
-        "fname" : "John Paul",
-        "lname" : "Grefaldo",
-        "mname" : "L",
-        "plaintiff" : "1",
-        "business_nature" : "Under Nature",
-        "email" : "fake@email.com",
-}).done(function(data){console.log(data);fetchData();});
+function updateData(){
+    post('/update');
 }
 
-function popData(data){
+function post(loc){
+    $.post(location.pathname+loc,
+            `_token=${$("#_token").attr("value")}&${$( ".tab-content :input" ).serialize()}`,
+    ).done(function(data){
+        if(data){
+            fetchData();
+            $("#myModal5 .close").click();
+            clearInputs();
+        }
+    });
+}
 
-const dataTable = $('.table-striped').dataTable( {
+
+table = $('.table-striped').dataTable( {
         "autoWidth": false,//Disable autowidth for responsive table
         "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [
@@ -108,16 +105,16 @@ const dataTable = $('.table-striped').dataTable( {
             "className": "text-right",
             "render": function (row) {
                 return  `<div class="btn-group">
-                            <a class="btn-success btn btn-xs" href="contract/create?id=${row.id}">Contract</a>
+                            <a class="btn-success btn btn-xs" href="contract/create/${row.id}">Contract</a>
                             <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this.id)">
                             View</button>
-                            <button class="btn-danger btn btn-xs" id=${row.id}>Delete</button>
+                            <button class="btn-danger btn btn-xs" id=${row.id} onclick="destroy(this.id)">Delete</button>
                         </div>`;}}
             
         ]
     } );
 
-}
+
 
 
 function pasteAll(){
@@ -150,15 +147,12 @@ function delClient(elem){
 }
 
 function clearInputs(){
-for (i=1; i < 3; i++){
-    for (var component in componentForm){
-        document.getElementsByClassName(`${component}_acInput${i}`)[0].value = "";
-        document.getElementsByClassName('autocomplete')[i-1].value = "";
-    }
-}}
+    $( ".tab-content :input" ).val("");
+}
 
 function getData(id){
     clearInputs();
+    $("#id").val(id);
     for (component of data){
 
         let found; // Toggle if match found
@@ -166,7 +160,8 @@ function getData(id){
 
         for(row in component){     
             if (component.id == id){ found = 1;
-                address = {...component.address[0]};      
+                
+                address = component.address;      
             inputText = document.querySelectorAll(`[name=${row}]`)[0];
 
             if (inputText){
@@ -189,15 +184,26 @@ function getData(id){
 
 function fillAddress(address){
     
-    for(item in address){
-        inputText = document.getElementsByClassName(`${item}_acInput${address.address + 1}`)[0];
+    for (i = 0 ; i < address.length;i++){
+    for(item in address[i]){
+        inputText = document.getElementsByClassName(`${item}_acInput${address[i].address + 1}`)[0];
         if(inputText){
-            inputText.value = address[item];
+            inputText.value = address[i][item];
         }
     }
+}
 }
 
 
 function getElem(elem){
     return document.getElementsByClassName(elem)[0];
+}
+
+$("form").submit(function(){
+    return false;
+});
+
+function destroy(id){
+    $("#id").val(id);
+    post("/destroy");
 }
