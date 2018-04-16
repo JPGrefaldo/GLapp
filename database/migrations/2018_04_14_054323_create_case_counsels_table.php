@@ -17,6 +17,7 @@ class CreateCaseCounselsTable extends Migration
             $table->increments('id');
             $table->integer('case_id')->unsigned()->nullable();
             $table->integer('counsel_id');
+            $table->boolean('lead')->default(0);
             $table->timestamps();
             $table->foreign('case_id')
                 ->references('id')

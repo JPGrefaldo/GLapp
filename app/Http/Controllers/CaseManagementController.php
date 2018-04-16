@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CaseCounsel;
 use App\CaseManagement;
 use App\Counsel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CaseManagementController extends Controller
@@ -94,10 +96,53 @@ class CaseManagementController extends Controller
             $data = new CaseManagement();
             $data->transaction_id = $request->input('id');
             $data->save();
-            $data = CaseManagement::find($data->id);
+            $data = CaseManagement::with('counsel_list')->find($data->id);
         }
         $data2 = Counsel::get();
         return response()->json(array($data, $data2));
+    }
+
+    public function addCoCounsel(Request $request)
+    {
+        $data = new CaseCounsel();
+        $data->case_id = $request->input('case_id');
+        $data->counsel_id = $request->input('id');
+        if($data->save()){
+            $data2 = CaseCounsel::where('case_id',$data->case_id)
+                ->with('info')
+                ->get();
+            return response()->json($data2);
+        }
+    }
+
+    public function removeCoCounsel(Request $request)
+    {
+        CaseCounsel::find($request->input('id'))->delete();
+    }
+
+    public function loadCounsel(Request $request)
+    {
+        $data = CaseCounsel::where('case_id',$request->input('id'))->with('info')->get();
+        return response()->json($data);
+    }
+
+    public function storeCase(Request $request)
+    {
+        $data = CaseManagement::find($request->input('id'));
+        $data->title = $request->input('title');
+        $data->venue = $request->input('venue');
+        $data->date = Carbon::parse($request->input('date'));
+        $data->number = $request->input('number');
+        $data->class = $request->input('case_class');
+        $data->status = $request->input('status');
+        $data->temp = 0;
+        if($data->save()){
+            $data = new CaseCounsel();
+            $data->case_id = $data->id;
+            $data->counsel_id = $request->input('lead');
+            $data->lead = 1;
+            $data->save();
+        }
     }
 
 }

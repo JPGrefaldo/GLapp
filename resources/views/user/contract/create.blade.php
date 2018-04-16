@@ -318,13 +318,13 @@
                             <div class="form-group">
                                 <div class="textarea-group">
                                     <span class="textarea-group-addon bg-muted">Case Title:</span>
-                                    <textarea name="" id="" class="form-control resize-vertical"></textarea>
+                                    <textarea name="title" id="" class="form-control resize-vertical"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="textarea-group">
                                     <span class="textarea-group-addon bg-muted">Venue:</span>
-                                    <textarea name="" id="" class="form-control resize-vertical"></textarea>
+                                    <textarea name="venue" id="" class="form-control resize-vertical"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -333,14 +333,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="input-group m-b">
-                                    <span class="input-group-addon bg-muted">Contract No:</span>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Case No:</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="number" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -366,24 +360,20 @@
                             <div class="form-group">
                                 <div class="input-group m-b date">
                                     <span class="input-group-addon bg-muted">Case Date:</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="date" class="form-control">
                                     <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon bg-muted">Contract No:</span>
+                                    <span class="input-group-addon bg-muted">Case Status:</span>
                                     <div class="input-group-btn input-group-select">
-                                        <select name="" class="form-control">
+                                        <select name="status" class="form-control">
                                             <option value="">Select Status</option>
+                                            <option value="Open">Open</option>
+                                            <option value="Close">Close</option>
                                         </select>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group m-b">
-                                    <span class="input-group-addon bg-muted">Cluster:</span>
-                                    <input type="text" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -408,7 +398,7 @@
                                         <select name="select-counsel" class="form-control counsel-select"></select>
                                     </div>
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary add-counsel">Add</button>
+                                        <button type="button" class="btn btn-primary" id="add-co-counsel-btn">Add</button>
                                     </span>
                                 </div>
                             </div>
@@ -420,14 +410,16 @@
                                 <div class="panel-heading">
                                     <label>Co-Counsel List</label>
                                 </div>
-                                <table id="counsel-table" class="table table-stripped">
+                                <table id="co-counsel-table" class="table table-stripped">
                                     <thead>
                                     <tr>
                                         <th>Counsel Code.</th>
                                         <th>Name of Counsel</th>
                                         <th>Lawyer Forte</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
@@ -464,9 +456,13 @@
             var tran_id = '{!! $data->id !!}';
             var modal = $('#modal');
             var caseModal = $('#case-modal');
-            modal.on('hidden.bs.modal', function () {
-                modal.find('.fee-name').empty();
-                modal.data('id',0);
+
+            $('.input-group.date').datepicker({
+                startView: 2,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true
             });
 
             var feeListTable = $('#fee-list-table').DataTable( {
@@ -546,43 +542,6 @@
                 ]
             });
 
-            $('.input-group.date').datepicker({
-                startView: 2,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoClose: true
-            });
-
-            $(document).on('click','.table-action-btn',function(){
-                var type = $(this).data('type');
-                var id = $(this).data('id');
-                if(type === 'list'){
-                    modal.find('.fee-name').append('<h1>'+ $(this).data('name') +'</h1>');
-                    modal.data('id',id);
-                    modal.modal({backdrop: 'static', keyboard: false});
-                }
-            });
-
-            $(document).on('click','#btn-add-counsel',function(){
-                modal.modal({backdrop: 'static', keyboard: false});
-            });
-
-            $(document).on('click','#counsel-btn-create',function(){
-                $.get('http://'+ window.location.host +'create-case',{
-                    _token: '{!! csrf_token() !!}',
-                    id: tran_id
-                },function(data){
-                    console.log(data);
-                    var counsel_select = $('.counsel-select');
-                    counsel_select.empty().append('<option value="">Select Counsel</option>');
-                    for(var a = 0; a < data[1]; a++){
-                        counsel_select.append('<option value="'+ data[1][a].id +'">'+ data[1][a].fname +'</option>');
-                    }
-                });
-                caseModal.modal({backdrop: 'static', keyboard: false});
-            });
-
             loadFeeTable();
             function loadFeeTable(type){
                 if(type == 'fee'){
@@ -595,8 +554,23 @@
                     feeDetailTable.ajax.reload();
                     caseTable.ajax.reload();
                 }
-
             }
+
+            // Fee Process
+            modal.on('hidden.bs.modal', function () {
+                modal.find('.fee-name').empty();
+                modal.data('id',0);
+            });
+
+            $(document).on('click','.table-action-btn',function(){
+                var type = $(this).data('type');
+                var id = $(this).data('id');
+                if(type === 'list'){
+                    modal.find('.fee-name').append('<h1>'+ $(this).data('name') +'</h1>');
+                    modal.data('id',id);
+                    modal.modal({backdrop: 'static', keyboard: false});
+                }
+            });
 
             $(document).on('click','.fee-action-btn',function(){
                 $.get('http://'+ window.location.host +'/tran-fee-action',{
@@ -644,6 +618,80 @@
                 });
             }
 
+            // Case Process
+            function loadCounsel(){
+                $.get('{!! route('load-counsel') !!}',{
+                    id: caseModal.data('id'),
+                },function(data){
+                    var table = $('#co-counsel-table').find('tbody').empty();
+                    if(data.length > 0){
+                        for(var a = 0; a < data.length; a++){
+                            table.append('' +
+                                '<tr>' +
+                                '<td>'+ data[a].info.lawyer_code +'</td>' +
+                                '<td>'+ data[a].info.fname +' '+ data[a].info.lname +'</td>' +
+                                '<td>'+ data[a].info.lawyer_type +'</td>' +
+                                '<td class="text-right"><button data-id="'+ data[0].id +'" type="button" class="remove-co-counsel-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i></button></td>' +
+                                '</tr>' +
+                                '');
+                        }
+                    }
+                });
+            }
+
+            $(document).on('click','#btn-add-counsel',function(){
+                modal.modal({backdrop: 'static', keyboard: false});
+            });
+
+            $(document).on('click','#counsel-btn-create',function(){
+                $.get('http://'+ window.location.host +'/create-case',{
+                    id: tran_id
+                },function(data){
+                    caseModal.data('id',data[0].id)
+                    var counsel_select = $('.counsel-select');
+                    counsel_select.empty().append('<option value="">Select Counsel</option>');
+                    for(var a = 0; a < data[1].length; a++){
+                        counsel_select.append('<option value="'+ data[1][a].id +'">'+ data[1][a].fname +' '+ data[1][a].lname +'</option>');
+                    }
+                    loadCounsel();
+                    caseModal.modal({backdrop: 'static', keyboard: false});
+                });
+            });
+
+            $(document).on('click','.remove-co-counsel-btn',function(){
+                var item = $(this);
+                $.get('http://'+ window.location.host +'/remove-co-counsel',{
+                    id: item.data('id')
+                },function(){
+                    loadCounsel();
+                });
+            });
+
+            $(document).on('click','#add-co-counsel-btn',function(){
+                var select = $(this).closest('.form-group').find('select');
+                $.get('http://'+ window.location.host +'/add-co-counsel',{
+                    id: select.val(),
+                    case_id: caseModal.data('id'),
+                },function(){
+                    loadCounsel();
+                });
+            });
+
+            $(document).on('click','#btn-store-case',function(){
+                $.post('{!! route('store-case') !!}',{
+                    _token: '{!! csrf_token() !!}',
+                    title: $('textarea[name="title"]').val(),
+                    venue: $('textarea[name="venue"]').val(),
+                    date: $('input[name="date"]').val(),
+                    number: $('input[name="number"]').val(),
+                    case_class: $('select[name="class"]').val(),
+                    status: $('select[name="status"]').val(),
+                    lead: $('select[name="lead-counsel"]').val()
+                },function(){
+                    loadFeeTable('case');
+                    caseModal.modal('toggle');
+                });
+            });
 
         });
     </script>

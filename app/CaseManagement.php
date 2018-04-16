@@ -11,6 +11,6 @@ class CaseManagement extends Model
     }
 
     public function counsel_list(){
-        return $this->hasMany('App\CaseCounsel','counsel_id','id')->with('counsel');
+        return $this->hasMany('App\CaseCounsel','case_id','id')->with('info');
     }
 }
