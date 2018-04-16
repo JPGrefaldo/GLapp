@@ -42,6 +42,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('case', 'CaseManagementController');
         Route::get('create-case', 'CaseManagementController@createCase')->name('create-case');
+        Route::post('store-case', 'CaseManagementController@storeCase')->name('store-case');
+        Route::get('add-co-counsel', 'CaseManagementController@addCoCounsel')->name('add-co-counsel');
+        Route::get('get-co-counsel', 'CaseManagementController@getCoCounsel')->name('get-co-counsel');
+        Route::get('remove-co-counsel', 'CaseManagementController@removeCoCounsel')->name('remove-co-counsel');
+        Route::get('load-counsel', 'CaseManagementController@loadCounsel')->name('load-counsel');
+
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CaseManagement;
 use App\Fee;
 use App\Transaction;
 use App\TransactionFeeDetail;
@@ -186,15 +187,17 @@ class TransactionController extends Controller
 
     public function tranCaseList(Request $request)
     {
-        $list = Fee::get();
+        $list = CaseManagement::where('transaction_id', $request->input('id'))
+            ->where('temp', 0)
+            ->get();
 
         $data = DataTables::of($list)
             ->addColumn('docket', function ($list) {
-                $info = $list->code;
+                $info = $list->id;
                 return $info;
             })
             ->addColumn('desc', function ($list) {
-                $info = $list->display_name;
+                $info = $list->id;
                 return $info;
             })
             ->addColumn('action', function ($list) {

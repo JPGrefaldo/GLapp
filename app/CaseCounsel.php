@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CaseCounsel extends Model
 {
-    public function counsel()
+    public function info()
     {
-        $this->belongsTo('App\Counsel','counsel_id','id');
+        return $this->belongsTo('App\Counsel','counsel_id','id');
     }
 }

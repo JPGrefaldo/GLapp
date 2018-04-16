@@ -17,12 +17,12 @@ class CreateCaseManagementsTable extends Migration
             $table->increments('id');
             $table->integer('transaction_id')->unsigned()->nullable();
             $table->boolean('temp')->default(1);
-            $table->text('title');
-            $table->text('venue');
-            $table->string('number');
-            $table->enum('class', array('Administrative','Criminal','Civil','Collection Retainer','General Retainer','Labor','Special Project','Others'));
-            $table->enum('status', array('Open','Close'));
-            $table->text('counsel_id');
+            $table->text('title')->nullable();
+            $table->text('venue')->nullable();
+            $table->date('date')->nullable();
+            $table->string('number')->nullable();
+            $table->enum('class', array('Administrative','Criminal','Civil','Collection Retainer','General Retainer','Labor','Special Project','Others'))->nullable();
+            $table->enum('status', array('Open','Close'))->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_id')
