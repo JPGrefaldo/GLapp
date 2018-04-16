@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCounselsTable extends Migration
+class CreateCaseCounselsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateCounselsTable extends Migration
      */
     public function up()
     {
-        Schema::create('counsels', function (Blueprint $table) {
+        Schema::create('case_counsels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fname');
-            $table->string('mname');
-            $table->string('lname');
-            $table->string('image')->nullable();
-            $table->string('lawyer_type');
-            $table->string('lawyer_code');
+            $table->integer('case_id')->unsigned()->nullable();
+            $table->integer('counsel_id');
             $table->timestamps();
+            $table->foreign('case_id')
+                ->references('id')
+                ->on('case_managements');
         });
     }
 
@@ -32,6 +31,6 @@ class CreateCounselsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('counsels');
+        Schema::dropIfExists('case_counsels');
     }
 }

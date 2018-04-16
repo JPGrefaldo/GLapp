@@ -15,17 +15,19 @@ class CreateCaseManagementsTable extends Migration
     {
         Schema::create('case_managements', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contract_id')->unsigned()->nullable();
-            $table->string('title');
-            $table->string('venue');
-            $table->string('case_number');
-            $table->enum('case_classification',['Administrative','Criminal','Civil',
-                                   'Collection Retainer','Genereal Reatiner','Labor']);
+            $table->integer('transaction_id')->unsigned()->nullable();
+            $table->boolean('temp')->default(1);
+            $table->text('title');
+            $table->text('venue');
+            $table->string('number');
+            $table->enum('class', array('Administrative','Criminal','Civil','Collection Retainer','General Retainer','Labor','Special Project','Others'));
+            $table->enum('status', array('Open','Close'));
+            $table->text('counsel_id');
             $table->timestamps();
 
-            $table->foreign('contract_id')
-            ->references('id')
-            ->on('contracts');
+            $table->foreign('transaction_id')
+                ->references('id')
+                ->on('transactions');
         });
     }
 

@@ -29,12 +29,21 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('contract', 'ContractController');
         Route::get('contract-create/{id}', 'ContractController@createClientContract')->name('contract-create');
-        Route::post('transaction-fee-detail-store', 'ContractController@transactionFeeDetailStore')->name('transaction-fee-detail-store');
-        Route::get('transaction-fee-detail-get', 'ContractController@transactionFeeDetailGet')->name('transaction-fee-detail-get');
-        Route::get('transaction-fee-detail-remove', 'ContractController@transactionFeeDetailRemove')->name('transaction-fee-detail-remove');
+
+        Route::resource('transaction', 'TransactionController');
+        Route::get('fee-list', 'TransactionController@feeList')->name('fee-list');
+        Route::get('tran-fee-list', 'TransactionController@tranFeeList')->name('tran-fee-list');
+        Route::get('tran-case-list', 'TransactionController@tranCaseList')->name('tran-case-list');
+        Route::post('tran-fee-store', 'TransactionController@tranFeeStore')->name('tran-fee-store');
+        Route::get('tran-fee-action', 'TransactionController@tranFeeAction')->name('tran-fee-action');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
+
+        Route::resource('case', 'CaseManagementController');
+        Route::get('create-case', 'CaseManagementController@createCase')->name('create-case');
+
+
 
         Route::get('client', 'ClientController@index');
         Route::get('client/list','ClientController@show');
@@ -42,7 +51,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('client/destroy','ClientController@destroy');
 
         /* Service Report Route */
-        Route::get('service-report','ServiceReportController@index');
+        Route::get('service-report',[
+            'uses'=>'ServiceReportController@index',
+             'as' => 'servicereport'
+        ]);
         Route::get('service-report/{id}','ServiceReportController@show'); 
     });
 

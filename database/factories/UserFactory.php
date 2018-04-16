@@ -48,3 +48,23 @@ $factory->define(App\Address::class, function ($faker) {
         'address' => rand(0,1)
     ];
 });
+
+
+
+$factory->define( \App\Counsel::class, function (Faker $faker) {
+    return [
+        "fname" => $faker->firstName,
+        "lname" => $faker->lastName,
+        "mname" => $faker->lastName,
+        'lawyer_type' => $faker->jobTitle,
+        'lawyer_code' => $faker->phoneNumber,
+    ];
+});
+
+$factory->define(\App\ContactInfo::class, function (Faker $faker) use ($factory) {
+    return [
+        'type' => 'present_address',
+        'description' => $faker->address,
+        'counsel_id' => factory(\App\Counsel::class)->create()->id
+    ];
+});
