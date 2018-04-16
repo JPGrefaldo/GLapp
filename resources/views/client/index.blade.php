@@ -4,7 +4,6 @@
 
 @section('styles')
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
-{!! Html::style('css/plugins/bootstrap-toggle-master/bootstrap-toggle.min.css') !!}
 {!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
 <style>
     .nopads{
@@ -40,8 +39,7 @@
     }
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 @endsection
 
 @section('content')

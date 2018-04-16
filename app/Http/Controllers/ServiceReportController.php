@@ -3,27 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\ServiceReport;
 use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('servicereport.index');
-    }
-    public function ajaxValidate(Request $request)
-    {
-       if($request['client'] == 1){
-           
-        $clients =   Client::get();
-        foreach($clients as $client){
-            $client['name'] = $client->fname." ".$client->lname;
-            unset($client->fname,$client->lname);
-            return $client;
-        }
-       }else{
-           return "No Client Found!";
-       }
     }
 
     /**
@@ -55,7 +42,7 @@ class ServiceReportController extends Controller
      */
     public function show(ServiceReport $serviceReport)
     {
-        //
+       return view('servicereport.list');
     }
 
     /**

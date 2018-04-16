@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
 
         /* Service Report Route */
         Route::get('service-report','ServiceReportController@index');
-        Route::post('service-report','ServiceReportController@ajaxValidate'); 
+        Route::get('service-report/{id}','ServiceReportController@show'); 
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {
