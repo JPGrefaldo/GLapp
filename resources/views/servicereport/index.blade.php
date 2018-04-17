@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-
     <div class="row wrapper border-bottom white-bg page-heading">
             
         <div class="col-lg-10">
@@ -21,15 +20,12 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
-        </div>
     </div>
 
     <div id="root" class="wrapper wrapper-content animated fadeInUp">
         <div class="row">
             <div class="col-lg-12">
-                <div class="ibox float-e-margins">
+                    <div class="ibox float-e-margins">
                         <div class="ibox-content">
                         <div class="full-height-scroll">
                             <div class="table-responsive">
@@ -60,7 +56,6 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script>
-
 table = $('.table-striped').dataTable( {
     "ajax": {
         "url": "client/list",
@@ -91,11 +86,7 @@ table = $('.table-striped').dataTable( {
                 return  `<div class="btn-group">
                             <a class="btn-success btn btn-xs" href="service-report/${row.id}">View</a>
                           </div>`;}}
-            
         ]
-
-
     } );
-
 </script>
 @endsection
