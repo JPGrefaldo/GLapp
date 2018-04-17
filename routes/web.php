@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('tran-case-list', 'TransactionController@tranCaseList')->name('tran-case-list');
         Route::post('tran-fee-store', 'TransactionController@tranFeeStore')->name('tran-fee-store');
         Route::get('tran-fee-action', 'TransactionController@tranFeeAction')->name('tran-fee-action');
+        Route::get('tran-contract-store', 'TransactionController@tranContractStore')->name('tran-contract-store');
+        Route::get('tran-cost', 'TransactionController@tranCost')->name('tran-cost');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');

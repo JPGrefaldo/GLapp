@@ -85,3 +85,15 @@
 .define-contract .table th:first-child {
     width: 1px !important;
 }
+
+.total-box input {
+    font-size: 40px;
+    padding: 30px;
+}
+
+.total-box label {
+    height: 63px;
+    font-size: 50px;
+    line-height: 0.9;
+    text-align: right;
+}

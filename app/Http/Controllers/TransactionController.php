@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CaseManagement;
+use App\Contract;
 use App\Fee;
 use App\Transaction;
 use App\TransactionFeeDetail;
@@ -106,7 +107,7 @@ class TransactionController extends Controller
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
-              $menu[] = '<button data-id="'.$list->id.'" data-type="list" data-name="'.$list->display_name.'" type="button" class="table-action-btn btn-white btn btn-xs"><i class="fa fa-plus text-success"></i> add</button>';
+              $menu[] = '<button data-id="'.$list->id.'" data-type="list" data-name="'.$list->display_name.'" type="button" class="table-action-btn btn-white btn btn-xs"><i class="fa fa-plus text-success"></i> </button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);
@@ -120,6 +121,10 @@ class TransactionController extends Controller
             ->get();
 
         $data = DataTables::of($list)
+            ->addColumn('collapse', function ($list) {
+                $info = '';
+                return $info;
+            })
             ->addColumn('code', function ($list) {
                 $info = $list->fee->code;
                 return $info;
@@ -168,17 +173,14 @@ class TransactionController extends Controller
                 $info = number_format($list->cap_value, 2, '.', ',');
                 return $info;
             })
-//            ->addColumn('cap', function ($list) {
-//                $info = $list->cap === 0 ? 'N' : 'Y';
-//                return $info;
-//            })
             ->addColumn('action', function ($list) {
                 $info = '<span class="span-btn fee-action-btn" data-id="'.$list->id.'" data-action="add"><i class="fa fa-times text-danger"></i></span>';
                 return $info;
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
-                $menu[] = '<button data-id="'.$list->id.'" data-action="add" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> del</button>';
+                $menu[] = '<button data-id="'.$list->id.'" data-action="edit" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> </button>';
+                $menu[] = '<button data-id="'.$list->id.'" data-action="add" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> </button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);
@@ -193,17 +195,17 @@ class TransactionController extends Controller
 
         $data = DataTables::of($list)
             ->addColumn('docket', function ($list) {
-                $info = $list->id;
+                $info = $list->docket;
                 return $info;
             })
             ->addColumn('desc', function ($list) {
-                $info = $list->id;
+                $info = $list->title;
                 return $info;
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
-//              $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-check text-success"></i> Edit</button>';
-                $menu[] = '<a href="'. route('user.edit',array('user'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
+                $menu[] = '<button data-id="'.$list->id.'" data-action="edit" type="button" class="case-btn btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> </button>';
+                $menu[] = '<button data-id="'.$list->id.'" data-action="delete" type="button" class="case-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> </button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);
@@ -237,7 +239,49 @@ class TransactionController extends Controller
 
     public function tranFeeAction(Request $request)
     {
-        TransactionFeeDetail::find($request->input('id'))->delete();
+        $data = TransactionFeeDetail::find($request->input('id'));
+        if($request->input('action') == 'delete'){
+            $data->delete();
+        }else{
+            return response()->json($data);
+        }
+    }
+
+    public function tranContractStore(Request $request)
+    {
+        $tran = Transaction::find($request->input('id'));
+
+        $data = new Contract();
+        $data->transaction_id = $tran->id;
+        $data->client_id = $tran->client_id;
+        $data->contract_type = $request->input('contract_type');
+        $data->contract_number = $request->input('contract_number');
+        $data->contract_date = $request->input('contract_date');
+        $data->start_date = $request->input('start_date');
+        $data->end_date = $request->input('end_date');
+        $data->status = $request->input('status');
+        $data->amount_cost = $request->input('amount_cost');
+        $data->other_conditions = $request->input('other_conditions');
+        $data->save();
+    }
+
+    public function tranCost(Request $request)
+    {
+        $total = 0;
+
+        $datas = TransactionFeeDetail::where('transaction_id', $request->input('id'))->get();
+        foreach($datas as $data){
+            $total += $data->charge_doc;
+            $total += $data->rate_1;
+            $total += $data->rate_2;
+            $total += $data->rate;
+            $total += $data->consumable_time;
+            $total += $data->excess_rate;
+            $total += $data->amount;
+            $total += $data->cap_value;
+        }
+
+        return response()->json($total);
     }
 
 }

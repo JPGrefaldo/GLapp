@@ -133,15 +133,16 @@ class CaseManagementController extends Controller
         $data->venue = $request->input('venue');
         $data->date = Carbon::parse($request->input('date'));
         $data->number = $request->input('number');
+        $data->docket = $request->input('docket');
         $data->class = $request->input('case_class');
         $data->status = $request->input('status');
         $data->temp = 0;
         if($data->save()){
-            $data = new CaseCounsel();
-            $data->case_id = $data->id;
-            $data->counsel_id = $request->input('lead');
-            $data->lead = 1;
-            $data->save();
+            $data2 = new CaseCounsel();
+            $data2->case_id = $data->id;
+            $data2->counsel_id = $request->input('lead');
+            $data2->lead = 1;
+            $data2->save();
         }
     }
 
