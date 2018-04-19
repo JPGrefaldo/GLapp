@@ -19,9 +19,10 @@ class CreateCaseCounselsTable extends Migration
             $table->integer('counsel_id');
             $table->boolean('lead')->default(0);
             $table->timestamps();
+
             $table->foreign('case_id')
-                ->references('id')
-                ->on('case_managements');
+                ->references('id')->on('case_managements')
+                ->onDelete('cascade');
         });
     }
 

@@ -18,21 +18,21 @@ class CreateTransactionFeeDetailsTable extends Migration
             $table->integer('transaction_id')->unsigned();
             $table->integer('fee_id');
             $table->enum('charge_type',['Standard','Special','Installment']);
-            $table->integer('free_page');
-            $table->decimal('charge_doc',10,2);
-            $table->decimal('rate_1',10,2);
-            $table->decimal('rate_2',10,2);
-            $table->decimal('rate',10,2);
-            $table->integer('consumable_time');
-            $table->decimal('excess_rate',10,2);
-            $table->decimal('amount',10,2);
+            $table->integer('free_page')->default(0);
+            $table->decimal('charge_doc',10,2)->default(0);
+            $table->decimal('rate_1',10,2)->default(0);
+            $table->decimal('rate_2',10,2)->default(0);
+            $table->decimal('rate',10,2)->default(0);
+            $table->integer('consumable_time')->default(0);
+            $table->decimal('excess_rate',10,2)->default(0);
+            $table->decimal('amount',10,2)->default(0);
             $table->boolean('cap')->default(0);
-            $table->decimal('cap_value',10,2);
+            $table->decimal('cap_value',10,2)->default(0);
             $table->timestamps();
 
             $table->foreign('transaction_id')
-                ->references('id')
-                ->on('transactions');
+                ->references('id')->on('transactions')
+                ->onDelete('cascade');
         });
     }
 

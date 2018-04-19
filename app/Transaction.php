@@ -10,4 +10,13 @@ class Transaction extends Model
     {
         return $this->hasOne('App\Client','id','client_id');
     }
+    public function contract()
+    {
+        return $this->hasOne('App\Contract','transaction_id','id');
+    }
+
+    public function fees()
+    {
+        return $this->hasMany('App\TransactionFeeDetail','transaction_id','id');
+    }
 }

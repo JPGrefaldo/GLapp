@@ -15,23 +15,24 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('transaction_id')->unsigned()->nullable();
-            $table->integer('client_id')->unsigned()->nullable();
-            $table->integer('contract_number');
+            $table->integer('transaction_id')->unsigned();
+            $table->integer('client_id')->unsigned();
+            $table->enum('contract_type', array('Special','General'));
+            $table->string('contract_number');
             $table->date('contract_date');
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('status');
-            $table->decimal('amount_cost');
+            $table->enum('status',array('Open','Close'));
+            $table->decimal('amount_cost',10,2)->default(0);
             $table->text('other_conditions');
             $table->timestamps();
 
             $table->foreign('transaction_id')
                 ->references('id')
-                ->on('transactions');
+                ->on('transactions')->onDelete('cascade');
             $table->foreign('client_id')
                 ->references('id')
-                ->on('clients');
+                ->on('clients')->onDelete('cascade');
         });
     }
 

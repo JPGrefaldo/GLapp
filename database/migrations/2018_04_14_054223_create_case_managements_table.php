@@ -21,13 +21,14 @@ class CreateCaseManagementsTable extends Migration
             $table->text('venue')->nullable();
             $table->date('date')->nullable();
             $table->string('number')->nullable();
+            $table->string('docket')->nullable();
             $table->enum('class', array('Administrative','Criminal','Civil','Collection Retainer','General Retainer','Labor','Special Project','Others'))->nullable();
             $table->enum('status', array('Open','Close'))->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_id')
-                ->references('id')
-                ->on('transactions');
+                ->references('id')->on('transactions')
+                ->onDelete('cascade');
         });
     }
 

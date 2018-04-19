@@ -111,6 +111,21 @@ class CaseManagementController extends Controller
             $data2 = CaseCounsel::where('case_id',$data->case_id)
                 ->with('info')
                 ->get();
+
+            if($request->input('lead') != ''){
+                $lead = CaseCounsel::where('case_id',$data->case_id)
+                    ->where('lead',1)
+                    ->first();
+                if($lead){
+                    $lead->counsel_id = $request->input('lead');
+                }else{
+                    $lead = new CaseCounsel();
+                    $lead->case_id = $data->case_id;
+                    $lead->counsel_id = $request->input('lead');
+                    $lead->lead = 1;
+                }
+                $lead->save();
+            }
             return response()->json($data2);
         }
     }
@@ -126,6 +141,18 @@ class CaseManagementController extends Controller
         return response()->json($data);
     }
 
+    public function actionCase(Request $request)
+    {
+        $data = CaseManagement::with('counsel_list')->find($request->input('id'));
+        if($request->input('action') == 'delete'){
+            $data->delete();
+        }
+        if($request->input('action') == 'edit'){
+            $data2 = Counsel::get();
+            return response()->json(array($data, $data2));
+        }
+    }
+
     public function storeCase(Request $request)
     {
         $data = CaseManagement::find($request->input('id'));
@@ -133,15 +160,25 @@ class CaseManagementController extends Controller
         $data->venue = $request->input('venue');
         $data->date = Carbon::parse($request->input('date'));
         $data->number = $request->input('number');
+        $data->docket = $request->input('docket');
         $data->class = $request->input('case_class');
         $data->status = $request->input('status');
         $data->temp = 0;
         if($data->save()){
-            $data = new CaseCounsel();
-            $data->case_id = $data->id;
-            $data->counsel_id = $request->input('lead');
-            $data->lead = 1;
-            $data->save();
+            if($request->input('lead') != ''){
+                $lead = CaseCounsel::where('case_id',$data->id)
+                    ->where('lead',1)
+                    ->first();
+                if($lead){
+                    $lead->counsel_id = $request->input('lead');
+                }else{
+                    $lead = new CaseCounsel();
+                    $lead->case_id = $data->id;
+                    $lead->counsel_id = $request->input('lead');
+                    $lead->lead = 1;
+                }
+                $lead->save();
+            }
         }
     }
 
