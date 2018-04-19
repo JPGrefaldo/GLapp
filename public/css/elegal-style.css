@@ -78,13 +78,13 @@
     right: 5px;
 }
 
-.define-contract .table th {
+.table th {
     white-space: nowrap;
 }
 
-.define-contract .table th:first-child {
-    width: 1px !important;
-}
+/*.define-contract .table th:first-child {*/
+    /*width: 1px !important;*/
+/*}*/
 
 .total-box input {
     font-size: 40px;
@@ -97,3 +97,7 @@
     line-height: 0.9;
     text-align: right;
 }
+
+/*#case-table table thead td th:first-child {*/
+    /*width: 50px !important;*/
+/*}*/

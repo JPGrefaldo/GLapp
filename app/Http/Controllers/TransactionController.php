@@ -180,7 +180,7 @@ class TransactionController extends Controller
             ->addColumn('action', function ($list) {
                 $menu = [];
                 $menu[] = '<button data-id="'.$list->id.'" data-action="edit" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> </button>';
-                $menu[] = '<button data-id="'.$list->id.'" data-action="add" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> </button>';
+                $menu[] = '<button data-id="'.$list->id.'" data-action="delete" type="button" class="fee-action-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> </button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);
@@ -212,16 +212,18 @@ class TransactionController extends Controller
         return $data;
     }
 
-    public function tranCaseStore()
-    {
-
-    }
-
     public function tranFeeStore(Request $request)
     {
-        $data = new TransactionFeeDetail();
-        $data->transaction_id = $request->input('transaction_id');
-        $data->fee_id = $request->input('fee_id');
+        if($request->input('action') === "add"){
+            $data = new TransactionFeeDetail();
+            $data->transaction_id = $request->input('transaction_id');
+            $data->fee_id = $request->input('fee_id');
+        }
+
+        if($request->input('action') === "edit"){
+            $data = TransactionFeeDetail::find($request->input('fee_id'));
+        }
+
         $data->charge_type = $request->input('charge_type');
         $data->free_page = $request->input('free_page');
         $data->charge_doc = $request->input('charge_doc');
@@ -239,30 +241,13 @@ class TransactionController extends Controller
 
     public function tranFeeAction(Request $request)
     {
-        $data = TransactionFeeDetail::find($request->input('id'));
+        $data = TransactionFeeDetail::with('fee')->find($request->input('id'));
         if($request->input('action') == 'delete'){
             $data->delete();
-        }else{
+        }
+        if($request->input('action') == 'edit'){
             return response()->json($data);
         }
-    }
-
-    public function tranContractStore(Request $request)
-    {
-        $tran = Transaction::find($request->input('id'));
-
-        $data = new Contract();
-        $data->transaction_id = $tran->id;
-        $data->client_id = $tran->client_id;
-        $data->contract_type = $request->input('contract_type');
-        $data->contract_number = $request->input('contract_number');
-        $data->contract_date = $request->input('contract_date');
-        $data->start_date = $request->input('start_date');
-        $data->end_date = $request->input('end_date');
-        $data->status = $request->input('status');
-        $data->amount_cost = $request->input('amount_cost');
-        $data->other_conditions = $request->input('other_conditions');
-        $data->save();
     }
 
     public function tranCost(Request $request)

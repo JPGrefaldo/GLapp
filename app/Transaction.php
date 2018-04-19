@@ -12,11 +12,11 @@ class Transaction extends Model
     }
     public function contract()
     {
-        return $this->hasOne('App\Contract','id','client_id');
+        return $this->hasOne('App\Contract','transaction_id','id');
     }
 
     public function fees()
     {
-        return $this->hasMany('App\TransactionFeeDetail','','');
+        return $this->hasMany('App\TransactionFeeDetail','transaction_id','id');
     }
 }

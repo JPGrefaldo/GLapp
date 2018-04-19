@@ -31,8 +31,8 @@ class CreateTransactionFeeDetailsTable extends Migration
             $table->timestamps();
 
             $table->foreign('transaction_id')
-                ->references('id')
-                ->on('transactions');
+                ->references('id')->on('transactions')
+                ->onDelete('cascade');
         });
     }
 

@@ -19,23 +19,23 @@
         </div>
         <div class="col-lg-4">
             <div class="title-action">
-                <button type="button" id="save-contract-btn" class="btn btn-primary">Save as Ongoing Contract</button>
+                <button type="button" id="save-contract-btn" data-action="{!! ($data->status === 'Ongoing') ? 'edit' : 'add' !!}" class="btn btn-primary">{!! ($data->status === 'Ongoing') ? 'Update' : 'Save' !!}</button>
             </div>
         </div>
     </div>
 
     <div class="wrapper wrapper-content animated define-contract">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Define Contract <small>page</small></h5>
+                        {!! ($data->status === 'Ongoing') ? '<h3>Contract Number: <span class="text-success">'.$data->contract->contract_number.'</span></h3>' : '<h5>Create Contract</h5>' !!}
                     </div>
                     <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-5">
+                        <div class="row" id="contract-info">
+                            <div class="col-md-5">
                                 <div class="row">
-                                    <div class="col-sm-8">
+                                    <div class="col-lg-8 col-md-12">
                                         <div class="form-group">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-muted">Full Name:</span>
@@ -43,7 +43,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-lg-4 col-md-12">
                                         <div class="form-group">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-muted">Client's ID:</span>
@@ -65,32 +65,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-md-7">
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-muted">Type of Contract:</span>
                                                 <div class="input-group-btn input-group-select">
-                                                    <select name="" class="form-control">
-                                                        <option value="">Select Retainer</option>
-                                                        <option value="special">Special</option>
-                                                        <option value="general">General</option>
-                                                    </select>
+                                                    {{Form::select('contract_type', array(null => 'Select Retainer','Special' => 'Special','General' => 'General'),($data->status === 'Ongoing') ? $data->contract->contract_type : null,array('class'=>'form-control'))}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-muted">Contract Status:</span>
                                                 <div class="input-group-btn input-group-select">
-                                                    <select name="status" class="form-control">
-                                                        <option value="">Select Status</option>
-                                                        <option value="Open">Open</option>
-                                                        <option value="Close">Close</option>
-                                                    </select>
+                                                    {{Form::select('status', array(null => 'Select Status','Open' => 'Open','Close' => 'Close'),($data->status === 'Ongoing') ? $data->contract->status : null,array('class'=>'form-control'))}}
                                                 </div>
                                             </div>
                                         </div>
@@ -98,29 +90,29 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">Contract Date:</span>
-                                                <input type="text" class="form-control">
+                                                <input type="text" name="contract_date" value="{!! ($data->status === 'Ongoing') ? \Carbon\Carbon::parse($data->contract->contract_date)->format('m/d/Y') : '' !!}" class="form-control">
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">Start Date:</span>
-                                                <input type="text" class="form-control">
+                                                <input type="text" name="start_date" value="{!! ($data->status === 'Ongoing') ? \Carbon\Carbon::parse($data->contract->start_date)->format('m/d/Y') : '' !!}" class="form-control">
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">End Date:</span>
-                                                <input type="text" class="form-control">
+                                                <input type="text" name="end_date" value="{!! ($data->status === 'Ongoing') ? \Carbon\Carbon::parse($data->contract->end_date)->format('m/d/Y') : '' !!}" class="form-control">
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
@@ -130,7 +122,7 @@
                                 <div class="form-group">
                                     <div class="textarea-group">
                                         <span class="textarea-group-addon bg-muted">Other Condition:</span>
-                                        <textarea name="" id="" class="form-control resize-vertical"></textarea>
+                                        <textarea name="other_conditions" id="" class="form-control resize-vertical">{!! ($data->status === 'Ongoing') ? $data->contract->other_conditions : '' !!}</textarea>
                                     </div>
                                 </div>
 
@@ -204,7 +196,7 @@
                                         <table id="case-table" class="table table-stripped dt-responsive nowrap">
                                             <thead>
                                             <tr>
-                                                <th></th>
+                                                <th style="width: 30px;"></th>
                                                 <th>Docket No.</th>
                                                 <th>Description</th>
                                             </tr>
@@ -220,7 +212,7 @@
         </div>
     </div>
 
-    <div class="modal inmodal fade" id="modal" data-id="0" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal fade" id="modal" data-id="0" data-action="add" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 15px;">
@@ -313,7 +305,7 @@
         </div>
     </div>
 
-    <div class="modal inmodal fade" id="case-modal" data-id="0" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal fade" id="case-modal" data-id="0" data-action="add" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 15px;">
@@ -322,7 +314,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <div class="textarea-group">
                                     <span class="textarea-group-addon bg-muted">Case Title:</span>
@@ -338,9 +330,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-md-7">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon bg-muted">Case No:</span>
@@ -348,7 +340,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon bg-muted">Docket No:</span>
@@ -377,7 +369,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <div class="input-group m-b date">
                                     <span class="input-group-addon bg-muted">Case Date:</span>
@@ -401,7 +393,7 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Lead Counsel:</span>
@@ -411,7 +403,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon bg-muted">Co-Counsel:</span>
@@ -426,7 +418,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="panel panel-default table-box">
                                 <div class="panel-heading">
                                     <label>Co-Counsel List</label>
@@ -521,8 +513,7 @@
                     }
                 },
                 columnDefs: [
-                    { sortable: false, 'targets': 0 },
-                    { orderable: false, 'targets': 0 },
+                    { width: '30', 'targets': [ 1 ] },
                     { className: "text-center", "targets": [ 3,9 ] },
                     { className: "text-right", "targets": [ 4,5,6,7,8,10,11 ] }
                 ],
@@ -556,7 +547,7 @@
                     }
                 },
                 columnDefs: [
-                    { width: '20px', 'targets': [ 0,1 ] },
+                    { width: '30', 'targets': [ 0,1 ] },
 //                    { className: "text-right", "targets": [ 2 ] }
                 ],
                 columns: [
@@ -587,14 +578,29 @@
                 $.get('http://'+ window.location.host +'/tran-cost',{
                     id: tran_id,
                 },function(data){
-//                    console.log(numeral(data).format('0,0.00'));
                     $('#tran-cost-display').text(numeral(data).format('0,0.00'));
                 });
             }
 
             // Contract Process
             $(document).on('click','#save-contract-btn',function(){
-
+                var contract = $('#contract-info');
+                var action = $(this).data('action');
+                $.post('{!! route('contract-store') !!}',{
+                    _token: '{!! csrf_token() !!}',
+                    id: tran_id,
+                    action: action,
+                    contract_type: contract.find('select[name="contract_type"]').val(),
+                    contract_date: contract.find('input[name="contract_date"]').val(),
+                    start_date: contract.find('input[name="start_date"]').val(),
+                    end_date: contract.find('input[name="end_date"]').val(),
+                    status: contract.find('select[name="status"]').val(),
+                    other_conditions: contract.find('textarea[name="other_conditions"]').val(),
+                },function(data){
+                    if(data.length != 0) {
+                        window.location.replace('http://'+window.location.host+'/contract');
+                    }
+                });
             });
 
             // Fee Process
@@ -610,12 +616,13 @@
 
             $(document).on('click','.fee-action-btn',function(){
                 $.get('http://'+ window.location.host +'/tran-fee-action',{
-                    _token: '{!! csrf_token() !!}',
                     id: $(this).data('id'),
                     action: $(this).data('action')
                 },function(data){
-                    if(data.length > 0){
+                    if(data.length != 0) {
+                        console.log('return edit');
                         modal.data('id',data.id);
+                        modal.data('action','edit');
                         modal.find('select[name="charge_type"]').val(data.charge_type);
                         modal.find('select[name="status"]').val(data.status);
                         modal.find('input[name="free_page"]').val(data.free_page);
@@ -627,7 +634,10 @@
                         modal.find('input[name="excess_rate"]').val(data.excess_rate);
                         modal.find('input[name="amount"]').val(data.amount);
                         modal.find('input[name="cap_value"]').val(data.cap_value);
+                        modal.find('.fee-name').append('<h1>'+ data.fee.display_name +'</h1>');
+                        modal.modal({backdrop: 'static', keyboard: false});
                     }else{
+                        console.log('return delete');
                         loadFeeTable('fee');
                         loadTotalCost();
                     }
@@ -643,6 +653,7 @@
                     _token: '{!! csrf_token() !!}',
                     transaction_id: tran_id,
                     fee_id: modal.data('id'),
+                    action: modal.data('action'),
                     charge_type: modal.find('select[name="charge_type"]').val(),
                     status: modal.find('select[name="status"]').val(),
                     free_page: parseInt(modal.find('input[name="free_page"]').val()),
@@ -663,8 +674,9 @@
             modal.on('hidden.bs.modal', function () {
                 $(this).find('.fee-name').empty();
                 $(this).data('id',0);
+                $(this).data('action','add');
                 $(this).find('input').val('');
-                $(this).find('select option:first-child').attr("selected", "selected");
+                $(this).find('select').val('');
             });
 
             // Case Process
@@ -675,14 +687,22 @@
                     var table = $('#co-counsel-table').find('tbody').empty();
                     if(data.length > 0){
                         for(var a = 0; a < data.length; a++){
-                            table.append('' +
-                                '<tr>' +
-                                    '<td>'+ data[a].info.lawyer_code +'</td>' +
-                                    '<td>'+ data[a].info.fname +' '+ data[a].info.lname +'</td>' +
-                                    '<td>'+ data[a].info.lawyer_type +'</td>' +
-                                    '<td class="text-right"><button data-id="'+ data[0].id +'" type="button" class="remove-co-counsel-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i></button></td>' +
-                                '</tr>' +
-                            '');
+                            if(data[a].lead === 1){
+                                caseModal.find('select[name="lead-counsel"]').val(data[a].counsel_id);
+                                caseModal.find('select[name="select-counsel"]').find('option[value="'+ data[a].counsel_id +'"]').hide();
+                            }else{
+                                caseModal.find('select[name="lead-counsel"]').find('option[value="'+ data[a].counsel_id +'"]').hide();
+                                caseModal.find('select[name="select-counsel"]').find('option[value="'+ data[a].counsel_id +'"]').hide();
+                                table.append('' +
+                                    '<tr>' +
+                                        '<td>'+ data[a].info.lawyer_code +'</td>' +
+                                        '<td>'+ data[a].info.fname +' '+ data[a].info.lname +'</td>' +
+                                        '<td>'+ data[a].info.lawyer_type +'</td>' +
+                                        '<td class="text-right"><button data-id="'+ data[0].id +'" type="button" class="remove-co-counsel-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i></button></td>' +
+                                    '</tr>' +
+                                '');
+                            }
+                            caseModal.find('select[name="select-counsel"]').val('');
                         }
                     }
                 });
@@ -718,11 +738,44 @@
 
             $(document).on('click','#add-co-counsel-btn',function(){
                 var select = $(this).closest('.form-group').find('select');
+                var lead = caseModal.find('select[name="lead-counsel"]').val();
                 $.get('http://'+ window.location.host +'/add-co-counsel',{
                     id: select.val(),
                     case_id: caseModal.data('id'),
+                    lead: lead
                 },function(){
                     loadCounsel();
+                });
+            });
+
+            $(document).on('click','.case-btn',function(){
+                $.get('http://'+ window.location.host +'/action-case',{
+                    _token: '{!! csrf_token() !!}',
+                    id: $(this).data('id'),
+                    action: $(this).data('action')
+                },function(data){
+                    if(data.length != 0) {
+                        console.log('return edit');
+                        caseModal.data('id',data[0].id);
+                        caseModal.data('action','edit');
+                        caseModal.find('textarea[name="title"]').val(data[0].title);
+                        caseModal.find('textarea[name="venue"]').val(data[0].venue);
+                        caseModal.find('input[name="date"]').val(data[0].date);
+                        caseModal.find('input[name="number"]').val(data[0].number);
+                        caseModal.find('input[name="docket"]').val(data[0].docket);
+                        caseModal.find('select[name="class"]').val(data[0].class);
+                        caseModal.find('select[name="status"]').val(data[0].status);
+                        var counsel_select = $('.counsel-select');
+                        counsel_select.empty().append('<option value="">Select Counsel</option>');
+                        for(var a = 0; a < data[1].length; a++){
+                            counsel_select.append('<option value="'+ data[1][a].id +'">'+ data[1][a].fname +' '+ data[1][a].lname +'</option>');
+                        }
+                        loadCounsel();
+                        caseModal.modal({backdrop: 'static', keyboard: false});
+                    }else{
+                        console.log('return delete');
+                        loadFeeTable('case');
+                    }
                 });
             });
 
@@ -737,7 +790,8 @@
                     case_class: caseModal.find('select[name="class"]').val(),
                     status: caseModal.find('select[name="status"]').val(),
                     lead: caseModal.find('select[name="lead-counsel"]').val(),
-                    id: caseModal.data('id')
+                    id: caseModal.data('id'),
+                    action: caseModal.data('action')
                 },function(){
                     caseModal.modal('toggle');
                     loadFeeTable('case');
@@ -746,6 +800,7 @@
 
             caseModal.on('hidden.bs.modal', function () {
                 $(this).data('id',0);
+                $(this).data('action','add');
                 $(this).find('textarea').val('');
                 $(this).find('input').val('');
                 $(this).find('select option:first-child').attr("selected", "selected");
