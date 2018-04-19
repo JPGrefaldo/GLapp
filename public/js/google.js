@@ -7,7 +7,7 @@
 
       var placeSearch, autocomplete;
       var componentForm = {
-        street_number: 'short_name',
+        "street_number": 'short_name',
         route: 'long_name',
         neighborhood: 'long_name',
         administrative_area_level_5: 'long_name',

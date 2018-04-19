@@ -19,11 +19,6 @@ class Client extends Model
         Address::updateOrCreate([
                 'client_id'=>$address['client_id'],
                 'address'=>$address['address']],$address);
-
     }
 }
 
-// function $1()
-//{
-//
-//}
