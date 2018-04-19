@@ -5,6 +5,7 @@
 @section('styles')
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
+{!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
 <style>
     .nopads{
         padding:0;

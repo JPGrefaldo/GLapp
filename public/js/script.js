@@ -45,13 +45,14 @@ function fetchData(){
 
 
 function updateData(){
-    post('/update');
+    post('client/update',);
 }
 
-function post(loc){
-    $.post(location.pathname+loc,
-            `_token=${$("#_token").attr("value")}&${$( ".tab-content :input" ).serialize()}`,
+function post(loc,tab){
+    $.post(loc,
+            `_token=${$("#_token").attr("value")}&${$("#tab-1 input, #client_id, [name=billing]").serialize()}`,
     ).done(function(data){
+        console.log(data);
         if(data){
             fetchData();
             $("#myModal5 .close").click();
@@ -61,7 +62,7 @@ function post(loc){
 }
 
 
-table = $('.table-striped').dataTable( {
+table = $('#client').dataTable( {
         "autoWidth": false,//Disable autowidth for responsive table
         "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [
@@ -106,32 +107,13 @@ table = $('.table-striped').dataTable( {
             "render": function (row) {
                 return  `<div class="btn-group">
                             <a class="btn-success btn btn-xs" href="contract-create/${row.id}">Contract</a>
-                            <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this.id)">
+                            <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this)">
                             View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id} onclick="destroy(this.id)">Delete</button>
                         </div>`;}}
             
         ]
     } );
-
-
-
-
-function pasteAll(){
-    for (component in componentForm){
-        paste(component);
-    }
-}
-
-function paste(elem){
-	if(typeof elem === 'object'){
-		for(item of elem){
-
-		getElem(`${item}_acInput2`).value = getElem(`${item}_acInput1`).value}
-    }else{
-        getElem(`${elem}_acInput2`).value = getElem(`${elem}_acInput1`).value
-    } 
-}
 
 function delClient(elem){
     
@@ -146,20 +128,22 @@ function delClient(elem){
 
 }
 
-function clearInputs(){
-    $( ".tab-content :input" ).val("");
+function clearInputs(field){
+    $( `${field} :input` ).val("");
 }
-
-function getData(id){
-    clearInputs();
-    $("#id").val(id);
+let bill_id;
+function getData(elem){
+    bill_id = table.fnGetData(elem.closest("tr")).billing;
+    clearInputs(".tab-content");
+    $("#client_id").val(elem.id);
+    busTable._fnReDraw();
     for (component of data){
 
         let found; // Toggle if match found
         let address; 
 
         for(row in component){     
-            if (component.id == id){ found = 1;
+            if (component.id == elem.id){ found = 1;
                 
                 address = component.address;      
             inputText = document.querySelectorAll(`[name=${row}]`)[0];
@@ -179,21 +163,8 @@ function getData(id){
             }}
         }
 
-        if (found) {fillAddress(address);break;} // prevent d' loop on going if the match is found early & call the function
+        if (found) break;
     }}
-
-function fillAddress(address){
-    
-    for (i = 0 ; i < address.length;i++){
-    for(item in address[i]){
-        inputText = document.getElementsByClassName(`${item}_acInput${address[i].address + 1}`)[0];
-        if(inputText){
-            inputText.value = address[i][item];
-        }
-    }
-}
-}
-
 
 function getElem(elem){
     return document.getElementsByClassName(elem)[0];
@@ -204,6 +175,77 @@ $("form").submit(function(){
 });
 
 function destroy(id){
-    $("#id").val(id);
-    post("/destroy");
+    
+    $("#client_id").val(id);
+    post("client/destroy");
+}
+var b;
+busTable = $('#clientBus').dataTable( {
+    "ajax":{
+    "type":"POST",
+    "url":"client",
+    "data": {
+        "client_id": () => $("#client_id").val().toString(),
+        "_token":$("#_token").attr("value"),
+        "request":"get",
+        
+    }
+},
+    "processing": true,
+    "serverSide": true,
+    "autoWidth": false,
+    "paging":false,
+    "searching": false,
+    "ordering":  false,
+    "info": false,
+
+    "columnDefs": [{
+
+        "targets": 0,
+        "data": null,
+        "render":function(row){
+            let name, mark;
+            name = row.name;
+        
+            if( row.name.length > 17) name = `${row.name.substr(0,18)}...`;
+            if (row.id === bill_id) mark = "checked";
+            
+            return `
+                <div class="radio no-margins text-center no-padding">
+                    <input class="no-margins" type="radio" value="${row.id}" name="billing" aria-label="Single radio One" ${mark}>
+                    <label></label>
+                </div> ${name}` 
+        }},{
+
+        "targets": 1,
+        "data": null,
+        "className": "text-right",
+        "render": function (row) {
+            return `
+                <div class="btn-group">
+                    <button class="btn-mute btn btn-xs" onclick="popBus(this)">view</button>
+                    <button class="btn-danger btn btn-xs" id="${row.id}" onclick="updateBus(this.id,'destroy')">Delete</button>
+                </div>` }
+       }
+        
+    ]
+} );
+var business;
+function popBus(row){
+    clearInputs("#tab-2");
+    business = busTable.fnGetData(row.closest('tr'))
+    for (column in business){
+        $(`[name=${column}]`).val(business[column])}
+}
+
+function updateBus(id,request){
+    $.post("client",
+            `_token=${$("#_token").attr("value")}&request=${request}&id=${id}&${$("#tab-2 input, #client_id").not("[name=billing]").serialize()}`,
+        ).done(function(data){
+    console.log(data);
+    if(data){
+        busTable._fnReDraw();
+        clearInputs("#tab-2");
+    }
+});
 }

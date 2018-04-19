@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('client', 'ClientController@index');
+        Route::post('client', 'ClientController@busAddress');
         Route::get('client/list','ClientController@show');
         Route::post('client/update','ClientController@update');
         Route::post('client/destroy','ClientController@destroy');

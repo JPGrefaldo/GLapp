@@ -37,6 +37,7 @@ class CreateClientsTable extends Migration
                                             'LGU',
                                             'Others']);
             $table->string('email');
+            $table->integer('billing');
             $table->timestamps();
 
         });
