@@ -5,7 +5,7 @@
             <div class="ibox-content">
             <div class="full-height-scroll">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover" >
+                    <table id="client" class="table table-striped table-hover" >
                         <thead>
                             <tr>
                                 <th>Name</th>

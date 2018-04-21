@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
-use Faker\Factory as Faker;
+
 
 class ClientController extends Controller
 {
@@ -26,52 +26,44 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-       return $client->with('address')->get();
+       return $client->get();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Client $client)
     {
+        $request['id'] = $request['client_id'];
+        $client->addClient($request->except('_token','client_id'));
 
-    $clientId = $client->addClient([
-        'id'              => $request['id'],
-        'fname'           => $request['fname'],
-        'lname'           => $request['lname'],
-        'mname'           => $request['mname'],
-        'business_nature' => $request['business_nature'],
-        'plaintiff'       => $request['plaintiff'],
-        'email'           => $request['email']]);
-
-    for ($i = 0;$i < 2; $i++){
-    $client->addAddress([
-        "client_id"                     => $clientId,
-        "address"                       => $i,
-        "street_number"                 => $request["street_number"][$i],
-        "route"                         => $request["route"][$i],
-        "neighborhood"                  => $request["neighborhood"][$i],
-        "locality"                      => $request["locality"][$i],
-        "administrative_area_level_1"   => $request["administrative_area_level_1"][$i],
-        "country"                       => $request["country"][$i],
-        "postal_code"                   => $request["postal_code"][$i]]);}
-
-        return "Success!";
+         return "success";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
+        return Client::destroy($request['client_id']);
+    }
 
-        return Client::destroy($request['id']);
+    public function busAddress( Client $client,Request $req)
+    {   
+        switch($req['request']){
+            case 'get':
+                return $this->getBusHandler($req);
+                break;
+            case 'post':
+                return $client->addBusiness($req->except('_token','request'));
+                break;
+            case 'destroy':
+                return $client->zapBusiness($req['id']);
+                break;
+            default:
+                return ['error' => 'No request supplied!'];
+        }
+    }
+
+    public function getBusHandler($req){
+        if ($req['client_id']){
+            return ['data'=>Client::find($req['client_id'])->business];
+        }else{
+            return ["data"=>""];
+        }
     }
 }

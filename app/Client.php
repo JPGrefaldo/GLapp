@@ -4,21 +4,21 @@ namespace App;
 
 class Client extends Model
 {
-    public function address(){
-        return $this->hasMany(Address::class);
+    public function business(){
+        return $this->hasMany(ClientBusiness::class);
     }
     
     public function addClient($info){
-
-        return $this->updateOrCreate([ 'id' => $info['id'] ],$info)->id;
-       
+        return $this->updateOrCreate([ 'id' => $info['id'] ],$info);
     }
 
-    public function addAddress($address){
+    public function addBusiness($address){
+        return ClientBusiness::updateOrCreate([ 'id' => $address['id'] ],$address);
+    }
 
-        Address::updateOrCreate([
-                'client_id'=>$address['client_id'],
-                'address'=>$address['address']],$address);
+    public function zapBusiness($id){
+        return ClientBusiness::destroy($id);
     }
 }
+
 
