@@ -74,7 +74,7 @@
                 <li class="{!! if_uri_pattern(array('contract*')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-book"></i> <span class="nav-label">Contracts</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="{!! if_uri_pattern(array('contract/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.create') !!}">Create</a></li>
+                        {{-- <li class="{!! if_uri_pattern(array('contract/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.create') !!}">Create</a></li> --}}
                         <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.index') !!}">List</a></li>
                     </ul>
                 </li>

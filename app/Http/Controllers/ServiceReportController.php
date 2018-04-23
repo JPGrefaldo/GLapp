@@ -40,9 +40,12 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport)
+    public function show(ServiceReport $serviceReport,$id)
     {
-       return view('servicereport.list');
+        $client = Client::find($id);
+        $client['contract'] = $client->contract;
+        dd($client);
+        return view("servicereport.list",compact('client'));
     }
 
     /**

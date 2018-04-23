@@ -47,6 +47,7 @@
                         </div>
                     </div>
             </div>
+          
         </div>
     </div>
 
@@ -57,6 +58,7 @@
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script>
 table = $('.table-striped').dataTable( {
+    "autoWidth": false,
     "ajax": {
         "url": "client/list",
         "dataSrc": ""

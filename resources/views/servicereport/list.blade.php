@@ -44,31 +44,31 @@
                         <div class="col-lg-6">
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Name:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="name" type="text" class=" form-control" value="{{"$client->fname $client->lname"}}">
                             </div>
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Case Title:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="case" type="text" class=" form-control">
                             </div>
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Venue:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="venue" type="text" class=" form-control">
                             </div>
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Contract:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="contract" type="text" class=" form-control">
                                 <span class="input-group-addon bg-muted">Docket No.:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="docket" type="text" class=" form-control">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Date Rendered:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="rendered" type="text" class=" form-control">
                             </div>
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Contract Type:</span>
-                                <input name="name" type="text" class=" form-control">
+                                <input name="type" type="text" class=" form-control">
                             </div>
                             
                             <div class="panel panel-default">

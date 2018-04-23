@@ -19,6 +19,9 @@ class Client extends Model
     public function zapBusiness($id){
         return ClientBusiness::destroy($id);
     }
+    public function contract(){
+        return $this->hasMany(Contract::class);
+    }
 }
 
 

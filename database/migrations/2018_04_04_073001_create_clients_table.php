@@ -15,9 +15,9 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fname');
-            $table->string('lname');
-            $table->string('mname');
+            $table->string('fname')->nullable();
+            $table->string('lname')->nullable();
+            $table->string('mname')->nullable();
             $table->enum('plaintiff',['Respondent','Complainant','Defendant']);
             $table->enum('business_nature',['Corporate','Infrastructure',
                                             'advertising',
@@ -36,8 +36,8 @@ class CreateClientsTable extends Migration
                                             'NGO',
                                             'LGU',
                                             'Others']);
-            $table->string('email');
-            $table->integer('billing');
+            $table->string('email')->nullable();
+            $table->integer('billing')->nullable();
             $table->timestamps();
 
         });
