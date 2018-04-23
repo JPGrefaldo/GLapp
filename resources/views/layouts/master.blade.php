@@ -58,7 +58,7 @@
                         </ul>
                     </div>
                     <div class="logo-element">
-                        EL
+                        PLR
                     </div>
                 </li>
 
@@ -87,16 +87,16 @@
                     </ul>
                 </li>
 
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href=""><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
+                <li class="{!! if_uri_pattern(array('chargeable*')) == 1 ? 'active' : '' !!}">
+                    <a href="{!! route('chargeable.create') !!}"><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href="/service-report"><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
                 </li>
 
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href=""><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
+                <li class="{!! if_uri_pattern(array('billing*')) == 1 ? 'active' : '' !!}">
+                    <a href="{!! route('billing.create') !!}"><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('user*','profile*','role*')) == 1 ? 'active' : '' !!}">
@@ -125,7 +125,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to PLR e-legal system</span>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">

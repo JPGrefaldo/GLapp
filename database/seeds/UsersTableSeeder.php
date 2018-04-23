@@ -34,9 +34,12 @@ class UsersTableSeeder extends Seeder
         );
 
         $models = array(
-            'users',
-            'profiles',
-            'clients',
+            'user',
+            'profile',
+            'client',
+            'counsel',
+            'contract',
+            'expense',
         );
 
         foreach ($models as $model){

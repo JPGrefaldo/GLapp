@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-list', 'UserController@getList')->name('user-list');
 
         Route::resource('contract', 'ContractController');
-        Route::get('contract/create/{id}', 'ContractController@createClientContract')->name('contract/create');
+        Route::get('contract-create/{id}', 'ContractController@createClientContract')->name('contract-create');
         Route::get('contract-list', 'ContractController@getList')->name('contract-list');
         Route::post('contract-store', 'ContractController@contractStore')->name('contract-store');
 
@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('remove-co-counsel', 'CaseManagementController@removeCoCounsel')->name('remove-co-counsel');
         Route::get('load-counsel', 'CaseManagementController@loadCounsel')->name('load-counsel');
         Route::get('action-case', 'CaseManagementController@actionCase')->name('action-case');
+
+        Route::resource('chargeable', 'ChargeableExpenseController');
+
+        Route::resource('billing', 'BillingController');
 
 
 
