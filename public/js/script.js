@@ -63,7 +63,7 @@ function post(loc,tab){
 
 
 table = $('#client').dataTable( {
-        "autoWidth": false,//Disable autowidth for responsive table
+        "autoWidth": false,
         "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [
                 {"extend": 'copy'},
@@ -106,7 +106,7 @@ table = $('#client').dataTable( {
             "className": "text-right",
             "render": function (row) {
                 return  `<div class="btn-group">
-                            <a class="btn-success btn btn-xs" href="contract/create/${row.id}">Contract</a>
+                            <a class="btn-success btn btn-xs" href="contract-create/${row.id}">Contract</a>
                             <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this)">
                             View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id} onclick="destroy(this.id)">Delete</button>
