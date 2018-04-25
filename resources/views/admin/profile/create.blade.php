@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Profile|Create')
+@section('title', 'Profile Create')
 
 
 @section('content')
@@ -35,16 +35,27 @@
                             <div class="col-sm-6">
                                 <h3 class="m-t-none m-b text-success">Basic Information</h3>
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-push-6">
+                                    <div class="col-lg-5 col-lg-push-7">
                                         <div class="form-group">
-                                            <label>Preview image</label>
-                                            <div class="img-preview img-preview-sm"></div>
+                                            <div class="photo_holder">
+                                                <img alt="image" class="img-responsive" src="http://via.placeholder.com/300x300">
+                                            </div>
+                                            <div id="validation-errors"></div>
+                                            {!! Form::hidden('image',null,array('id'=>'image_path','class'=>'required')) !!}
+                                            <div class="progress upload-progress" style="display: none;">
+                                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only"><span class="percentage"></span> Complete</span>
+                                                </div>
+                                            </div>
+                                            @if($errors->has('image'))
+                                                <span class="text-danger">{{$errors->first('image')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <button type="button" id="modal-btn" class="btn btn-primary">Edit Image</button>
+                                            <button type="button" class="btn btn-primary" id="photo_file_trigger">Select Image</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-pull-6">
+                                    <div class="col-lg-7 col-lg-pull-5">
                                         <div class="form-group">
                                             <label>First Name</label>
                                             {{Form::text('firstname',null, array('class'=>'form-control'))}}
@@ -113,7 +124,7 @@
                                         <div class="form-group">
                                             <label>Contact Number</label>
                                             <div class="input-group">
-                                                <div class="input-group-btn input-group-select">
+                                                <div class="input-group-select">
                                                     <select name="contact-type" class="form-control">
                                                         <option value="">Select type</option>
                                                         <option value="telephone">Telephone</option>
@@ -160,7 +171,7 @@
                                     <div class="form-group">
                                         <label>Contact Number</label>
                                         <div class="input-group">
-                                            <div class="input-group-btn input-group-select">
+                                            <div class="input-group-select">
                                                 <select name="icoe-contact-type[]" class="form-control">
                                                     <option value="">Select type</option>
                                                     <option value="telephone">Telephone</option>
@@ -188,44 +199,46 @@
                                 <h3 class="m-t-none m-b text-success">Account security question</h3>
                                 <div class="form-group">
                                     <label>Question 1</label>
-                                    <select name="question[]" id="" class="form-control">
-                                        <option value="question-01">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
-                                        <option value="question-02">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
-                                        <option value="question-03">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
-                                        <option value="question-04">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
-                                        <option value="question-05">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
-                                        <option value="question-06">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
-                                        <option value="question-07">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
-                                        <option value="question-08">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
-                                        <option value="question-09">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
-                                        <option value="question-10">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
-                                    </select>
+                                    {{Form::select('question[]', array(
+                                    null => 'Select Type',
+                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
+                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
+                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
+                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
+                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
+                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
+                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
+                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
+                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
+                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    ),null,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
                                     <label>Answer 1</label>
-                                    <input type="text" name="answer[]" class="form-control">
+                                    {{Form::text('answer[]',null, array('class'=>'form-control'))}}
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
 
                                 <div class="form-group">
                                     <label>Question 2</label>
-                                    <select name="question[]" id="" class="form-control">
-                                        <option value="question-11">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
-                                        <option value="question-12">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
-                                        <option value="question-13">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
-                                        <option value="question-14">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
-                                        <option value="question-15">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
-                                        <option value="question-16">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
-                                        <option value="question-17">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
-                                        <option value="question-18">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
-                                        <option value="question-19">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
-                                        <option value="question-20">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
-                                    </select>
+                                    {{Form::select('question[]', array(
+                                    null => 'Select Type',
+                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
+                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
+                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
+                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
+                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
+                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
+                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
+                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
+                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
+                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    ),null,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
                                     <label>Answer 2</label>
-                                    <input type="text" name="answer[]" class="form-control">
+                                    {{Form::text('answer[]',null, array('class'=>'form-control'))}}
                                 </div>
                             </div>
 
@@ -245,51 +258,22 @@
         </div>
     </div>
 
-    <div class="modal inmodal fade" id="modal" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Modal title</h4>
-                    <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-                </div>
-                <div class="modal-body">
-                    <div class="image-crop">
-                        <img src="img/p3.jpg">
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <div class="btn-group">
-                        <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                            <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
-                            Upload new image
-                        </label>
-                        <label title="Donload image" id="download" class="btn btn-primary">Download</label>
-                        <button class="btn btn-white" id="zoomIn" type="button">Zoom In</button>
-                        <button class="btn btn-white" id="zoomOut" type="button">Zoom Out</button>
-                        <button class="btn btn-white" id="rotateLeft" type="button">Rotate Left</button>
-                        <button class="btn btn-white" id="rotateRight" type="button">Rotate Right</button>
-                        <button class="btn btn-warning" id="setDrag" type="button">New crop</button>
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {{-- Photo Uploader Form --}}
+    {!! Form::open(array('route'=>'upload-image','files'=>'true','id'=>'image_uploader','class'=>'sr-only')) !!}
+    {!! Form::file('photo',array('id'=>'photo_file_input')) !!}
+    {!! Form::close() !!}
 @endsection
 
 
 @section('styles')
     {!! Html::style('css/plugins/datapicker/datepicker3.css') !!}
-    {!! Html::style('css/plugins/cropper/cropper.min.css') !!}
 @endsection
 
 @section('scripts')
     <!-- Data picker -->
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
-    {!! Html::script('js/plugins/cropper/cropper.min.js') !!}
+    {!! Html::script('js/jquery.form.min.js') !!}
+    {!! Html::script('js/image-uploader.js') !!}
     <script>
         $(document).ready(function(){
             var modal = $('#modal');
@@ -316,65 +300,9 @@
                 $(this).remove();
             });
 
-            var $image = $(".image-crop > img")
-            $($image).cropper({
-                aspectRatio: 1,
-                preview: ".img-preview",
-                done: function(data) {
-                    // Output the result data for cropping image.
-                }
-            });
-
-            var $inputImage = $("#inputImage");
-            if (window.FileReader) {
-                $inputImage.change(function() {
-                    var fileReader = new FileReader(),
-                        files = this.files,
-                        file;
-
-                    if (!files.length) {
-                        return;
-                    }
-
-                    file = files[0];
-
-                    if (/^image\/\w+$/.test(file.type)) {
-                        fileReader.readAsDataURL(file);
-                        fileReader.onload = function () {
-                            $inputImage.val("");
-                            $image.cropper("reset", true).cropper("replace", this.result);
-                        };
-                    } else {
-                        showMessage("Please choose an image file.");
-                    }
-                });
-            } else {
-                $inputImage.addClass("hide");
+            if($('#image_path').val().length != 0){
+                $('.photo_holder').empty().append('<img src="/temp/image/'+ $('#image_path').val() +'" alt="Image" class="img-responsive">');
             }
-
-            $("#download").click(function() {
-                window.open($image.cropper("getDataURL"));
-            });
-
-            $("#zoomIn").click(function() {
-                $image.cropper("zoom", 0.1);
-            });
-
-            $("#zoomOut").click(function() {
-                $image.cropper("zoom", -0.1);
-            });
-
-            $("#rotateLeft").click(function() {
-                $image.cropper("rotate", 45);
-            });
-
-            $("#rotateRight").click(function() {
-                $image.cropper("rotate", -45);
-            });
-
-            $("#setDrag").click(function() {
-                $image.cropper("setDragMode", "crop");
-            });
 
         });
     </script>

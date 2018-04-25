@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class ImageController extends Controller
 {
@@ -38,5 +39,12 @@ class ImageController extends Controller
             $img->save('temp/image/'.$filename,80);
             return response()->json(['success' => true, 'file' => $filename, 'version'=>$v,'uid'=>$v]);
         }
+    }
+
+    public function imageMove($image)
+    {
+        File::move(public_path().'/temp/image/'.$image, public_path().'/uploads/image/'.$image);
+        $files = File::files(public_path().'/temp/image/');
+        File::delete($files);
     }
 }

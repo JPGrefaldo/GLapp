@@ -5,7 +5,12 @@
 }
 
 .input-group-select {
-    width: 74% !important;
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+    width: 15%;
+    vertical-align: middle;
+    display: table-cell;
 }
 
 .permission-box {

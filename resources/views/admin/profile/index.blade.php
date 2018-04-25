@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Post page')
+@section('title', 'Profile')
 
 
 @section('content')
@@ -19,7 +19,7 @@
         </div>
         <div class="col-lg-4">
             <div class="title-action">
-                <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Edit </a>
+                <a href="{!! route('profile-edit') !!}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit </a>
             </div>
         </div>
     </div>
@@ -36,47 +36,57 @@
                             <div class="col-sm-6">
                                 <h3 class="m-t-none m-b text-success">Basic Information</h3>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>First Name</label>
-                                            <p>{{ $data->profile->firstname }}</p>
-                                        </div>
+                                    <div class="col-lg-5 col-lg-push-7">
+                                        <img alt="image" class="img-responsive" src="{!! ($data->profile->image != '') ? '/uploads/image/'.$data->profile->image : 'http://via.placeholder.com/300x300' !!}">
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Middle Name</label>
-                                            <p>{{ $data->profile->middlename }}</p>
+                                    <div class="col-lg-7 col-lg-pull-5">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>First Name</label>
+                                                    <p>{{ $data->profile->firstname }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Middle Name</label>
+                                                    <p>{{ $data->profile->middlename }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>last Name</label>
+                                                    <p>{{ $data->profile->lastname }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="data_3">
+                                                    <label>Date of Birth</label>
+                                                    <p>{{ \Carbon\Carbon::parse($data->profile->dob)->toFormattedDateString() }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Marital Status</label>
+                                                    <p>{{ $data->profile->status }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Blood Type</label>
+                                                    <p>{{ $data->profile->blood_type }}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>last Name</label>
-                                            <p>{{ $data->profile->lastname }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group" id="data_3">
-                                            <label>Date of Birth</label>
-                                            <p>{{ \Carbon\Carbon::parse($data->profile->dob)->toFormattedDateString() }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Marital Status</label>
-                                            <p>{{ $data->profile->status }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Blood Type</label>
-                                            <p>{{ $data->profile->blood_type }}</p>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+
 
                                 <div class="hr-line-dashed"></div>
                                 <h3 class="m-t-none m-b text-success">Contact Information</h3>
