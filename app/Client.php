@@ -9,7 +9,7 @@ class Client extends Model
     }
     
     public function addClient($info){
-        return $this->updateOrCreate([ 'id' => $info['id'] ],$info);
+        return $this->updateOrCreate([ 'id' => $info['id'] ],$info)->id;
     }
 
     public function addBusiness($address){

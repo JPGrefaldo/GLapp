@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\ClientBusiness;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -13,7 +14,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {  
         return view('client.index');
     }
 
@@ -25,17 +26,23 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-              // $client['hidden'] = ["I've Been Grabbed!"];
-        // dd($client);
         return $client->get();
     }
 
     public function update(Request $request, Client $client)
     {
         $request['id'] = $request['client_id'];
-        $client->addClient($request->except('_token','client_id'));
+        $userId = $client->addClient($request->except('_token','client_id'));
+        
+        $busAddress = $this->getBusHandler();
 
-         return "success";
+        if(count($busAddress['data'])){
+                foreach ($busAddress['data'] as $item){
+                $item->client_id = $userId;
+                $item->save();
+            }
+        }
+        return "Success!";
     }
 
     public function destroy(Request $request)
@@ -60,11 +67,11 @@ class ClientController extends Controller
         }
     }
 
-    public function getBusHandler($req){
+    public function getBusHandler($req = ['client_id'=>""]){
         if ($req['client_id']){
             return ['data'=>Client::find($req['client_id'])->business];
         }else{
-            return ["data"=>""];
+            return ["data"=>ClientBusiness::where('client_id',null)->get()];
         }
     }
 }

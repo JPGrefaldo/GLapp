@@ -189,7 +189,6 @@ busTable = $('#clientBus').dataTable( {
         "client_id": () => $("#client_id").val().toString(),
         "_token":$("#_token").attr("value"),
         "request":"get",
-        
     }
 },
     "processing": true,
