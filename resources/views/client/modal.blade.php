@@ -21,7 +21,7 @@
                                     <input id="client_id" name="client_id" type="text" hidden>
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
-                                            <form class="" onsubmit="updateData()">
+                                            {{-- <form class="" onsubmit="updateData()"> --}}
                                             <div class=" form-group">
                                             <div class="col-lg-6">
                                                 <div class="input-group m-b"><span class="input-group-addon bg-primary" >First Name</span>
@@ -160,9 +160,9 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" onclick="updateData()" class="btn btn-primary">Save changes</button>
                     </div>
-                </form>
+                {{-- </form> --}}
                 </div>
     
             </div>

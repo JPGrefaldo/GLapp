@@ -129,9 +129,8 @@ function delClient(elem){
 }
 
 function clearInputs(field=".tab-content"){
-    $("#client_id").val("");
-    busTable._fnReDraw();
     $( `${field} :input` ).val("");
+    busTable._fnReDraw();
 }
 let bill_id;
 function getData(elem){
