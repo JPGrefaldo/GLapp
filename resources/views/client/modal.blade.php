@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Business Name</span>
-                                            <input type="text"  name="name" class="form-control neighborhood_acInput1 administrative_area_level_5_acInput1" >
+                                            <input type="text"  name="name" class="form-control" >
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Street Address</span>
