@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Post page')
+@section('title', 'Profile Edit')
 
 
 @section('content')
@@ -30,12 +30,32 @@
                         <h5>Create Profile</h5>
                     </div>
                     <div class="ibox-content">
-                        {{ Form::open(array('route'=>'profile-store')) }}
+                        {{ Form::open(array('route'=>'profile-update')) }}
                         <div class="row">
                             <div class="col-sm-6">
                                 <h3 class="m-t-none m-b text-success">Basic Information</h3>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-lg-5 col-lg-push-7">
+                                        <div class="form-group">
+                                            <div class="photo_holder">
+                                                <img alt="image" class="img-responsive" src="{!! ($data->profile->image) ? '/uploads/image/'.$data->profile->image : 'http://via.placeholder.com/300x300' !!}">
+                                            </div>
+                                            <div id="validation-errors"></div>
+                                            {!! Form::hidden('image',$data->profile->image,array('id'=>'image_path','class'=>'required')) !!}
+                                            <div class="progress upload-progress" style="display: none;">
+                                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only"><span class="percentage"></span> Complete</span>
+                                                </div>
+                                            </div>
+                                            @if($errors->has('image'))
+                                                <span class="text-danger">{{$errors->first('image')}}</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary" id="photo_file_trigger">Select Image</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 col-lg-pull-5">
                                         <div class="form-group">
                                             <label>First Name</label>
                                             {{Form::text('firstname',$data->profile->firstname, array('class'=>'form-control'))}}
@@ -43,42 +63,31 @@
                                                 <span class="text-danger">{{$errors->first('firstname')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Middle Name</label>
-                                            {{Form::text('middlename',null, array('class'=>'form-control'))}}
+                                            {{Form::text('middlename',$data->profile->middlename, array('class'=>'form-control'))}}
                                             @if($errors->has('middlename'))
                                                 <span class="text-danger">{{$errors->first('middlename')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Last Name</label>
-                                            {{Form::text('lastname',null, array('class'=>'form-control'))}}
+                                            {{Form::text('lastname',$data->profile->lastname, array('class'=>'form-control'))}}
                                             @if($errors->has('lastname'))
                                                 <span class="text-danger">{{$errors->first('lastname')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group" id="data_3">
                                             <label>Date of Birth</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="dob" class="form-control" value="01/13/2000">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                {{Form::text('dob',\Carbon\Carbon::parse($data->profile->dob)->format('m/d/Y'), array('class'=>'form-control'))}}
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Marital Status</label>
                                             {{Form::select('status', array(
-                                            null => 'Select status',
+                                            $data->profile->status => 'Select status',
                                             'married' => 'Married (and not separated)',
                                             'widowed' => 'Widowed (including living common law)',
                                             'separated' => 'Separated (including living common law)',
@@ -89,8 +98,6 @@
                                                 <span class="text-danger">{{$errors->first('status')}}</span>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Blood Type</label>
                                             {{Form::select('blood_type', array(
@@ -103,7 +110,7 @@
                                             'B positive' => 'B positive',
                                             'AB negative' => 'AB negative',
                                             'AB positive' => 'AB positive',
-                                            ),null,array('class'=>'form-control'))}}
+                                            ),$data->profile->blood_type,array('class'=>'form-control'))}}
                                             @if($errors->has('blood_type'))
                                                 <span class="text-danger">{{$errors->first('blood_type')}}</span>
                                             @endif
@@ -112,21 +119,35 @@
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
+                                @php
+                                    foreach ($data->profile->contact as $con) {
+                                        if($con->type === 'permanent_address'){
+                                            $permanent = $con->description;
+                                        }
+                                        if($con->type === 'present_address'){
+                                            $present = $con->description;
+                                        }
+                                        if(($con->type === 'telephone')||$con->type === 'fax'||$con->type === 'mobile'){
+                                            $type = $con->type;
+                                            $value = $con->description;
+                                        }
+                                    }
+                                @endphp
                                 <h3 class="m-t-none m-b text-success">Contact Information</h3>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Contact Number</label>
                                             <div class="input-group">
-                                                <div class="input-group-btn input-group-select">
-                                                    <select name="contact-type" class="form-control">
-                                                        <option value="">Select type</option>
-                                                        <option value="telephone">Telephone</option>
-                                                        <option value="fax">Fax</option>
-                                                        <option value="mobile">Mobile</option>
-                                                    </select>
+                                                <div class="input-group-select">
+                                                    {{Form::select('contact-type', array(
+                                                    null => 'Select Type',
+                                                    'telephone' => 'Telephone',
+                                                    'fax' => 'Fax',
+                                                    'mobile' => 'Mobile',
+                                                    ),$type,array('class'=>'form-control'))}}
                                                 </div>
-                                                <input type="text" name="contact-number" class="form-control">
+                                                {{Form::text('contact-number',$value, array('class'=>'form-control'))}}
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +157,14 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Permanent Address</label>
-                                            {{Form::textarea('permanent_address',null, array('class'=>'form-control resize-vertical'))}}
+                                            {{Form::textarea('permanent_address',$permanent, array('class'=>'form-control resize-vertical'))}}
                                             @if($errors->has('permanent_address'))
                                                 <span class="text-danger">{{$errors->first('permanent_address')}}</span>
                                             @endif
                                         </div>
                                         <div class="form-group">
                                             <label>Present Address</label>
-                                            {{Form::textarea('present_address',null, array('class'=>'form-control resize-vertical'))}}
+                                            {{Form::textarea('present_address',$present, array('class'=>'form-control resize-vertical'))}}
                                             @if($errors->has('present_address'))
                                                 <span class="text-danger">{{$errors->first('present_address')}}</span>
                                             @endif
@@ -156,33 +177,86 @@
                                 <div id="icoe-first">
                                     <div class="form-group">
                                         <label>Full Name</label>
-                                        <input type="text" name="icoe-name[]" class="form-control">
+                                        {{Form::text('icoe-name[]',$data->icoe[0]->name, array('class'=>'form-control'))}}
                                     </div>
                                     <div class="form-group">
                                         <label>Contact Relation</label>
-                                        <input type="text" name="icoe-relation[]" class="form-control">
+                                        {{Form::text('icoe-relation[]',$data->icoe[0]->relation_type, array('class'=>'form-control'))}}
                                     </div>
+                                    @php
+                                        foreach ($data->icoe[0]->contact as $con) {
+                                            if($con->type === 'present_address'){
+                                                $present = $con->description;
+                                            }
+                                            if(($con->type === 'telephone')||$con->type === 'fax'||$con->type === 'mobile'){
+                                                $type = $con->type;
+                                                $value = $con->description;
+                                            }
+                                        }
+                                    @endphp
                                     <div class="form-group">
                                         <label>Contact Number</label>
                                         <div class="input-group">
-                                            <div class="input-group-btn input-group-select">
-                                                <select name="icoe-contact-type[]" class="form-control">
-                                                    <option value="">Select type</option>
-                                                    <option value="telephone">Telephone</option>
-                                                    <option value="fax">Fax</option>
-                                                    <option value="mobile">Mobile</option>
-                                                </select>
+                                            <div class="input-group-select">
+                                                {{Form::select('icoe-contact-type[]', array(
+                                                    null => 'Select Type',
+                                                    'telephone' => 'Telephone',
+                                                    'fax' => 'Fax',
+                                                    'mobile' => 'Mobile',
+                                                    ),$type,array('class'=>'form-control'))}}
                                             </div>
-                                            <input type="text" name="icoe-contact-number[]" class="form-control">
+                                            {{Form::text('icoe-contact-number[]',$value, array('class'=>'form-control'))}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <textarea name="icoe-address[]" class="form-control resize-vertical"></textarea>
+                                        {{Form::textarea('icoe-address[]',$present, array('class'=>'form-control resize-vertical'))}}
                                     </div>
                                     <div class="hr-line-dashed"></div>
                                 </div>
-                                <div id="icoe-second"></div>
+
+                                <div id="icoe-second">
+                                    @if(count($data->icoe) > 1)
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            {{Form::text('icoe-name[]',$data->icoe[1]->name, array('class'=>'form-control'))}}
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Contact Relation</label>
+                                            {{Form::text('icoe-relation[]',$data->icoe[1]->relation_type, array('class'=>'form-control'))}}
+                                        </div>
+                                        @php
+                                            foreach ($data->icoe[1]->contact as $con) {
+                                                if($con->type === 'present_address'){
+                                                    $present = $con->description;
+                                                }
+                                                if(($con->type === 'telephone')||$con->type === 'fax'||$con->type === 'mobile'){
+                                                    $type = $con->type;
+                                                    $value = $con->description;
+                                                }
+                                            }
+                                        @endphp
+                                        <div class="form-group">
+                                            <label>Contact Number</label>
+                                            <div class="input-group">
+                                                <div class="input-group-select">
+                                                    {{Form::select('icoe-contact-type[]', array(
+                                                        null => 'Select Type',
+                                                        'telephone' => 'Telephone',
+                                                        'fax' => 'Fax',
+                                                        'mobile' => 'Mobile',
+                                                        ),$type,array('class'=>'form-control'))}}
+                                                </div>
+                                                {{Form::text('icoe-contact-number[]',$value, array('class'=>'form-control'))}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            {{Form::textarea('icoe-address[]',$present, array('class'=>'form-control resize-vertical'))}}
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    @endif
+                                </div>
 
                                 <button type="button" class="btn btn-success add-icoe">Add another</button>
 
@@ -193,44 +267,46 @@
                                 <h3 class="m-t-none m-b text-success">Account security question</h3>
                                 <div class="form-group">
                                     <label>Question 1</label>
-                                    <select name="question[]" id="" class="form-control">
-                                        <option value="question-01">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
-                                        <option value="question-02">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
-                                        <option value="question-03">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
-                                        <option value="question-04">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
-                                        <option value="question-05">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
-                                        <option value="question-06">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
-                                        <option value="question-07">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
-                                        <option value="question-08">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
-                                        <option value="question-09">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
-                                        <option value="question-10">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
-                                    </select>
+                                    {{Form::select('question[]', array(
+                                    null => 'Select Type',
+                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
+                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
+                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
+                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
+                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
+                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
+                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
+                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
+                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
+                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    ),$data->sqa[0]->question,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
                                     <label>Answer 1</label>
-                                    <input type="text" name="answer[]" class="form-control">
+                                    {{Form::text('answer[]',$data->sqa[0]->answer, array('class'=>'form-control'))}}
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
 
                                 <div class="form-group">
                                     <label>Question 2</label>
-                                    <select name="question[]" id="" class="form-control">
-                                        <option value="question-11">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!</option>
-                                        <option value="question-12">Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.</option>
-                                        <option value="question-13">Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam! </option>
-                                        <option value="question-14">Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?</option>
-                                        <option value="question-15">Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!</option>
-                                        <option value="question-16">Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.</option>
-                                        <option value="question-17">Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?</option>
-                                        <option value="question-18">A culpa iste nostrum odio ratione similique unde voluptates voluptatum!</option>
-                                        <option value="question-19">A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!</option>
-                                        <option value="question-20">Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?</option>
-                                    </select>
+                                    {{Form::select('question[]', array(
+                                    null => 'Select Type',
+                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
+                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
+                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
+                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
+                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
+                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
+                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
+                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
+                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
+                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    ),$data->sqa[1]->question,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
                                     <label>Answer 2</label>
-                                    <input type="text" name="answer[]" class="form-control">
+                                    {{Form::text('answer[]',$data->sqa[1]->answer, array('class'=>'form-control'))}}
                                 </div>
                             </div>
 
@@ -239,7 +315,7 @@
                             <div class="col-sm-12">
                                 <div class="hr-line-dashed"></div>
                                 <div class="text-right">
-                                    {{Form::submit('Create', array('class'=>'btn btn-lg btn-primary'))}}
+                                    {{Form::submit('Update', array('class'=>'btn btn-lg btn-primary'))}}
                                 </div>
                             </div>
                         </div>
@@ -250,6 +326,10 @@
         </div>
     </div>
 
+    {{-- Photo Uploader Form --}}
+    {!! Form::open(array('route'=>'upload-image','files'=>'true','id'=>'image_uploader','class'=>'sr-only')) !!}
+    {!! Form::file('photo',array('id'=>'photo_file_input')) !!}
+    {!! Form::close() !!}
 @endsection
 
 
@@ -260,8 +340,15 @@
 @section('scripts')
     <!-- Data picker -->
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
+    {!! Html::script('js/jquery.form.min.js') !!}
+    {!! Html::script('js/image-uploader.js') !!}
     <script>
         $(document).ready(function(){
+            var modal = $('#modal');
+            $('#modal-btn').on('click',function(){
+                modal.modal({backdrop: 'static', keyboard: false});
+            });
+
             $('#data_3 .input-group.date').datepicker({
                 startView: 2,
                 todayBtn: "linked",
@@ -269,16 +356,27 @@
                 forceParse: false,
                 autoclose: true
             });
+
+            if ( $('#icoe-second').children().length > 0 ) {
+                $('.add-icoe').hide();
+                $('#icoe-second').append('<button type="button" class="btn btn-danger remove-icoe">Remove</button>');
+            }
+
             $(document).on('click','.add-icoe',function(){
                 $('#icoe-first').clone().appendTo('#icoe-second');
                 $(this).hide();
-                $('#icoe-second').append('<button type="button" class="btn btn-danger remove-icoe">Remove</button>')
+                $('#icoe-second').append('<button type="button" class="btn btn-danger remove-icoe">Remove</button>');
             });
             $(document).on('click','.remove-icoe',function(){
                 $('#icoe-second').empty();
                 $('.add-icoe').show();
                 $(this).remove();
             });
+
+//            if($('#image_path').val().length != 0){
+//                $('.photo_holder').empty().append('<img src="/temp/image/'+ $('#image_path').val() +'" alt="Image" class="img-responsive">');
+//            }
+
         });
     </script>
 @endsection

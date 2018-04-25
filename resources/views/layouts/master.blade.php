@@ -23,19 +23,19 @@
 
 <div id="wrapper">
     @php
-
+        $user = \App\User::with('profile')->find(Auth::user()->id);
     @endphp
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                            <img alt="image" class="img-circle" src="{!! ($user->profile != '') ? '/uploads/image/'.$user->profile->image : 'img/profile_small.jpg' !!}" style="width: 48px;" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">{!! Auth::user()->name !!}</strong>
+                                    <strong class="font-bold">{!! ($user->profile != '') ? $user->profile->firstname.' '.$user->profile->lastname : Auth::user()->name !!}</strong>
                                 </span>
                                 <span class="text-muted text-xs block">
                                     @foreach(\Spatie\Permission\Models\Role::get() as $role)

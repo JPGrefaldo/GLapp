@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -192,8 +193,13 @@ class UserController extends Controller
         $profile->lastname = $request->input('lastname');
         $profile->status = $request->input('status');
         $profile->blood_type = $request->input('blood_type');
+        $profile->image = $request->input('image');
         $profile->dob = Carbon::parse($request->input('dob'));
         if($profile->save()){
+
+            File::move(public_path().'/temp/image/'.$profile->image, public_path().'/uploads/image/'.$profile->image);
+            $files = File::files(public_path().'/temp/image/');
+            File::delete($files);
 
             $contacts = array(
                 array('permanent_address', $request->input('permanent_address')),
@@ -247,17 +253,22 @@ class UserController extends Controller
 
         }
 
-        return view('admin.profile.index');
+//        return view('admin.profile.index');
+        return redirect()->route('profile');
     }
 
     public function userProfileShow ()
     {
-        $data = User::with('profile')
-            ->with('icoe')
-            ->with('sqa')
-            ->find(Auth::user()->id);
-//        return $data;
-        return view('admin.profile.index', compact('data'));
+
+        $data = Profile::where('user_id',Auth::user()->id)->first();
+        if($data){
+            $data = User::with('profile')
+                ->with('icoe')
+                ->with('sqa')
+                ->find(Auth::user()->id);
+            return view('admin.profile.index', compact('data'));
+        }
+        return redirect()->route('profile-create');
     }
 
     public function userProfileEdit ()
@@ -266,12 +277,86 @@ class UserController extends Controller
             ->with('icoe')
             ->with('sqa')
             ->find(Auth::user()->id);
+//        return $data;
         return view('admin.profile.edit', compact('data'));
     }
 
     public function userProfileUpdate (Request $request)
     {
-        return view('admin.profile.index');
+        $profile = Profile::where('user_id',Auth::user()->id)->first();
+        $profile->firstname = $request->input('firstname');
+        $profile->middlename = $request->input('middlename');
+        $profile->lastname = $request->input('lastname');
+        $profile->status = $request->input('status');
+        $profile->blood_type = $request->input('blood_type');
+        if($profile->image != $request->input('image')){
+            $files = File::files(public_path().'/uploads/image/');
+            File::delete($files);
+            $profile->image = $request->input('image');
+            File::move(public_path().'/temp/image/'.$profile->image, public_path().'/uploads/image/'.$profile->image);
+            $files = File::files(public_path().'/temp/image/');
+            File::delete($files);
+        }
+        $profile->dob = Carbon::parse($request->input('dob'));
+        if($profile->save()){
+
+            $contacts = array(
+                array('permanent_address', $request->input('permanent_address')),
+                array('present_address', $request->input('present_address')),
+                array($request->input('contact-type'), $request->input('contact-number')),
+            );
+
+            ContactInfo::where('profile_id',$profile->id)->each(function($row){ $row->delete(); });
+            foreach ($contacts as $contact){
+                $data = new ContactInfo();
+                $data->profile_id = $profile->id;
+                $data->type = $contact[0];
+                $data->description = $contact[1];
+                $data->save();
+            }
+
+            $icoe_input1 = $request->input('icoe-name');
+            $icoe_input2 = $request->input('icoe-relation');
+            $icoe_input3 = $request->input('icoe-contact-type');
+            $icoe_input4 = $request->input('icoe-contact-number');
+            $icoe_input5 = $request->input('icoe-address');
+
+            IcoeInfo::where('user_id',$profile->user_id)->each(function($row){ $row->delete(); });
+            foreach ($icoe_input1 as $key => $input){
+                $icoe = new IcoeInfo();
+                $icoe->user_id = $profile->user_id;
+                $icoe->name = $input;
+                $icoe->relation_type = $icoe_input2[$key];
+                if($icoe->save()){
+                    $data = new ContactInfo();
+                    $data->icoe_id = $icoe->id;
+                    $data->type = $icoe_input3[$key];
+                    $data->description = $icoe_input4[$key];
+                    $data->save();
+
+                    $data = new ContactInfo();
+                    $data->icoe_id = $icoe->id;
+                    $data->type = 'present_address';
+                    $data->description = $icoe_input5[$key];
+                    $data->save();
+                }
+            }
+
+            $question = $request->input('question');
+            $answer = $request->input('answer');
+            SecurityQA::where('user_id',$profile->user_id)->each(function($row){ $row->delete(); });
+            foreach ($question as $key => $input){
+                $data = new SecurityQA();
+                $data->user_id = $profile->user_id;
+                $data->question = $input;
+                $data->answer = $answer[$key];
+                $data->save();
+            }
+
+        }
+
+//        return view('admin.profile.index');
+        return redirect()->route('profile');
     }
 
 }
