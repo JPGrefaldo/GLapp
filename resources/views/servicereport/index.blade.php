@@ -98,21 +98,25 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script>
+    
 $(document).ready(function() {
-    $('#serviceReport').DataTable({
-        autoWidth: false,
-    });
     $('#case').DataTable({
         lengthChange: false,
         searching: false,
     });
-    $('#data_1').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
+
+    $('#serviceReport').dataTable( {
+    "ajax":{
+        "type":"GET",
+        "url":"service-report/hasCase",
+    },
+    "processing": true,
+    "serverSide": true,
+    "autoWidth": false,
     });
-} );
+
+});
+
+
 </script>
 @endsection

@@ -64,44 +64,19 @@ function post(loc,tab){
 
 table = $('#client').dataTable( {
         "autoWidth": false,
-        "dom": '<"html5buttons"B>lTfgitp',
-            "buttons": [
-                {"extend": 'copy'},
-                {"extend": 'csv'},
-                {"extend": 'excel', title: 'ExampleFile'},
-                {"extend": 'pdf', title: 'ExampleFile'},
-
-                {"extend": 'print',
-                customize: function (win){
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                }
-                }],
         "data": data,
         "columnDefs": [{
-            
             "targets": 0,
             "data": null,
             "render": function (row) {
-                return row.fname + " " + row.lname;} },{
-
+                return row.fname + " " + row.lname;} },
+            {
             "targets": 1,
-            "data": "plaintiff"},{
-            
-            "targets": 2,
-            "data": "business_nature"},{
-
-            "targets": 3,
             "data": null,
             "render":function(row){
                 return `${row.email}`
             }},{
-
-            "targets": 4,
+            "targets": 2,
             "data": null,
             "className": "text-right",
             "render": function (row) {
@@ -134,38 +109,15 @@ function clearInputs(field=".tab-content"){
 }
 let bill_id;
 function getData(elem){
-    bill_id = table.fnGetData(elem.closest("tr")).billing;
+    rowData = table.fnGetData(elem.closest("tr"));
+    bill_id = rowData.billing;
     clearInputs(".tab-content");
     $("#client_id").val(elem.id);
     busTable._fnReDraw();
-    for (component of data){
 
-        let found; // Toggle if match found
-        let address; 
-
-        for(row in component){     
-            if (component.id == elem.id){ found = 1;
-                
-                address = component.address;      
-            inputText = document.querySelectorAll(`[name=${row}]`)[0];
-
-            if (inputText){
-                switch (row){
-                    case 'plaintiff':
-                        inputText.value = plaintiff[component[row]];
-                        break;
-                    case 'business_nature':
-
-                        inputText.value = busType[component[row]];
-                        break;
-                    default:
-                    inputText.value = component[row];
-                }                
-            }}
-        }
-
-        if (found) break;
-    }}
+    for (data in rowData){
+        $(`input[name=${data}]`).val(rowData[data]);}
+}
 
 function getElem(elem){
     return document.getElementsByClassName(elem)[0];
@@ -239,7 +191,8 @@ function popBus(row){
 }
 
 function updateBus(id,request){
-    $.post("client",
+    if($("input[name=name]").val() || id){
+       $.post("client",
             `_token=${$("#_token").attr("value")}&request=${request}&id=${id}&${$("#tab-2 input, #client_id").not("[name=billing]").serialize()}`,
         ).done(function(data){
     console.log(data);
@@ -247,5 +200,7 @@ function updateBus(id,request){
         busTable._fnReDraw();
         clearInputs("#tab-2");
     }
-});
+}); }else{
+    console.log("invalid input");
+}
 }

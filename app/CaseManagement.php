@@ -13,4 +13,8 @@ class CaseManagement extends Model
     public function counsel_list(){
         return $this->hasMany('App\CaseCounsel','case_id','id')->with('info');
     }
+
+    public function serviceReport(){
+        return $this->hasOne(ServiceReport::class);
+    }
 }

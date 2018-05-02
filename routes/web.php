@@ -67,13 +67,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('client/list','ClientController@show');
         Route::post('client/update','ClientController@update');
         Route::post('client/destroy','ClientController@destroy');
+        Route::resource('photos', 'ServiceReportController');
 
         /* Service Report Route */
-        Route::get('service-report',[
-            'uses'=>'ServiceReportController@index',
-             'as' => 'servicereport'
-        ]);
-        Route::get('service-report/{id}','ServiceReportController@show'); 
+        Route::resource('service-report', 'ServiceReportController');
+        // Route::get('service-report',[
+        //     'uses'=>'ServiceReportController@index',
+        //      'as' => 'servicereport'
+        // ]);
+        // Route::get('service-report/{id}','ServiceReportController@show'); 
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

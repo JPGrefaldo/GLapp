@@ -14,36 +14,16 @@ class CreateChargeableExpensesTable extends Migration
     public function up()
     {
         Schema::create('chargeable_expenses', function (Blueprint $table) {
-
             $table->increments('id');
-            $table->integer('sr_id')->unsigned()->nullable();
-            $table->integer('contract_id')->unsigned()->nullable();
             $table->integer('case_mgt_id')->unsigned()->nullable();
-            $table->integer('counsel_id')->unsigned()->nullable();
-            $table->date('date_rendered');
             $table->text('description');
             $table->decimal('amount');
-            $table->decimal('trust_fund');
-            $table->string('type');
             $table->text('explanation');
             $table->timestamps();
-
-
-            $table->foreign('sr_id')
-            ->references('id')
-            ->on('service_reports');
-
-            $table->foreign('contract_id')
-            ->references('id')
-            ->on('contracts');
 
             $table->foreign('case_mgt_id')
             ->references('id')
             ->on('case_managements');
-
-            $table->foreign('counsel_id')
-            ->references('id')
-            ->on('counsels');
         });
     }
 

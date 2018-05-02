@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\ServiceReport;
 use Illuminate\Http\Request;
 
@@ -18,9 +17,18 @@ class ServiceReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ServiceReport $ServiceReport)
     {
-        //
+        switch($req){
+            case 'case':
+                return $ServiceReport->case;
+                break;
+            case 'noAttachCase':
+                return 'No Case';
+                break;
+            default:
+                return abort(404);
+        }
     }
 
     /**
@@ -40,12 +48,18 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport,$id)
+    public function show($req, ServiceReport $serviceRep)
     {
-        $client = Client::find($id);
-        $client['contract'] = $client->contract;
-        $client['case'] = $client->case;
-        return view("servicereport.list",compact('client'));
+        switch($req){
+            case 'hasCase':
+                return ['data'=> $serviceRep->hasCase()];
+                break;
+            case 'hasNoCase':
+                return ['data'=> $serviceRep->hasNoCase()];
+                break;
+            default:
+                return abort(404);
+        }
     }
 
     /**

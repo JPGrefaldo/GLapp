@@ -19,7 +19,23 @@ class CreateClientBusinessesTable extends Migration
             $table->string('name')->nullable();
             $table->string('oic')->nullable();
             $table->string('contract')->nullable();
-            $table->string('type')->nullable();
+            $table->enum('business_nature',['Corporate','Infrastructure',
+                                            'advertising',
+                                            'Media broadcasting',
+                                            'Contraction',
+                                            'Consulting',
+                                            'IT/Telco',
+                                            'transportation',
+                                            'Logistics',
+                                            'Finance',
+                                            'entertainment',
+                                            'Clothing',
+                                            'Cosmetics',
+                                            'Agriculture',
+                                            'Hospitality/Tourism',
+                                            'NGO',
+                                            'LGU',
+                                            'Others'])->nullable();
             $table->string('street_number')->nullable();
             $table->string('route')->nullable();
             $table->string('neighborhood')->nullable();
