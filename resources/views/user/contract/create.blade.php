@@ -12,6 +12,9 @@
                 <li>
                     <a href="/">Home</a>
                 </li>
+                <li>
+                    <a href="{!! route('contract.index') !!}">Contract List</a>
+                </li>
                 <li class="active">
                     <strong>Define Contract</strong>
                 </li>
@@ -19,7 +22,7 @@
         </div>
         <div class="col-lg-4">
             <div class="title-action">
-                <button type="button" id="save-contract-btn" data-action="{!! ($data->status === 'Ongoing') ? 'edit' : 'add' !!}" class="btn btn-primary">{!! ($data->status === 'Ongoing') ? 'Update' : 'Save' !!}</button>
+                <button type="button" id="save-contract-btn" data-action="{!! ($data->status === 'Ongoing') ? 'edit' : 'add' !!}" class="btn btn-primary">{!! ($data->status === 'Ongoing') ? 'Update Contract' : 'Save Contract' !!}</button>
             </div>
         </div>
     </div>
@@ -33,45 +36,29 @@
                     </div>
                     <div class="ibox-content">
                         <div class="row" id="contract-info">
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <div class="col-lg-7 col-md-12">
-                                        <div class="form-group">
-                                            <div class="input-group m-b">
-                                                <span class="input-group-addon bg-muted">Full Name:</span>
-                                                <label class="form-control">{!! $data->client->fname !!} {!! $data->client->mname !!} {!! $data->client->lname !!}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5 col-md-12">
-                                        <div class="form-group">
-                                            <div class="input-group m-b">
-                                                <span class="input-group-addon bg-muted">Client's ID:</span>
-                                                <label class="form-control">{!! $client_id !!}</label>
-                                            </div>
-                                        </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon bg-muted">Full Name:</span>
+                                        <label class="form-control">{!! $data->client->fname !!} {!! $data->client->mname !!} {!! $data->client->lname !!}</label>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <div class="textarea-group">
-                                                <span class="textarea-group-addon bg-muted">Complete Billing Address:</span>
-                                                <label class="form-control resize-vertical">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos eveniet exercitationem porro sint voluptatum. Aliquam aliquid beatae, dolore, in iusto modi, nesciunt nihil nisi provident quae quia reiciendis voluptas voluptatem?</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="textarea-group">
-                                                <span class="textarea-group-addon bg-muted">Complete Office Address:</span>
-                                                <label class="form-control resize-vertical">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur blanditiis cupiditate, dolores ea earum eligendi error eum eveniet facere harum id impedit incidunt inventore laborum laudantium modi nisi nobis nulla odio, officia quae quam quidem quo ratione rerum sint soluta suscipit tempora unde velit. Delectus deleniti, dolor dolorem dolores fuga, inventore ipsum iusto natus non officia optio pariatur quam repellat soluta totam veniam voluptas voluptates? Ab adipisci aliquam architecto atque beatae cumque dignissimos distinctio doloribus eveniet fugit harum molestias, mollitia natus, optio quas quos repellat tempore totam. Consequuntur ducimus ea, eos est in ipsa iure quos sapiente voluptas voluptatem? Consequuntur dolorem dolores excepturi in inventore ipsa neque numquam omnis, quidem repellat. Cumque ex fuga ipsam nihil nobis, qui sapiente. Alias aut debitis expedita in ipsa, laborum libero perspiciatis quaerat qui quia recusandae, repudiandae saepe sit voluptates voluptatibus. Aliquam delectus harum illo libero magni nisi porro sint tenetur totam voluptatum. Asperiores beatae delectus dicta exercitationem, expedita laboriosam magnam maiores provident sapiente sed similique soluta sunt ut vel veritatis vitae voluptates. Accusamus alias atque delectus deserunt doloribus ea esse eveniet, ex fugiat ipsa laudantium modi molestiae natus necessitatibus nobis nulla odio odit perspiciatis quas quidem quis recusandae repudiandae similique tenetur vitae voluptatum?</label>
-                                            </div>
-                                        </div>
+                                <div class="form-group">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon bg-muted">Client's ID:</span>
+                                        <label class="form-control">{!! $client_id !!}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="textarea-group">
+                                        <span class="textarea-group-addon bg-muted">Billing Address:</span>
+                                        <label class="form-control resize-vertical">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos eveniet exercitationem porro sint voluptatum. Aliquam aliquid beatae, dolore, in iusto modi, nesciunt nihil nisi provident quae quia reiciendis voluptas voluptatem?</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-lg-8">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-muted">Type of Contract:</span>
@@ -80,8 +67,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-muted">Contract Status:</span>
@@ -90,11 +75,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-12">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">Contract Date:</span>
@@ -102,8 +82,6 @@
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-12">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">Start Date:</span>
@@ -111,8 +89,6 @@
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-12">
                                         <div class="form-group">
                                             <div class="input-group m-b date">
                                                 <span class="input-group-addon bg-muted">End Date:</span>
@@ -120,23 +96,25 @@
                                                 <span class="input-group-addon bg-muted"><span class=""><i class="fa fa-calendar"></i></span></span>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="textarea-group">
-                                        <span class="textarea-group-addon bg-muted">Other Condition:</span>
-                                        <textarea name="other_conditions" id="" class="form-control resize-vertical">{!! ($data->status === 'Ongoing') ? $data->contract->other_conditions : '' !!}</textarea>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="input-group m-b total-box">
-                                        <span class="input-group-addon bg-muted">Total Amount Cost:</span>
-                                        <label class="form-control text-success" id="tran-cost-display">0.00</label>
                                     </div>
-                                </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="textarea-group">
+                                                <span class="textarea-group-addon bg-muted">Other Condition:</span>
+                                                <textarea name="other_conditions" id="" class="form-control resize-vertical">{!! ($data->status === 'Ongoing') ? $data->contract->other_conditions : '' !!}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group m-b total-box">
+                                                <span class="input-group-addon bg-muted">Total Amount Cost:</span>
+                                                <label class="form-control text-success" id="tran-cost-display">0.00</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
 

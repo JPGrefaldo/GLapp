@@ -38,7 +38,7 @@
                             <div class="col-sm-5 col-sm-push-7">
                                 <div class="form-group">
                                     <div class="photo_holder">
-                                        <img alt="image" class="img-responsive" src="http://via.placeholder.com/300x300">
+                                        <img alt="image" class="img-responsive" src="/img/placeholder.jpg">
                                     </div>
                                     <div id="validation-errors"></div>
                                     {!! Form::hidden('image',null,array('id'=>'image_path','class'=>'required')) !!}

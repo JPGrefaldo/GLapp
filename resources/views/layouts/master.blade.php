@@ -30,7 +30,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="{!! ($user->profile != '') ? '/uploads/image/'.$user->profile->image : 'img/profile_small.jpg' !!}" style="width: 48px;" />
+                            <img alt="image" class="img-circle" src="{!! ($user->profile != '') ? '/uploads/image/'.$user->profile->image : '/img/placeholder.jpg' !!}" style="width: 48px;" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
@@ -72,11 +72,7 @@
                 </li>
 
                 <li class="{!! if_uri_pattern(array('contract*')) == 1 ? 'active' : '' !!}">
-                    <a href="#"><i class="fa fa-book"></i> <span class="nav-label">Contracts</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        {{-- <li class="{!! if_uri_pattern(array('contract/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.create') !!}">Create</a></li> --}}
-                        <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}"><a href="{!! route('contract.index') !!}">List</a></li>
-                    </ul>
+                    <a href="{!! route('contract.index') !!}"><i class="fa fa-user"></i> <span class="nav-label">Contracts</span></a>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('counsel*')) == 1 ? 'active' : '' !!}">

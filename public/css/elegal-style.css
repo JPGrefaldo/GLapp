@@ -1,7 +1,7 @@
 .resize-vertical {
     resize:vertical;
     overflow:auto;
-    height: 80px !important;
+    height: 100px !important;
 }
 
 .input-group-select {
@@ -110,8 +110,8 @@
 }
 
 .total-box label {
-    height: 63px;
-    font-size: 50px;
+    height: 82px;
+    font-size: 69px;
     line-height: 0.9;
     text-align: right;
 }

@@ -38,7 +38,7 @@
                                     <div class="col-lg-5 col-lg-push-7">
                                         <div class="form-group">
                                             <div class="photo_holder">
-                                                <img alt="image" class="img-responsive" src="{!! ($data->profile->image) ? '/uploads/image/'.$data->profile->image : 'http://via.placeholder.com/300x300' !!}">
+                                                <img alt="image" class="img-responsive" src="{!! ($data->profile->image) ? '/uploads/image/'.$data->profile->image : '/img/placeholder.jpg' !!}">
                                             </div>
                                             <div id="validation-errors"></div>
                                             {!! Form::hidden('image',$data->profile->image,array('id'=>'image_path','class'=>'required')) !!}
@@ -269,16 +269,14 @@
                                     <label>Question 1</label>
                                     {{Form::select('question[]', array(
                                     null => 'Select Type',
-                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
-                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
-                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
-                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
-                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
-                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
-                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
-                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
-                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
-                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    'What was your childhood nickname?' => 'What was your childhood nickname?',
+                                    'In what city or town did your mother and father meet?' => 'In what city or town did your mother and father meet?',
+                                    'What is your favorite team?' => 'What is your favorite team?',
+                                    'What was your favorite sport in high school?' => 'What was your favorite sport in high school?',
+                                    'What is the first name of the boy or girl that you first kissed?' => 'What is the first name of the boy or girl that you first kissed?',
+                                    'What was the name of the hospital where you were born?' => 'What was the name of the hospital where you were born?',
+                                    'What school did you attend for sixth grade?' => 'What school did you attend for sixth grade?',
+                                    'In what town was your first job?' => 'In what town was your first job?',
                                     ),$data->sqa[0]->question,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
@@ -292,16 +290,14 @@
                                     <label>Question 2</label>
                                     {{Form::select('question[]', array(
                                     null => 'Select Type',
-                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, voluptatum!',
-                                    'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.' => 'Ad doloribus ipsum unde! Deserunt distinctio illum repellat? Accusamus, provident.',
-                                    'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!' => 'Atque beatae doloremque, expedita inventore ipsum iure quis sunt veniam!',
-                                    'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?' => 'Ab illo ipsa maxime molestias obcaecati rem voluptatum. Aspernatur, eos?',
-                                    'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!' => 'Ab dolorum eaque facilis id inventore iusto laborum reiciendis voluptatem!',
-                                    'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.' => 'Accusamus eaque fugiat obcaecati porro unde? Deserunt ea exercitationem vitae.',
-                                    'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?' => 'Asperiores atque cumque earum neque quas quisquam sint, ullam voluptas?',
-                                    'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!' => 'A culpa iste nostrum odio ratione similique unde voluptates voluptatum!',
-                                    'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!' => 'A eveniet fugit quod recusandae repellat! Aliquam qui repellendus sapiente!',
-                                    'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?' => 'Aliquam, beatae commodi doloribus obcaecati omnis quisquam reiciendis sit veniam?',
+                                    'What is the name of your favorite childhood friend?' => 'What is the name of your favorite childhood friend?',
+                                    'What is the middle name of your oldest child?' => 'What is the middle name of your oldest child?',
+                                    'What is your favorite movie?' => 'What is your favorite movie?',
+                                    'What was your favorite food as a child?' => 'What was your favorite food as a child?',
+                                    'What was the make and model of your first car?' => 'What was the make and model of your first car?',
+                                    'Who is your childhood sports hero?' => 'Who is your childhood sports hero?',
+                                    'What was the last name of your third grade teacher?' => 'What was the last name of your third grade teacher?',
+                                    'What was the name of the company where you had your first job?' => 'What was the name of the company where you had your first job?',
                                     ),$data->sqa[1]->question,array('class'=>'form-control'))}}
                                 </div>
                                 <div class="form-group">
