@@ -19,4 +19,8 @@ class Transaction extends Model
     {
         return $this->hasMany('App\TransactionFeeDetail','transaction_id','id');
     }
+    public function case()
+    {
+        return $this->hasMany(CaseManagement::class);
+    }
 }

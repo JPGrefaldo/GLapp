@@ -1,3 +1,4 @@
+{{dd($client)}}
 @extends('layouts.master')
 
 @section('title', 'Service Report')
@@ -34,7 +35,7 @@
         <div class="ibox-content">
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="panel panel-default table-box">
                    
                     <div class="panel-heading">
@@ -99,6 +100,24 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="panel panel-default table-box">
+                   
+                    <div class="panel-heading">
+                            <label>Case Info</label>
+                    </div>
+                    <div class="panel-body">
+                        <table id="case" class="table table-striped dt-responsive nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Docket No.</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -136,40 +155,40 @@
         </div>
         </div>
         </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default table-box">
-                            <div class="panel-heading">
-                                    <label>Chargeable Expense</label>
-                            </div>
-                            <div class="panel-body">
-                                <table id="chargeable-expense" class="table table-striped dt-responsive nowrap" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Code</th>
-                                            <th>Description</th>
-                                            <th>Charge Type</th>
-                                            <th>Free Pages</th>
-                                            <th>First 5 Pages</th>
-                                            <th>Rate No. 1</th>
-                                            <th>Rate No. 2</th>
-                                            <th>Fixed Amount</th>
-                                            <th>Consumable | Min</th>
-                                            <th>Excess Rate</th>
-                                            <th>Fixed Amount</th>
-                                            <th>W/ CAP or Ceiling</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="panel-footer p-xxs">
-                                    <div class="input-sm input-group col-md-6 col-xs-offset-6">
-                                        <span class="input-group-addon bg-muted">Total Expense</span>
-                                        <input type="text" class=" form-control">
-                                    </div>
-                                </div>
-                        </div>
+            <div class="col-md-6">
+                <div class="panel panel-default table-box">
+                    <div class="panel-heading">
+                            <label>Chargeable Expense</label>
                     </div>
+                    <div class="panel-body">
+                        <table id="chargeable-expense" class="table table-striped dt-responsive nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                    <th>Charge Type</th>
+                                    <th>Free Pages</th>
+                                    <th>First 5 Pages</th>
+                                    <th>Rate No. 1</th>
+                                    <th>Rate No. 2</th>
+                                    <th>Fixed Amount</th>
+                                    <th>Consumable | Min</th>
+                                    <th>Excess Rate</th>
+                                    <th>Fixed Amount</th>
+                                    <th>W/ CAP or Ceiling</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="panel-footer p-xxs">
+                            <div class="input-sm input-group col-md-6 col-xs-offset-6">
+                                <span class="input-group-addon bg-muted">Total Expense</span>
+                                <input type="text" class=" form-control">
+                            </div>
+                        </div>
+                </div>
+            </div>
    
 
         </div>
@@ -238,7 +257,7 @@
                         <input type="text" class=" form-control">
 
                         <span class="input-group-addon bg-muted date"><i class="fa fa-calendar"></i></span>
-                        <input type="date" class="form-control ">
+                        <input type="date" class="form-control">
                     </div>
                 </div>
                 <div class="input-group m-b">
@@ -281,6 +300,11 @@ $(document).ready(function() {
     $('#chargeable-expense').DataTable({
         lengthChange: false,
         searching: false,
+    });
+
+    $('#case').DataTable({
+    lengthChange: false,
+    searching: false,
     });
 
     $('#data_1').datepicker({

@@ -44,7 +44,7 @@ class ServiceReportController extends Controller
     {
         $client = Client::find($id);
         $client['contract'] = $client->contract;
-        dd($client);
+        $client['case'] = $client->case;
         return view("servicereport.list",compact('client'));
     }
 

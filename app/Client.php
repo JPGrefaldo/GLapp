@@ -22,7 +22,8 @@ class Client extends Model
     public function contract(){
         return $this->hasMany(Contract::class);
     }
+    public function case(){
+        return $this->hasManyThrough(CaseManagement::class,Transaction::class);
+    }
+    
 }
-
-
-
