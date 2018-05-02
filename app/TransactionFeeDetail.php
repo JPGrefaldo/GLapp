@@ -10,4 +10,9 @@ class TransactionFeeDetail extends Model
     {
         return $this->belongsTo('App\Fee','fee_id','id');
     }
+
+    public function cases()
+    {
+        return $this->belongsTo('App\CaseManagement','case_id','id');
+    }
 }

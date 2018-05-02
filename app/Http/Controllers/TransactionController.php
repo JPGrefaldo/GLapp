@@ -94,7 +94,7 @@ class TransactionController extends Controller
             ->pluck('fee_id')
             ->toArray();
 
-        $list = Fee::whereNotIn('id',$used)->get();
+        $list = Fee::get();
 
         $data = DataTables::of($list)
             ->addColumn('code', function ($list) {
@@ -116,13 +116,24 @@ class TransactionController extends Controller
 
     public function tranFeeList(Request $request)
     {
-        $list = TransactionFeeDetail::where('transaction_id', $request->input('id'))
-            ->with('fee')
-            ->get();
-
+        if($request->input('ids')){
+            $list = TransactionFeeDetail::whereIn('case_id', $request->input('ids'))
+                ->with('fee')
+                ->with('cases')
+                ->get();
+        }else{
+            $list = TransactionFeeDetail::where('transaction_id', $request->input('id'))
+                ->with('fee')
+                ->with('cases')
+                ->get();
+        }
         $data = DataTables::of($list)
             ->addColumn('collapse', function ($list) {
                 $info = '';
+                return $info;
+            })
+            ->addColumn('docket', function ($list) {
+                $info = $list->cases->docket;
                 return $info;
             })
             ->addColumn('code', function ($list) {
@@ -204,6 +215,8 @@ class TransactionController extends Controller
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
+//                $menu[] = '<input type="radio" name="case" class="view-fees" value="'.$list->id.'">';
+                $menu[] = '<input type="checkbox" class="case-chkbx" value="'.$list->id.'" checked>';
                 $menu[] = '<button data-id="'.$list->id.'" data-action="edit" type="button" class="case-btn btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> </button>';
                 $menu[] = '<button data-id="'.$list->id.'" data-action="delete" type="button" class="case-btn btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> </button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
@@ -218,6 +231,7 @@ class TransactionController extends Controller
             $data = new TransactionFeeDetail();
             $data->transaction_id = $request->input('transaction_id');
             $data->fee_id = $request->input('fee_id');
+            $data->case_id = $request->input('case_id');
         }
 
         if($request->input('action') === "edit"){

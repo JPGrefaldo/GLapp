@@ -13,6 +13,15 @@
     display: table-cell;
 }
 
+.btn-group > input[type="radio"], .btn-group > input[type="checkbox"] {
+    position: relative;
+    float: left;
+    height: 23px;
+    width: 23px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
 .permission-box {
     margin-bottom: 20px;
 }

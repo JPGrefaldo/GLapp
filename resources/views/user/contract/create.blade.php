@@ -143,19 +143,30 @@
                         <div class="hr-line-dashed"></div>
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="panel panel-default table-box">
                                     <div class="panel-heading">
-                                        <label>Fees List</label>
+                                        <label>Case Management</label>
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="button" id="counsel-btn-create" class="btn-white btn btn-xs"><i class="fa fa-plus"></i> Add</button>
+                                                {{--<button class="btn-white btn btn-xs">View</button>--}}
+                                                {{--<button class="btn-white btn btn-xs">Edit</button>--}}
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="table-box">
-                                        <table id="fee-list-table" class="table table-stripped dt-responsive nowrap">
+                                        <table id="case-table" class="table table-stripped dt-responsive nowrap">
                                             <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Code</th>
-                                                    <th>Description</th>
-                                                </tr>
+                                            <tr>
+                                                <th>
+                                                    {{--<div class="btn-group">--}}
+                                                        {{--<input type="radio">--}}
+                                                    {{--</div>--}}
+                                                </th>
+                                                <th>Docket No.</th>
+                                                <th>Description</th>
+                                            </tr>
                                             </thead>
                                         </table>
                                     </div>
@@ -171,6 +182,7 @@
                                             <tr>
                                                 <th></th>
                                                 <th></th>
+                                                <th>Docket</th>
                                                 <th>Code</th>
                                                 <th>Description</th>
                                                 <th>Charge Type</th>
@@ -188,20 +200,17 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="panel panel-default table-box">
                                     <div class="panel-heading">
-                                        <label>Case Management</label>
-                                        <div class="btn-group pull-right">
-                                            <button type="button" id="counsel-btn-create" class="btn-success btn btn-xs"><i class="fa fa-plus"></i> Add</button>
-                                        </div>
+                                        <label>Fees List</label>
                                     </div>
                                     <div class="table-box">
-                                        <table id="case-table" class="table table-stripped dt-responsive nowrap">
+                                        <table id="fee-list-table" class="table table-stripped dt-responsive nowrap">
                                             <thead>
                                             <tr>
-                                                <th style="width: 30px;"></th>
-                                                <th>Docket No.</th>
+                                                <th></th>
+                                                <th>Code</th>
                                                 <th>Description</th>
                                             </tr>
                                             </thead>
@@ -226,6 +235,9 @@
                 <div class="modal-body">
                     <div class="fee-name text-center"></div>
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group case-list"></div>
+                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group">
@@ -252,8 +264,6 @@
                                     <input type="text" name="charge_doc" placeholder="0.00" class="form-control numonly">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Rate No. 1:</span>
@@ -266,14 +276,14 @@
                                     <input type="text" name="rate_2" placeholder="0.00" class="form-control numonly">
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Fixed Amount</span>
                                     <input type="text" name="rate" placeholder="0.00" class="form-control numonly">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group m-b">
                                     <span class="input-group-addon bg-muted">Consumable | Min</span>
@@ -459,6 +469,7 @@
     {!! Html::style('https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css') !!}
     {!! Html::style('https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap.min.css') !!}
     {!! Html::style('css/plugins/datapicker/datepicker3.css') !!}
+    {!! Html::style('css/plugins/iCheck/custom.css') !!}
 @endsection
 
 @section('scripts')
@@ -469,6 +480,7 @@
     {!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js') !!}
     {!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
     {!! Html::script('js/numeral.js') !!}
+    {!! Html::script('js/plugins/iCheck/icheck.min.js') !!}
     <script>
         $(document).ready(function(){
             var tran_id = '{!! $data->id !!}';
@@ -513,6 +525,11 @@
                 ajax: {
                     url: 'http://'+window.location.host+'/tran-fee-list',
                     data: function (d) {
+                        var cases = [];
+                        $('input[class="case-chkbx"]:checked').each(function() {
+                            cases.push($(this).val());
+                        });
+                        d.ids = cases;
                         d.id = tran_id;
                     }
                 },
@@ -524,6 +541,7 @@
                 columns: [
                     {data: 'collapse', name: 'collapse'},
                     {data: 'action', name: 'action'},
+                    {data: 'docket', name: 'docket'},
                     {data: 'code', name: 'code'},
                     {data: 'desc', name: 'desc'},
                     {data: 'charge_type', name: 'charge_type'},
@@ -551,7 +569,9 @@
                     }
                 },
                 columnDefs: [
-                    { width: '30', 'targets': [ 0,1 ] },
+                    { width: '80', 'targets': [ 0,1 ] },
+//                    { targets: 'no-sort', orderable: false },
+                    { orderable: false, "targets": 0 }
 //                    { className: "text-right", "targets": [ 2 ] }
                 ],
                 columns: [
@@ -561,18 +581,29 @@
                 ]
             });
 
+            $(document).on('change','.case-chkbx',function(){
+                var cases = new Array();
+                $('input[class="case-chkbx"]:checked').each(function() {
+                    cases.push(this.value);
+                });
+                console.log(cases);
+                feeDetailTable.ajax.reload();
+            });
+
             loadFeeTable();
             function loadFeeTable(type){
                 if(type == 'fee'){
+
                     feeListTable.ajax.reload();
                     feeDetailTable.ajax.reload();
                     loadTotalCost();
                 }else if(type == 'case'){
                     caseTable.ajax.reload();
                 }else{
+
+                    caseTable.ajax.reload();
                     feeListTable.ajax.reload();
                     feeDetailTable.ajax.reload();
-                    caseTable.ajax.reload();
                     loadTotalCost();
                 }
             }
@@ -609,13 +640,28 @@
 
             // Fee Process
             $(document).on('click','.table-action-btn',function(){
-                var type = $(this).data('type');
-                var id = $(this).data('id');
-                if(type === 'list'){
-                    modal.find('.fee-name').append('<h1>'+ $(this).data('name') +'</h1>');
-                    modal.data('id',id);
-                    modal.modal({backdrop: 'static', keyboard: false});
+                if($('.case-chkbx').length < 1){
+                    alert('create Case first');
+                }else{
+                    var type = $(this).data('type');
+                    var title = $(this).data('name');
+                    var id = $(this).data('id');
+                    $.get('{!! route('get-case') !!}',{
+                        id: tran_id
+                    },function(data){
+                        if(data.length != 0){
+                            modal.find('.case-list').empty();
+                            for(var a = 0; a < data.length; a++){
+                                var checked = ([a] == 0) ? 'checked' : '';
+                                modal.find('.case-list').append('<div class="i-checks"><label> <input type="radio" value="'+ data[a].id +'" name="case" '+ checked +' > <i></i> '+ data[a].docket +' - '+ data[a].title +' </label></div>');
+                            }
+                            modal.find('.fee-name').append('<h1>'+ title +'</h1>');
+                            modal.data('id',id);
+                            modal.modal({backdrop: 'static', keyboard: false});
+                        }
+                    });
                 }
+
             });
 
             $(document).on('click','.fee-action-btn',function(){
@@ -653,9 +699,11 @@
             });
 
             function storeFeeDetail(){
+//                console.log(modal.find('input[name="case"]:checked').val());
                 $.post('http://'+ window.location.host +'/tran-fee-store', {
                     _token: '{!! csrf_token() !!}',
                     transaction_id: tran_id,
+                    case_id: modal.find('input[name="case"]:checked').val(),
                     fee_id: modal.data('id'),
                     action: modal.data('action'),
                     charge_type: modal.find('select[name="charge_type"]').val(),
@@ -681,6 +729,12 @@
                 $(this).data('action','add');
                 $(this).find('input').val('');
                 $(this).find('select').val('');
+            });
+
+            modal.on('show.bs.modal', function () {
+                $('.i-checks').iCheck({
+                    radioClass: 'iradio_square-green',
+                });
             });
 
             // Case Process

@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
 
         Route::resource('case', 'CaseManagementController');
+        Route::get('get-case', 'CaseManagementController@getCase')->name('get-case');
         Route::get('create-case', 'CaseManagementController@createCase')->name('create-case');
         Route::post('store-case', 'CaseManagementController@storeCase')->name('store-case');
         Route::get('add-co-counsel', 'CaseManagementController@addCoCounsel')->name('add-co-counsel');
