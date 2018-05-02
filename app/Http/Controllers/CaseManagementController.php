@@ -153,6 +153,13 @@ class CaseManagementController extends Controller
         }
     }
 
+    public function getCase(Request $request)
+    {
+        $data = CaseManagement::where('transaction_id',$request->input('id'))->get();
+
+        return response()->json($data);
+    }
+
     public function storeCase(Request $request)
     {
         $data = CaseManagement::find($request->input('id'));

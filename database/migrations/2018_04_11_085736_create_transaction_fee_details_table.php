@@ -16,6 +16,7 @@ class CreateTransactionFeeDetailsTable extends Migration
         Schema::create('transaction_fee_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('transaction_id')->unsigned();
+            $table->integer('case_id')->unsigned();
             $table->integer('fee_id');
             $table->enum('charge_type',['Standard','Special','Installment']);
             $table->integer('free_page')->default(0);
