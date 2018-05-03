@@ -32,7 +32,7 @@
             <div class="col-md-6">
 
                 <div class="profile-image">
-                    <img src="{!! ($counsel->image != '') ? '/uploads/image/'.$counsel->image : 'http://via.placeholder.com/300x300' !!}" class="img-circle circle-border m-b-md" alt="profile">
+                    <img src="{!! ($counsel->image != '') ? '/uploads/image/'.$counsel->image : '/img/placeholder.jpg' !!}" class="img-circle circle-border m-b-md" alt="profile">
                 </div>
                 <div class="profile-info">
                     <div class="">
