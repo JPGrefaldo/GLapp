@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <div id="app">
+
             
     <div class="modal inmodal" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg">
@@ -15,13 +15,11 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">Personal Info</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">Business Info</a></li>
-                                    <modal title="Hello World"></modal>
                                 </ul>
                                 <div class="tab-content" >
                                     <input id="client_id" name="client_id" type="text" hidden>
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
-                                            {{-- <form class="" onsubmit="updateData()"> --}}
                                             <div class=" form-group">
                                             <div class="col-lg-6">
                                                 <div class="input-group m-b"><span class="input-group-addon bg-primary" >First Name</span>
@@ -30,50 +28,17 @@
                                                 <div class="input-group m-b"><span class="input-group-addon bg-primary">Middle Name</span>
                                                     <input name="mname" type="text" class="form-control" required>
                                                 </div>
-                                                <div class="input-group m-b"><span class="input-group-addon bg-primary">Last Name</span>
-                                                    <input name="lname" type="text" class="form-control" required>
-                                                </div>
+                                               
                                             </div>
-                                            </div>
-                                        
-                                            <div class=" col-lg-6">
+                                            <div class="col-lg-6">
+                                                    <div class="input-group m-b"><span class="input-group-addon bg-primary">Last Name</span>
+                                                        <input name="lname" type="text" class="form-control" required>
+                                                    </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-primary">Email</span>
                                                     <input name="email" type="text" class="form-control" required>
                                                 </div>
-                                                <div class="input-group m-b">
-                                                    <span class="input-group-addon bg-primary">Plaintiff Type</span>
-                                                    <select name="plaintiff" type="text"  class="form-control"> 
-                                                        <option disabled selected></option>                                   
-                                                        <option value="1">Respondent</option>
-                                                        <option value="2">Complainant</option>
-                                                        <option value="3">Defendant</option>
-                                                    </select>
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <span class="input-group-addon bg-primary">Business Type</span>
-                                                    <select name="business_nature" type="text" class="form-control">
-                                                        <option disabled selected></option>
-                                                        <option value="1">Corporate</option>
-                                                        <option value="2">Infrastructure</option>
-                                                        <option value="3">advertising</option>
-                                                        <option value="4">Media broadcasting</option>
-                                                        <option value="5">Contraction</option>
-                                                        <option value="6">Consulting</option>
-                                                        <option value="7">IT/Telco</option>
-                                                        <option value="8">transportation</option>
-                                                        <option value="9">Logistics</option>
-                                                        <option value="10">Finance</option>
-                                                        <option value="11">entertainment</option>
-                                                        <option value="12">Clothing</option>
-                                                        <option value="13">Cosmetics</option>
-                                                        <option value="14">Agriculture</option>
-                                                        <option value="15">Hospitality/Tourism</option>
-                                                        <option value="16">NGO</option>
-                                                        <option value="17">LGU</option>
-                                                        <option value="18">Others</option>
-                                                    </select>
-                                                </div>
+                                            </div>
                                             </div>
                                         
                                         </div>
@@ -82,7 +47,6 @@
                                     <div id="tab-2" class="tab-pane">
                                         <div class="panel-body">
                                         <div class=" col-lg-7">
-
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">Search</span>
                                                 <input id="acInput1" placeholder="Enter your address" onfocus="" type="text" class="form-control autocomplete" autocomplete="off">
@@ -130,8 +94,28 @@
                                             </div>
             
                                             <div class="input-group m-b">
-                                                <span class="input-group-addon bg-primary">Type</span>
-                                                <input name="type" type="text" class="form-control" >
+                                                <span class="input-group-addon bg-primary">Business Type</span>
+                                                <select name="business_nature" type="text" class="form-control">
+                                                    <option disabled selected></option>
+                                                    <option value="1">Corporate</option>
+                                                    <option value="2">Infrastructure</option>
+                                                    <option value="3">advertising</option>
+                                                    <option value="4">Media broadcasting</option>
+                                                    <option value="5">Contraction</option>
+                                                    <option value="6">Consulting</option>
+                                                    <option value="7">IT/Telco</option>
+                                                    <option value="8">transportation</option>
+                                                    <option value="9">Logistics</option>
+                                                    <option value="10">Finance</option>
+                                                    <option value="11">entertainment</option>
+                                                    <option value="12">Clothing</option>
+                                                    <option value="13">Cosmetics</option>
+                                                    <option value="14">Agriculture</option>
+                                                    <option value="15">Hospitality/Tourism</option>
+                                                    <option value="16">NGO</option>
+                                                    <option value="17">LGU</option>
+                                                    <option value="18">Others</option>
+                                                </select>
                                             </div>
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon bg-primary">O.I.C.</span>
@@ -160,13 +144,12 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" onclick="updateData()" class="btn btn-primary">Save changes</button>
+                        <button type="submit"  class="btn btn-primary">Save changes</button>
                     </div>
                 {{-- </form> --}}
                 </div>
     
             </div>
         </div>
-    </div>
     </div>
 </div>

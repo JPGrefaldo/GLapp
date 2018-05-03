@@ -9,8 +9,6 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Plaintiff</th>
-                                <th>Business Type</th>
                                 <th>Email</th>
                                 <th>Action</th>
                             </tr>

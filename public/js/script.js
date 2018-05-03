@@ -64,23 +64,6 @@ function post(loc,tab){
 
 table = $('#client').dataTable( {
         "autoWidth": false,
-        "dom": '<"html5buttons"B>lTfgitp',
-            "buttons": [
-                {"extend": 'copy'},
-                {"extend": 'csv'},
-                {"extend": 'excel', title: 'ExampleFile'},
-                {"extend": 'pdf', title: 'ExampleFile'},
-
-                {"extend": 'print',
-                customize: function (win){
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                }
-                }],
         "data": data,
         "columnDefs": [{
             
@@ -90,18 +73,12 @@ table = $('#client').dataTable( {
                 return row.fname + " " + row.lname;} },{
 
             "targets": 1,
-            "data": "plaintiff"},{
-            
-            "targets": 2,
-            "data": "business_nature"},{
-
-            "targets": 3,
             "data": null,
             "render":function(row){
                 return `${row.email}`
             }},{
 
-            "targets": 4,
+            "targets": 2,
             "data": null,
             "className": "text-right",
             "render": function (row) {
@@ -134,6 +111,7 @@ function clearInputs(field=".tab-content"){
 }
 let bill_id;
 function getData(elem){
+    tabs();
     bill_id = table.fnGetData(elem.closest("tr")).billing;
     clearInputs(".tab-content");
     $("#client_id").val(elem.id);
@@ -248,4 +226,12 @@ function updateBus(id,request){
         clearInputs("#tab-2");
     }
 });
+}
+
+function tabs(){
+    bot =  $('button[type=submit')
+    bot.text('Next');
+    bot.addEventListener('click',function(){
+    });
+    onclick="updateData()"
 }
