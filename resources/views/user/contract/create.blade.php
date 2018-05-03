@@ -619,13 +619,14 @@
             // Fee Process
             $(document).on('click','.table-action-btn',function(){
                 if($('.case-chkbx').length < 1){
-                    alert('create Case first');
+                    alert('Create Case first.');
                 }else{
                     var type = $(this).data('type');
                     var title = $(this).data('name');
                     var id = $(this).data('id');
                     $.get('{!! route('get-case') !!}',{
-                        id: tran_id
+                        id: tran_id,
+                        fee_id: id
                     },function(data){
                         if(data.length != 0){
                             modal.find('.case-list').empty();
@@ -636,6 +637,8 @@
                             modal.find('.fee-name').append('<h1>'+ title +'</h1>');
                             modal.data('id',id);
                             modal.modal({backdrop: 'static', keyboard: false});
+                        }else{
+                            alert('Case Fee is already on the list.');
                         }
                     });
                 }

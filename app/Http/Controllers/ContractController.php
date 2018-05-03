@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CaseManagement;
 use App\Client;
 use App\Contract;
+use App\Counsel;
 use App\Fee;
 use App\Transaction;
 use App\TransactionDetail;
@@ -54,7 +56,25 @@ class ContractController extends Controller
      */
     public function show(Contract $contract)
     {
-        //
+        $data = Transaction::with('client')
+            ->with('contract')
+            ->with('cases')
+            ->with('user')
+            ->find($contract->transaction_id);
+//        return $data;
+        $cases = CaseManagement::where('transaction_id', $data->id)
+            ->with('counsel_list')
+            ->get();
+        $counsel = [];
+        foreach ($cases as $ca){
+            foreach ($ca->counsel_list as $c){
+                $counsel[] = $c->counsel_id;
+            }
+        }
+        $ids = array_unique($counsel);
+        $counsels = Counsel::whereIn('id',$ids)->get();
+//        return $counsels;
+        return view('user.contract.show', compact('data','counsels'));
     }
 
     /**
@@ -122,8 +142,9 @@ class ContractController extends Controller
             })
             ->addColumn('action', function ($list) {
                 $menu = [];
-                $menu[] = '<a href="'. route('contract.edit',array('contract'=>$list->id)) .'" class="btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
-                $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> delete</button>';
+                $menu[] = '<a href="'. route('contract.show',array('contract'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-search text-success"></i> show</a>';
+                $menu[] = '<a href="'. route('contract.edit',array('contract'=>$list->id)) .'" class="btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> edit</a>';
+//                $menu[] = '<button data-id="'.$list->id.'" type="button" class="btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> delete</button>';
                 return '<div class="btn-group text-right">'.implode($menu).'</div>';
             })
             ->make(true);

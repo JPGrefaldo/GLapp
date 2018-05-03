@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CaseCounsel;
 use App\CaseManagement;
 use App\Counsel;
+use App\TransactionFeeDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -155,7 +156,14 @@ class CaseManagementController extends Controller
 
     public function getCase(Request $request)
     {
-        $data = CaseManagement::where('transaction_id',$request->input('id'))->get();
+        $ids = TransactionFeeDetail::where('transaction_id',$request->input('id'))
+            ->where('fee_id', $request->input('fee_id'))
+            ->pluck('case_id')
+            ->toArray();
+
+        $data = CaseManagement::where('transaction_id',$request->input('id'))
+            ->whereNotIn('id', $ids)
+            ->get();
 
         return response()->json($data);
     }

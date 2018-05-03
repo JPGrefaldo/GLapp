@@ -119,3 +119,30 @@
 /*#case-table table thead td th:first-child {*/
     /*width: 50px !important;*/
 /*}*/
+
+.placeholder-initial {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+.placeholder-initial > span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #5c5c5c;
+
+}
+
+.dl-contract dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
