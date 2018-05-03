@@ -217,21 +217,40 @@ function popBus(row){
 }
 
 function updateBus(id,request){
+    if($("input[name=name]").val() !==  ""){
     $.post("client",
             `_token=${$("#_token").attr("value")}&request=${request}&id=${id}&${$("#tab-2 input, #client_id").not("[name=billing]").serialize()}`,
         ).done(function(data){
-    console.log(data);
+    console.log(data)
     if(data){
         busTable._fnReDraw();
         clearInputs("#tab-2");
     }
-});
+});}
 }
+bot =  $('button[type=submit');
+swtch = $("ul.nav li.active").index();
+function botNext(){
+    bot.text('Next');
+    bot.on("click",function() {
+        $("a[href='#tab-2']").click();
+    });
+}
+function botSave(){
+    bot.text('Save');
+    bot.on("click",function() {
+        updateData();
+    });
+}
+$("a[href='#tab-1']").on('click', function(){
+    swtch = 0;
+    tabs();
+});
+$("a[href='#tab-2']").on('click', function(){
+    swtch = 1;
+    tabs();
+});
 
 function tabs(){
-    bot =  $('button[type=submit')
-    bot.text('Next');
-    bot.addEventListener('click',function(){
-    });
-    onclick="updateData()"
+    swtch ? botSave() : botNext();
 }

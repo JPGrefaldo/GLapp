@@ -122,7 +122,7 @@
                                                 <input name="oic" type="text" class="form-control" >
                                             </div>
                                             <div class="pull-right">
-                                                <button name="id" type="button" class="btn btn-primary" onclick="updateBus(this.value,'post')">Save</button>
+                                                <button name="id" type="button" class="btn btn-primary" onclick="updateBus(this.value,'post')">Add</button>
                                             </div>
                                         </div>
                                         <div class="col-lg-5 no-padding">
