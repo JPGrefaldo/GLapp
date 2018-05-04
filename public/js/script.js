@@ -89,7 +89,7 @@ table = $('#client').dataTable( {
             "render": function (row) {
                 return  `<div class="btn-group">
                             <a class="btn-success btn btn-xs" href="contract-create/${row.id}">Contract</a>
-                            <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-target="#myModal5" onclick="getData(this)">
+                            <button class="btn-primary btn btn-xs" id="${row.id}" data-toggle="modal" data-backdrop="static" data-target="#myModal5" onclick="getData(this)">
                             View</button>
                             <button class="btn-danger btn btn-xs" id=${row.id} onclick="destroy(this.id)">Delete</button>
                         </div>`;}}
