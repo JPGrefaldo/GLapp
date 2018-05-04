@@ -59,6 +59,7 @@
 
 @section('scripts')
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/script.js') !!}
 {!! Html::script('js/google.js') !!}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"

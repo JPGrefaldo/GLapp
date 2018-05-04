@@ -13,8 +13,8 @@
     </div>
     <div class="col-lg-4 pull-right">
         <div class="title-action">
-            <button type="button" class="btn btn-w-m btn-primary" data-toggle="modal" data-target="#myModal5" onclick="clearInputs()">
-                <i class="fa fa-user"></i> Add Client</button>
+            <button type="button" class="btn btn-w-m btn-primary" data-toggle="modal" data-target="#myModal5" onclick="doit()">
+                <i class="fa fa-user"></i> Add Client</button
         </div>
     </div>
 </div>

@@ -51,11 +51,17 @@ function updateData(){
 function post(loc,tab){
     $.post(loc,
             `_token=${$("#_token").attr("value")}&${$("#tab-1 input, #client_id, [name=billing]").serialize()}`,
-    ).done(function(data){
+    ).fail(error=>{
+        error = error.responseJSON
+        for(i in error.errors){
+            toastr['error'](error.errors[i][0], error.message );
+        }
+    }).done(function(data){
         console.log(data);
         if(data){
             fetchData();
             $("#myModal5 .close").click();
+            bot.unbind('click');
             clearInputs();
         }
     });
@@ -111,7 +117,7 @@ function clearInputs(field=".tab-content"){
 }
 let bill_id;
 function getData(elem){
-    tabs();
+    $("a[href='#tab-1']").click();
     bill_id = table.fnGetData(elem.closest("tr")).billing;
     clearInputs(".tab-content");
     $("#client_id").val(elem.id);
@@ -232,25 +238,26 @@ bot =  $('button[type=submit');
 swtch = $("ul.nav li.active").index();
 function botNext(){
     bot.text('Next');
-    bot.on("click",function() {
+    bot.click(() => {
         $("a[href='#tab-2']").click();
     });
 }
 function botSave(){
     bot.text('Save');
-    bot.on("click",function() {
-        updateData();
-    });
+    bot.click(updateData);
 }
 $("a[href='#tab-1']").on('click', function(){
-    swtch = 0;
-    tabs();
+    botNext();
+    // tabs();
 });
 $("a[href='#tab-2']").on('click', function(){
-    swtch = 1;
-    tabs();
+    botSave();
+    // tabs(1);
 });
-
-function tabs(){
-    swtch ? botSave() : botNext();
+function doit(){
+   clearInputs();
+   $("a[href='#tab-1']").click();
 }
+// function tabs(n = 0){
+//     n ? botSave() : botNext();
+// }

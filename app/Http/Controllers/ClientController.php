@@ -30,7 +30,14 @@ class ClientController extends Controller
     }
 
     public function update(Request $request, Client $client)
-    {
+    {   
+        $this->validate($request,[
+            'fname' => 'required',
+            'mname' => 'required',
+            'lname' => 'required',
+            'email' => 'required',
+        ]);
+
         $request['id'] = $request['client_id'];
         $userId = $client->addClient($request->except('_token','client_id'));
         

@@ -166,6 +166,7 @@ class ContractController extends Controller
             $data = Transaction::with('client')->find($data->id);
         }
         $client_id = str_pad($id, 5, 0, STR_PAD_LEFT);
+        $data['billing'] = $this->billingAdd($data->client);
         return view('user.contract.create', compact('data','client_id'));
     }
 
@@ -209,6 +210,9 @@ class ContractController extends Controller
         }
     }
 
+public function billingAdd($client){
+    return collect($client->business->find($client->billing))->splice(6,7);
+}
 
 
 

@@ -52,7 +52,11 @@
                                 <div class="form-group">
                                     <div class="textarea-group">
                                         <span class="textarea-group-addon bg-muted">Billing Address:</span>
-                                        <label class="form-control resize-vertical">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos eveniet exercitationem porro sint voluptatum. Aliquam aliquid beatae, dolore, in iusto modi, nesciunt nihil nisi provident quae quia reiciendis voluptas voluptatem?</label>
+                                        <label class="form-control resize-vertical">
+                                            @foreach ($data->billing as $billing)
+                                            {{ $billing }}
+                                            @endforeach
+                                        </label>
                                     </div>
                                 </div>
                             </div>
