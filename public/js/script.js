@@ -46,6 +46,8 @@ function fetchData(){
 
 function updateData(){
     post('client/update',);
+    bot.unbind('click');
+    $("#myModal5 .close").click();
 }
 
 function post(loc,tab){
@@ -53,15 +55,12 @@ function post(loc,tab){
             `_token=${$("#_token").attr("value")}&${$("#tab-1 input, #client_id, [name=billing]").serialize()}`,
     ).fail(error=>{
         error = error.responseJSON
-        for(i in error.errors){
-            toastr['error'](error.errors[i][0], error.message );
-        }
+        toastr['error'](error.message );
     }).done(function(data){
         console.log(data);
         if(data){
             fetchData();
             $("#myModal5 .close").click();
-            bot.unbind('click');
             clearInputs();
         }
     });
