@@ -18,13 +18,14 @@ class CreateClientBusinessesTable extends Migration
             $table->integer('client_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('oic')->nullable();
-            $table->string('contract')->nullable();
+            $table->string('contact')->nullable();
             $table->string('type')->nullable();
             $table->string('street_number')->nullable();
             $table->string('route')->nullable();
             $table->string('neighborhood')->nullable();
             $table->string('locality')->nullable();
             $table->string('administrative_area_level_1')->nullable();
+            $table->string('business_nature')->nullable();
             $table->string('country')->nullable();
             $table->string('postal_code')->nullable();
             $table->timestamps();

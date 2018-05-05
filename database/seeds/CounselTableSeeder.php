@@ -11,7 +11,7 @@ class CounselTableSeeder extends Seeder
      */
     public function run()
     {
-//        factory(App\Counsel::class, 30)->create();
+
         factory(App\ContactInfo::class, 30)->create();
     }
 }

@@ -46,8 +46,6 @@ function fetchData(){
 
 function updateData(){
     post('client/update',);
-    bot.unbind('click');
-    $("#myModal5 .close").click();
 }
 
 function post(loc,tab){
@@ -55,7 +53,14 @@ function post(loc,tab){
             `_token=${$("#_token").attr("value")}&${$("#tab-1 input, #client_id, [name=billing]").serialize()}`,
     ).fail(error=>{
         error = error.responseJSON
-        toastr['error'](error.message );
+        toastr['error'](error.message);
+        for(error in error.errors){
+            $(`input[name=${error}]`).parent().addClass("has-error has-feedback");
+        }
+        if(!false){
+            $("a[href='#tab-1']").click();
+        }
+        
     }).done(function(data){
         console.log(data);
         if(data){
@@ -117,38 +122,16 @@ function clearInputs(field=".tab-content"){
 let bill_id;
 function getData(elem){
     $("a[href='#tab-1']").click();
-    bill_id = table.fnGetData(elem.closest("tr")).billing;
+    data = table.fnGetData(elem.closest("tr"));
+    bill_id = data.billing;
     clearInputs(".tab-content");
     $("#client_id").val(elem.id);
     busTable._fnReDraw();
-    for (component of data){
 
-        let found; // Toggle if match found
-        let address; 
-
-        for(row in component){     
-            if (component.id == elem.id){ found = 1;
-                
-                address = component.address;      
-            inputText = document.querySelectorAll(`[name=${row}]`)[0];
-
-            if (inputText){
-                switch (row){
-                    case 'plaintiff':
-                        inputText.value = plaintiff[component[row]];
-                        break;
-                    case 'business_nature':
-
-                        inputText.value = busType[component[row]];
-                        break;
-                    default:
-                    inputText.value = component[row];
-                }                
-            }}
+        for (component in data){
+            $(`[name=${component}`).val(data[component]);
         }
-
-        if (found) break;
-    }}
+}
 
 function getElem(elem){
     return document.getElementsByClassName(elem)[0];
@@ -159,7 +142,6 @@ $("form").submit(function(){
 });
 
 function destroy(id){
-    
     $("#client_id").val(id);
     post("client/destroy");
 }
@@ -222,41 +204,38 @@ function popBus(row){
 }
 
 function updateBus(id,request){
-    if($("input[name=name]").val() !==  ""){
+    if($("input[name=name]").val() !==  "" || Boolean(id)){
     $.post("client",
             `_token=${$("#_token").attr("value")}&request=${request}&id=${id}&${$("#tab-2 input, #client_id").not("[name=billing]").serialize()}`,
         ).done(function(data){
-    console.log(data)
     if(data){
         busTable._fnReDraw();
         clearInputs("#tab-2");
     }
-});}
+});}else{
+    $("input[name=name").parent().addClass("has-error has-feedback");
+    toastr['error']("Business Name is Required");
+}
 }
 bot =  $('button[type=submit');
-swtch = $("ul.nav li.active").index();
-function botNext(){
-    bot.text('Next');
-    bot.click(() => {
-        $("a[href='#tab-2']").click();
-    });
-}
-function botSave(){
-    bot.text('Save');
-    bot.click(updateData);
-}
 $("a[href='#tab-1']").on('click', function(){
-    botNext();
-    // tabs();
+    bot.hide();
 });
 $("a[href='#tab-2']").on('click', function(){
-    botSave();
-    // tabs(1);
+    bot.show();
 });
 function doit(){
    clearInputs();
    $("a[href='#tab-1']").click();
 }
-// function tabs(n = 0){
-//     n ? botSave() : botNext();
-// }
+
+inputValidation = $(".panel-body .form-group input, input[name=name]")
+
+inputValidation.on('focus', function(){
+    $(this.closest("div")).removeClass("has-error has-feedback");}
+);
+$("#myModal5").on('show.bs.modal', removeClass);
+function removeClass(){
+    inputValidation.each(function(){
+        $(this.closest("div")).removeClass("has-error has-feedback");}
+    );}
