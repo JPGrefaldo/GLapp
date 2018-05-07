@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+    
         Route::get('client', 'ClientController@index');
         Route::post('client', 'ClientController@busAddress');
         Route::get('client/list','ClientController@show');
@@ -69,11 +69,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('client/destroy','ClientController@destroy');
 
         /* Service Report Route */
-        Route::get('service-report',[
-            'uses'=>'ServiceReportController@index',
-             'as' => 'servicereport'
-        ]);
-        Route::get('service-report/{id}','ServiceReportController@show'); 
+        Route::resource('service-report','ServiceReportController');
+        // Route::get('service-report/{id}','ServiceReportController@show'); 
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

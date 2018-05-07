@@ -36,7 +36,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h5 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                     Published Transaction
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
+                        <div class="panel panel-warning">
                             <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                                 
                                     <h4 class="panel-title">
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
+                        <div class="panel panel-info">
                             <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                                     <h4 class="panel-title">
                                         Billed Transactions
