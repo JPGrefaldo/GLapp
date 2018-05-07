@@ -15,7 +15,7 @@ class CreateServiceReportsTable extends Migration
     {
         Schema::create('service_reports', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('trans_id')->unsigned()->nullable();
+            $table->integer('transaction_id')->unsigned()->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
 

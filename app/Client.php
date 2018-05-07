@@ -25,5 +25,7 @@ class Client extends Model
     public function case(){
         return $this->hasManyThrough(CaseManagement::class,Transaction::class);
     }
-    
+    public function serviceReport(){
+        return $this->hasManyThrough(ServiceReport::class,Transaction::class);
+    }
 }

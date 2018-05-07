@@ -8,19 +8,25 @@ class ServiceReport extends Model
 {
     public function transactionDetails()
     {
-        return $this->belongsTo(TransactionFeeDetail::class,'trans_id');
+        return $this->belongsTo(TransactionFeeDetail::class,'transaction_id');
     }
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class,'trans_id');
-    }
-    public function case()
-    {
-
+        return $this->belongsTo(Transaction::class);
     }
     public function client()
     {
-        return $this->transaction->client;
+        return $this->belongsTo(Client::class,'App\Transaction.client_id');
     }
+    public function fetch(){
+        $serviceReport = $this->with('transaction')->get();
+        $serviceReport->each(function($item){
+          $item->transaction->contract;
+          $item->transaction->client;
+          $item->transaction->cases;
+        });
+        return $serviceReport;
+    }
+
 }
    

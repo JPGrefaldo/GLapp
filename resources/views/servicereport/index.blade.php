@@ -12,6 +12,7 @@
         background-color: #eaeaea;
         box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     }
+    
 </style>
 @endsection
 
@@ -119,26 +120,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#Unpublished').DataTable({
-        autoWidth: false,
-    });
-    $('#Published').DataTable({
-        autoWidth: false,
-    });
-    $('#Billed').DataTable({
-        autoWidth: false,
-    });
-    $('#data_1').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-} );
-</script>
+{!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/reportScript.js') !!}
 @endsection

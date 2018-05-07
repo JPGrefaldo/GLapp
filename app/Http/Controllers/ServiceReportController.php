@@ -29,23 +29,25 @@ class ServiceReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServiceReport $serviceReport,Request $request)
     {
-        //
+       switch($request['request']){
+           case 'get':
+             $data = $serviceReport->fetch();
+            break;
+       }
+       return compact('data');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ServiceReport  $serviceReport
+     * @param  \App\ServiceReport  $serviceRepor
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport,$id)
+    public function show(ServiceReport $serviceReport)
     {
-        $client = Client::find($id);
-        $client['contract'] = $client->contract;
-        $client['case'] = $client->case;
-        return view("servicereport.list",compact('client'));
+        return view('servicereport.list');
     }
 
     /**
