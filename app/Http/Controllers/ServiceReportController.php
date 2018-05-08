@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
+use App\Transaction;
 use App\ServiceReport;
 use Illuminate\Http\Request;
 
@@ -29,12 +29,17 @@ class ServiceReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ServiceReport $serviceReport,Request $request)
+    public function store(Transaction $transaction,Request $request)
     {
        switch($request['request']){
-           case 'get':
-             $data = $serviceReport->fetch();
-            break;
+            case 'published':
+                $data = $transaction->published();
+                break;
+            case 'unpublished':
+                $data = $transaction->unPublished();
+                break;
+            default:
+                $data = ['error' => 'Invalid Request'];
        }
        return compact('data');
     }

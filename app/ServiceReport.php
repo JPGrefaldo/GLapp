@@ -18,15 +18,5 @@ class ServiceReport extends Model
     {
         return $this->belongsTo(Client::class,'App\Transaction.client_id');
     }
-    public function fetch(){
-        $serviceReport = $this->with('transaction')->get();
-        $serviceReport->each(function($item){
-          $item->transaction->contract;
-          $item->transaction->client;
-          $item->transaction->cases;
-        });
-        return $serviceReport;
-    }
-
 }
    

@@ -1,7 +1,30 @@
 $(document).ready(function() {
-    $('#Unpublished').DataTable({
+tblUnpublished = $('#Unpublished').DataTable({
         autoWidth: false,
+        ajax:{
+            type:"POST",
+            url:"service-report",
+            data: {
+                _token:$("#_token").attr("value"),
+                request:"unpublished",
+            }
+        },
+        columns: [
+            {data: "cases[0].docket"},
+            {data: "cases[0].title"},
+            {data: (data) => {return `${data.client.fname} ${data.client.lname}`} },
+            {data: "contract.contract_number"},
+            {data: "contract.status"},
+        ],
+        columnDefs: [{
+            targets: 5,
+            data: null,
+            render:function(row){
+                return `<a class="btn-success btn btn-xs" href="service-report/${row.id}">Create</a>` 
+            }
+        }]
     });
+    
 tblPublished = $('#Published').DataTable({
     autoWidth: false,
     ajax:{
@@ -9,15 +32,15 @@ tblPublished = $('#Published').DataTable({
         url:"service-report",
         data: {
             _token:$("#_token").attr("value"),
-            request:"get",
+            request:"published",
         }
     },
     columns: [
-        {data: "transaction.cases[0].docket"},
-        {data: "transaction.cases[0].title"},
-        {data: (data) => {return `${data.transaction.client.fname} ${data.transaction.client.lname}`} },
-        {data: "transaction.contract.contract_number"},
-        {data: "transaction.contract.status"},
+        {data: "cases[0].docket"},
+        {data: "cases[0].title"},
+        {data: (data) => {return `${data.client.fname} ${data.client.lname}`} },
+        {data: "contract.contract_number"},
+        {data: "contract.status"},
     ],
     columnDefs: [{
         targets: 5,
