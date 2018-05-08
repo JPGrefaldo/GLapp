@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServiceReport extends Model
 {
-    public function transactionDetails()
+    public function transactionDetail()
     {
         return $this->belongsTo(TransactionFeeDetail::class,'transaction_id');
     }

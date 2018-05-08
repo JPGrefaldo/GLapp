@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Auth::routes();
 
 Route::get('test', function(){
@@ -61,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    
+        /* Client Route */
         Route::get('client', 'ClientController@index');
         Route::post('client', 'ClientController@busAddress');
         Route::get('client/list','ClientController@show');
@@ -70,7 +69,6 @@ Route::middleware(['auth'])->group(function () {
 
         /* Service Report Route */
         Route::resource('service-report','ServiceReportController');
-        // Route::get('service-report/{id}','ServiceReportController@show'); 
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

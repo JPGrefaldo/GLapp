@@ -20,7 +20,7 @@ tblUnpublished = $('#Unpublished').DataTable({
             targets: 5,
             data: null,
             render:function(row){
-                return `<a class="btn-success btn btn-xs" href="service-report/${row.id}">Create</a>` 
+                return `<a class="btn-success btn btn-xs" href="service-report/create?transaction_id=${row.id}">Create</a>` 
             }
         }]
     });
@@ -45,8 +45,8 @@ tblPublished = $('#Published').DataTable({
     columnDefs: [{
         targets: 5,
         data: null,
-        render:function(row){
-            return `<a class="btn-success btn btn-xs" href="service-report/${row.id}">Edit</a>` 
+        render:function(data){
+            return `<a class="btn-success btn btn-xs" href="service-report/${data.report.id}">Edit</a>` 
         }
     }]
     });

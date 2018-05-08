@@ -36,10 +36,14 @@ class Transaction extends Model
     }
     public function unPublished()
     {
-        return $this->doesntHave('report')->with(['client','cases','contract'])->get();
+        return $this->where('status','Ongoing')
+                    ->doesntHave('report')
+                    ->with(['client','cases','contract'])->get();
     }
     public function published()
     {
-        return $this->has('report')->with(['client','cases','contract'])->get();
+        return $this->where('status','Ongoing')
+                    ->has('report')
+                    ->with(['client','cases','contract','report'])->get();
     }
 }

@@ -1,12 +1,9 @@
 @extends('layouts.master')
-
+{{-- {{dd($data)}} --}}
 @section('title', 'Service Report')
 
 @section('styles')
-    {!! Html::style('https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css') !!}
-    {!! Html::style('https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap.min.css') !!}
-    {!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
-    {!! Html::style('css/plugins/daterangepicker/daterangepicker-bs3.css') !!}
+{!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
 @endsection
 
 @section('content')
@@ -35,7 +32,7 @@
                 <div class="col-lg-12">
                     <div class="m-b-md">
                         <a href="#" class="btn btn-success btn-xs pull-right">Update</a>
-                        <h2>S.R. No.: 05072018-01</h2>
+                        <h2>S.R. No.:</h2>
                     </div>
                     <dl class="dl-horizontal">
                         <dt>Contract Status:</dt> <dd><span class="label label-primary">Active</span></dd>
@@ -61,6 +58,47 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Fee's Detail</strong>
+                        </div>
+                        <div class="panel panel-body">
+                            <table id="feeDetail" class="table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Chargeable Expense</strong>
+                            <a href="#" class="btn btn-primary btn-xs pull-right">Add</a>
+                        </div>
+                        <div class="panel-body">
+                            <table id="chargeables" class="table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,35 +108,6 @@
 @endsection
 
 @section('scripts')
-{!! Html::script('https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js') !!}
-{!! Html::script('https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js') !!}
-{!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js') !!}
-{!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js') !!}
-{!! Html::script('js/plugins/datapicker/bootstrap-datepicker.js') !!}
-
-<script>
-$(document).ready(function() {
-    $('#fee-detail-table').DataTable({
-        lengthChange: false,
-        searching: false,
-    });
-    $('#chargeable-expense').DataTable({
-        lengthChange: false,
-        searching: false,
-    });
-
-    $('#case').DataTable({
-    lengthChange: false,
-    searching: false,
-    });
-
-    $('#data_1').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-} );
-</script>
+{!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/updateReport.js') !!}
 @endsection

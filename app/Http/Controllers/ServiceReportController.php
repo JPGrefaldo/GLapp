@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
+    private $data;
     public function index()
     {
         return view('servicereport.index');
@@ -29,29 +30,31 @@ class ServiceReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Transaction $transaction,Request $request)
+    public function store(Transaction $transaction, Request $request)
     {
        switch($request['request']){
             case 'published':
-                $data = $transaction->published();
+                $this->data = $transaction->published();
                 break;
             case 'unpublished':
-                $data = $transaction->unPublished();
+                $this->data = $transaction->unPublished();
                 break;
             default:
-                $data = ['error' => 'Invalid Request'];
+                $this->data = ['error' => 'Invalid Request'];
        }
-       return compact('data');
+       return ['data'=> $this->data];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ServiceReport  $serviceRepor
+     * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport)
+    public function show(ServiceReport $serviceReport,Request $request)
     {
+       $this->store($serviceReport->transaction, new request(['request' => 'published']));
+       return $this->format();
         return view('servicereport.list');
     }
 
@@ -63,7 +66,7 @@ class ServiceReportController extends Controller
      */
     public function edit(ServiceReport $serviceReport)
     {
-        //
+       //
     }
 
     /**
@@ -87,5 +90,13 @@ class ServiceReportController extends Controller
     public function destroy(ServiceReport $serviceReport)
     {
         //
+    }
+    private function format()
+    {   
+       $formatted = [];
+       $data = $this->data[0];
+       $formatted['date'] = date_format($data->report->created_at, 'Ymd'). "-" .$data->report->id;
+       $formatted['date']
+       return $formatted;
     }
 }
