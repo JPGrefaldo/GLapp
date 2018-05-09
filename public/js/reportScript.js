@@ -1,58 +1,47 @@
 $(document).ready(function() {
-tblUnpublished = $('#Unpublished').DataTable({
+var feeid;
+$.fn.dataTable.ext.errMode = 'throw';
+
+tblCase = $('#case').DataTable({
         autoWidth: false,
         ajax:{
-            type:"POST",
             url:"service-report",
             data: {
-                _token:$("#_token").attr("value"),
-                request:"unpublished",
+                request:"case",
             }
         },
         columns: [
-            {data: "cases[0].docket"},
-            {data: "cases[0].title"},
-            {data: (data) => {return `${data.client.fname} ${data.client.lname}`} },
-            {data: "contract.contract_number"},
-            {data: "contract.status"},
+            {data: "docket"},
+            {data: "title"},
         ],
         columnDefs: [{
-            targets: 5,
+            targets: 2,
             data: null,
             render:function(row){
-                return `<a class="btn-success btn btn-xs" href="service-report/create?transaction_id=${row.id}">Create</a>` 
+                return `<a class="btn-success btn btn-xs" >View</a>` 
             }
         }]
     });
-    
-tblPublished = $('#Published').DataTable({
+
+tblFee = $('#fee').DataTable({
     autoWidth: false,
     ajax:{
-        type:"POST",
         url:"service-report",
         data: {
-            _token:$("#_token").attr("value"),
-            request:"published",
+            request:"fee",
+            id:feeid
         }
     },
     columns: [
-        {data: "cases[0].docket"},
-        {data: "cases[0].title"},
-        {data: (data) => {return `${data.client.fname} ${data.client.lname}`} },
-        {data: "contract.contract_number"},
-        {data: "contract.status"},
+        {data: "docket"},
+        {data: "title"},
     ],
     columnDefs: [{
-        targets: 5,
+        targets: 2,
         data: null,
-        render:function(data){
-            return `<a class="btn-success btn btn-xs" href="service-report/${data.report.id}">Edit</a>` 
+        render:function(row){
+            return `<a class="btn-success btn btn-xs">View</a>` 
         }
     }]
-    });
-
-    $('#Billed').DataTable({
-        autoWidth: false,
-    });
-
+});
 } );

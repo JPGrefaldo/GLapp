@@ -38,12 +38,12 @@ class Transaction extends Model
     {
         return $this->where('status','Ongoing')
                     ->doesntHave('report')
-                    ->with(['client','cases','contract'])->get();
+                    ->with(['client','fees','contract'])->get();
     }
     public function published()
     {
         return $this->where('status','Ongoing')
                     ->has('report')
-                    ->with(['client','cases','contract','report'])->get();
+                    ->with(['client','fees','contract','report'])->get();
     }
 }

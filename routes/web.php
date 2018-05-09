@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
 
         /* Service Report Route */
         Route::resource('service-report','ServiceReportController');
+        
     });
 
     Route::group(['middleware' => ['role:admin|council']], function () {

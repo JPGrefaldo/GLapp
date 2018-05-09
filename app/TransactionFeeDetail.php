@@ -15,7 +15,8 @@ class TransactionFeeDetail extends Model
     {
         return $this->belongsTo('App\CaseManagement','case_id','id');
     }
-    public function serviceReport(){
+    public function serviceReport()
+    {
         return $this->hasOne(ServiceReport::class,'trans_id');
     }
 }

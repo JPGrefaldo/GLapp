@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Transaction;
+use App\CaseManagement;
 use App\ServiceReport;
 use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
-    private $data;
-    public function index()
-    {
-        return view('servicereport.index');
+    public function index(Request $request)
+    {   
+        switch ($request['request']){
+            case 'case':
+                return ['data' => CaseManagement::all()];
+                break;
+            case 'fee':
+                return ['data' => $this->getCase($request['request'])];
+                break;
+            default:
+                return view('servicereport.index');
+        }
     }
 
     /**
@@ -34,15 +43,15 @@ class ServiceReportController extends Controller
     {
        switch($request['request']){
             case 'published':
-                $this->data = $transaction->published();
+                $data = $transaction->published();
                 break;
             case 'unpublished':
-                $this->data = $transaction->unPublished();
+                $data = $transaction->unPublished();
                 break;
             default:
-                $this->data = ['error' => 'Invalid Request'];
+                $data = ['error' => 'Invalid Request'];
        }
-       return ['data'=> $this->data];
+       return compact('data');
     }
 
     /**
@@ -53,9 +62,7 @@ class ServiceReportController extends Controller
      */
     public function show(ServiceReport $serviceReport,Request $request)
     {
-       $this->store($serviceReport->transaction, new request(['request' => 'published']));
-       return $this->format();
-        return view('servicereport.list');
+        return view('servicereport.list', $this->store($serviceReport->transaction, new request(['request' => 'published'])));
     }
 
     /**
@@ -91,12 +98,12 @@ class ServiceReportController extends Controller
     {
         //
     }
-    private function format()
-    {   
-       $formatted = [];
-       $data = $this->data[0];
-       $formatted['date'] = date_format($data->report->created_at, 'Ymd'). "-" .$data->report->id;
-       $formatted['date']
-       return $formatted;
+    private function getCase($id)
+    {
+        try{
+            CaseManagement::findOrFail($id)->fees;
+        }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return ['error' => $e->getMessage()];
+        }
     }
 }
