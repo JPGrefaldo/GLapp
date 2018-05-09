@@ -22,10 +22,19 @@ class Client extends Model
     public function contract(){
         return $this->hasMany(Contract::class);
     }
-    public function case(){
+    public function cases(){
         return $this->hasManyThrough(CaseManagement::class,Transaction::class);
     }
+<<<<<<< HEAD
+
+    public function bill()
+    {
+        return $this->hasOne('App\ClientBusiness', 'id','billing');
+    }
+    
+=======
     public function serviceReport(){
         return $this->hasManyThrough(ServiceReport::class,Transaction::class);
     }
+>>>>>>> 157088d30bb4df70f88c23eed59d9d0ee291f295
 }

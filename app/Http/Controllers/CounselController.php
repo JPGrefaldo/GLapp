@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ContactInfo;
 use App\Counsel;
+use App\Helpers\LogActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +20,8 @@ class CounselController extends Controller
      */
     public function index()
     {
+        //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+        LogActivity::addToLog(null, 'Browse', 'Counsel');
         return view('user.counsel.index');
     }
 
@@ -74,6 +77,9 @@ class CounselController extends Controller
             $files = File::files(public_path().'/temp/image/');
             File::delete($files);
 
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($data->fname.' '.$data->lname, 'Add', 'Counsel');
+
             return redirect()->route('counsel.index');
         }
 
@@ -88,6 +94,10 @@ class CounselController extends Controller
     public function show(Counsel $counsel)
     {
         $counsel = Counsel::with('address')->find($counsel->id);
+
+        //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+        LogActivity::addToLog($counsel->fname.' '.$counsel->lname, 'Read', 'Counsel');
+
         return view('user.counsel.show', compact('counsel'));
     }
 
