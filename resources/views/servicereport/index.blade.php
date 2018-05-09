@@ -12,6 +12,7 @@
         background-color: #eaeaea;
         box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     }
+    
 </style>
 @endsection
 
@@ -36,15 +37,15 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h5 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                   Service Reports
+                                    Published Transaction
                                 </h5>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    <table id="serviceReport" class="table table-striped table-hover" >
+                                    <table id="Published" class="table table-striped table-hover" >
                                         <thead>
                                             <tr>
                                                 <th>Docket Number</th>
@@ -60,17 +61,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
+                        <div class="panel panel-warning">
                             <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                                 
                                     <h4 class="panel-title">
-                                            Case
+                                        Unpublished Transactions
                                     </h4>
                                 
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <table id="case" class="table table-striped table-hover" >
+                                    <table id="Unpublished" class="table table-striped table-hover" >
+                                        <thead>
+                                            <tr>
+                                                <th>Docket Number</th>
+                                                <th>Description</th>
+                                                <th>Client Name</th>
+                                                <th>Contract Number</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                    <h4 class="panel-title">
+                                        Billed Transactions
+                                    </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table id="Billed" class="table table-striped table-hover" >
                                         <thead>
                                             <tr>
                                                 <th>Docket Number</th>
@@ -95,24 +120,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#serviceReport').DataTable({
-        autoWidth: false,
-    });
-    $('#case').DataTable({
-        lengthChange: false,
-        searching: false,
-    });
-    $('#data_1').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-    });
-} );
-</script>
+{!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/reportScript.js') !!}
 @endsection

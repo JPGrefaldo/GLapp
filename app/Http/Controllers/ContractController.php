@@ -93,6 +93,7 @@ class ContractController extends Controller
 
 //        return $data;
         $client_id = str_pad($data->client->id, 5, 0, STR_PAD_LEFT);
+        $data['billing'] = $this->billingAdd($data->client);
         return view('user.contract.create', compact('data','client_id'));
     }
 

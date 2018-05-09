@@ -30,4 +30,20 @@ class Transaction extends Model
     {
         return $this->hasMany('App\CaseManagement','transaction_id','id')->with('fees')->with('counsel_list');
     }
+    public function report()
+    {
+        return $this->hasOne(ServiceReport::class);
+    }
+    public function unPublished()
+    {
+        return $this->where('status','Ongoing')
+                    ->doesntHave('report')
+                    ->with(['client','cases','contract'])->get();
+    }
+    public function published()
+    {
+        return $this->where('status','Ongoing')
+                    ->has('report')
+                    ->with(['client','cases','contract','report'])->get();
+    }
 }
