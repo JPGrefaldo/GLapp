@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ContactInfo;
+use App\Helpers\LogActivity;
 use App\IcoeInfo;
 use App\Profile;
 use App\SecurityQA;
@@ -25,6 +26,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+        LogActivity::addToLog(null, 'Browse', 'User');
         return view('admin.user.index');
     }
 
@@ -70,6 +73,8 @@ class UserController extends Controller
         $data->email = $request->input('email');
         $data->password = bcrypt($request->input('password'));
         if($data->save()){
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($data->name, 'Add', 'User');
             return redirect(route('user.index'));
         }
     }
@@ -135,6 +140,8 @@ class UserController extends Controller
             $user->password = bcrypt($request->input('password'));
         }
         if($user->update()){
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($user->name, 'Edit', 'User');
             $user->syncRoles($request->input('role'));
             return redirect(route('user.index'));
         }
@@ -251,6 +258,8 @@ class UserController extends Controller
                 $data->save();
             }
 
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($profile->name.' '.$profile->name, 'Add', 'Profile');
         }
 
 //        return view('admin.profile.index');
@@ -266,6 +275,10 @@ class UserController extends Controller
                 ->with('icoe')
                 ->with('sqa')
                 ->find(Auth::user()->id);
+
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($data->profile->name.' '.$data->profile->name, 'Read', 'Profile');
+
             return view('admin.profile.index', compact('data'));
         }
         return redirect()->route('profile-create');
@@ -352,7 +365,8 @@ class UserController extends Controller
                 $data->answer = $answer[$key];
                 $data->save();
             }
-
+            //Parameter LogActivity::addToLog('Subject/Description', 'Action[Browse, Read, Edit, Add, Delete]', 'Model Name');
+            LogActivity::addToLog($profile->name.' '.$profile->name, 'Edit', 'Profile');
         }
 
 //        return view('admin.profile.index');

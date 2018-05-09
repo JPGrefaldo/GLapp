@@ -53,9 +53,11 @@
                                     <div class="textarea-group">
                                         <span class="textarea-group-addon bg-muted">Billing Address:</span>
                                         <label class="form-control resize-vertical">
-                                            @foreach ($data->billing as $billing)
-                                            {{ $billing }}
-                                            @endforeach
+                                            @if($data->client->billing) @php $billing = collect($data->client->bill)->flatten()->splice(6,7); @endphp
+                                                @foreach($billing as $item)
+                                                    {!! $item !!}
+                                                @endforeach
+                                            @endif
                                         </label>
                                     </div>
                                 </div>

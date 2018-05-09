@@ -22,8 +22,13 @@ class Client extends Model
     public function contract(){
         return $this->hasMany(Contract::class);
     }
-    public function case(){
+    public function cases(){
         return $this->hasManyThrough(CaseManagement::class,Transaction::class);
+    }
+
+    public function bill()
+    {
+        return $this->hasOne('App\ClientBusiness', 'id','billing');
     }
     
 }
