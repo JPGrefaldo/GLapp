@@ -4,6 +4,10 @@
 
 @section('styles')
 {!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
+{!! Html::style('css/plugins/slick/slick.css') !!}
+{!! Html::style('css/plugins/slick/slick-theme.css') !!}
+{!! Html::style('css/plugins/toastr/toastr.min.css') !!}
+
 <style>
 .ibox-content .row div {
         -webkit-transition: width 0.3s ease;
@@ -34,15 +38,8 @@
     <div class="ibox float-e-argins">
         <div class="ibox-content">
             <div class="row">
-                <div class="bg-primary h-300 col-lg-10">
-                </div>
-                <div class="bg-warning h-300 col-lg-1">
-                </div>
-                <div class="bg-info h-300 col-lg-1">
-                </div>
-            </div>
-            <div class="row invisible">
-                <div class="col-sm-4 col">
+                <div class="slicker">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Cases
@@ -61,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Fee Details
@@ -80,8 +77,9 @@
                             </table>
                         </div>
                     </div>
+                    <button class="btn btn-muted col-lg-offset-6" onclick="prev()">Back</button>
                 </div>
-                <div class="col-sm-4 col">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Chargeable Expense
@@ -101,8 +99,10 @@
                             </table>
                         </div>
                     </div>
+                    <button class="btn btn-muted col-lg-offset-6" onclick="prev()">Back</button>
                 </div>     
             </div>
+        </div>
         </div>
     </div>          
 </div>
@@ -111,5 +111,7 @@
 
 @section('scripts')
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/plugins/slick/slick.min.js') !!}
+{!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/reportScript.js') !!}
 @endsection

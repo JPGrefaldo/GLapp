@@ -16,7 +16,10 @@ class ServiceReportController extends Controller
                 return ['data' => CaseManagement::all()];
                 break;
             case 'fee':
-                return ['data' => $this->getCase($request['request'])];
+                return ['data' => CaseManagement::findOrFail($request['id'])->fees];
+                break;
+            case 'chargeable':
+                return ['data' => $this->getCase($request['id'])];
                 break;
             default:
                 return view('servicereport.index');
@@ -101,7 +104,7 @@ class ServiceReportController extends Controller
     private function getCase($id)
     {
         try{
-            CaseManagement::findOrFail($id)->fees;
+            return CaseManagement::findOrFail($id)->fees;
         }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
             return ['error' => $e->getMessage()];
         }
