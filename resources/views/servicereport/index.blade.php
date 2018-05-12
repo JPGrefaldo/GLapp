@@ -83,7 +83,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Chargeable Expense
-                            <a href="#" class="btn btn-primary btn-xs pull-right">Add</a>
+                            <a href="#" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#chargeableModal">Add</a>
                         </div>
                         <div class="panel-body">
                             <table id="chargeable" class="table table-striped table-hover">
@@ -105,6 +105,31 @@
         </div>
         </div>
     </div>          
+</div>
+<div class="modal inmodal fade" id="chargeableModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Chargeable Expense</h4>
+                <small class="font-bold">Add new Chargeable Expense</small>
+            </div>
+            <div class="modal-body">
+                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Name</span>
+                    <input name="name" type="text" class="form-control" required>
+                </div>
+                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Description</span>
+                    <input name="description" type="text" class="form-control" required>
+                </div>
+                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Amount</span>
+                    <input name="amount" type="text" class="form-control" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="sendChargeable()" data-dismiss="modal">Add</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

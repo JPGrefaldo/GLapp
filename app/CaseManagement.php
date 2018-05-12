@@ -18,6 +18,6 @@ class CaseManagement extends Model
 
     public function fees()
     {
-        return $this->hasMany('App\TransactionFeeDetail','case_id','id')->with('fee');
+        return $this->hasMany('App\TransactionFeeDetail','case_id','id')->with('fee')->with('chargeables');
     }
 }

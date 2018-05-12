@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Transaction;
+use App\Chargeable;
+use App\TransactionFeeDetail;
 use App\CaseManagement;
 use App\ServiceReport;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ServiceReportController extends Controller
                 return ['data' => CaseManagement::findOrFail($request['id'])->fees];
                 break;
             case 'chargeable':
-                return ['data' => $this->getCase($request['id'])];
+                return ['data' => TransactionFeeDetail::findOrFail($request['id'])->chargeables];
                 break;
             default:
                 return view('servicereport.index');
@@ -42,19 +43,13 @@ class ServiceReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Transaction $transaction, Request $request)
+    public function store(Chargeable $chargeable, Request $request)
     {
-       switch($request['request']){
-            case 'published':
-                $data = $transaction->published();
-                break;
-            case 'unpublished':
-                $data = $transaction->unPublished();
-                break;
-            default:
-                $data = ['error' => 'Invalid Request'];
-       }
-       return compact('data');
+       $chargeable->name = $request->name;
+       $chargeable->description = $request->description;
+       $chargeable->amount = $request->amount;
+       $chargeable->transaction_fee_detail_id = $request->transaction_fee_detail_id;
+       $chargeable->save();
     }
 
     /**

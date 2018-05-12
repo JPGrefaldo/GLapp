@@ -19,4 +19,8 @@ class TransactionFeeDetail extends Model
     {
         return $this->hasOne(ServiceReport::class,'trans_id');
     }
+    public function chargeables()
+    {
+        return $this->hasMany(Chargeable::class);
+    }
 }

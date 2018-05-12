@@ -18,8 +18,12 @@ class CreateChargeablesTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('amount')->nullable();
-            $tabel->integer('fee_id')
+            $table->integer('transaction_fee_detail_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('transaction_fee_detail_id')
+                ->references('id')->on('transaction_fee_details')
+                ->onDelete('cascade');
         });
     }
 
