@@ -7,6 +7,7 @@
 {!! Html::style('css/plugins/slick/slick.css') !!}
 {!! Html::style('css/plugins/slick/slick-theme.css') !!}
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
+{!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
 
 <style>
 .ibox-content .row div {
@@ -20,8 +21,7 @@
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-        
-    <div class="col-lg-10">
+    <div class="col-lg-8">
         <h2>Service Report</h2>
         <ol class="breadcrumb">
             <li>
@@ -31,6 +31,11 @@
                 <strong>Service Report</strong>
             </li>
         </ol>
+    </div>
+    <div class="col-lg-4">
+        <div class="title-action">
+            <button type="submit" class="btn btn-primary" onclick="saveSR()">Save Contract</button>
+        </div>
     </div>
 </div>
 
@@ -136,6 +141,7 @@
 
 @section('scripts')
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
+{!! Html::script('js/plugins/dataTables/datatables.select.min.js') !!}
 {!! Html::script('js/plugins/slick/slick.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/reportScript.js') !!}

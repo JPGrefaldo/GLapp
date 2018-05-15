@@ -50,12 +50,23 @@ tblCase = $('#case').DataTable({
 tblFee = $('#fee').DataTable({
     autoWidth: false,
     columns: [
-        {data: "fee.name"},
+        {data: "name"},
         {data: "charge_type"},
         {data: "amount"},
     ],
     columnDefs: [{
-        targets: 2,
+        targets:0,
+        data:null,
+        render:function(a,b,row){
+        return `<div class="radio radio-success">
+                    <input type="radio" name="radio1" value="transaction_fee_detail_id=${row.id}" >
+                    <label for="radio1">
+                        ${row.fee.name}
+                    </label>
+                </div>`
+        }
+    },{
+        targets: 3,
         data: null,
         render:function(a,b,row){
             console.log(row.chargeables.lenght ? true : false);
@@ -67,9 +78,13 @@ tblFee = $('#fee').DataTable({
         }
     }]
 });
-var a;
+
 tblChargeable = $('#chargeable').DataTable({
     autoWidth: false,
+    dom: 'frBtip',
+    buttons: [
+        'csv','print'
+    ],
     columns: [
         {data: "name"},
         {data: "description"},
@@ -88,6 +103,7 @@ $('#fee, #chargeable').on('xhr.dt',function(e, settings, json, xhr){
     let slicker = $('.slicker');
     if(xhr.status === 200){
         slicker.slick('slickCurrentSlide') < 2 ? slicker.slick('slickNext'): null ;
+        console.log(settings);
     }else{
         toastr['error']("No records found!");
     }
@@ -108,6 +124,7 @@ function sendChargeable(){
     $.post('service-report', $.param(chargeableData) + '&' + $('.modal-content input').serialize()).fail(function(){
         toastr['error'](`Oops! something went wrong, call CHARLIE PUTH!`);}).done(function(){
             getChargeable(chargeableData.transaction_fee_detail_id);
+            tblFee.ajax.reload();
             });
 }
 
@@ -123,3 +140,13 @@ function getChargeable(id){
 function prev(){
     $('.slicker').slick('slickPrev');
 }
+
+function saveSR(){
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $("#_token").attr('value')},
+        method: "PUT",
+        url: "/service-report/test",
+        data:$('input[name=radio1]:checked').val()
+    }).done(response=>console.log(response)).fail(response=>toastr['error'](`Please Select Fee Details`))
+}
+

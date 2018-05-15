@@ -81,9 +81,13 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ServiceReport $serviceReport)
+    public function update(Request $request)
     {
-        //
+        $serviceReport = request()->validate([
+            'transaction_fee_detail_id'=>'required'
+        ]);        
+        ServiceReport::create($serviceReport); 
+        return $request;
     }
 
     /**
