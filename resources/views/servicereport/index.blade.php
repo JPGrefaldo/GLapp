@@ -8,6 +8,7 @@
 {!! Html::style('css/plugins/slick/slick-theme.css') !!}
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
+{!! Html::style('css/plugins/iCheck/custom.css') !!}
 
 <style>
 .ibox-content .row div {
@@ -16,6 +17,30 @@
         -o-transition: width 0.3s ease;
         transition: width 0.3s ease;
     }
+
+.del {
+        color: #fff;
+        background-color: #d9534f;
+        border-color: #d343f3a;
+}
+
+.del:focus {
+        color: #fff;
+        background-color: #c9302c;
+        border-color: #761c19
+}
+
+.del:hover {
+        color: #fff;
+        background-color: #c9302c;
+        border-color: #ac2925
+}
+
+.del:active {
+        color: #fff;
+        background-color: #c9302c;
+        border-color: #ac2925
+}
 </style>
 @endsection
 
@@ -94,8 +119,18 @@
                             <table id="chargeable" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-info">
+                                                <input id="checkboxMain" onchange="selectedHandler(this)" type="checkbox">
+                                                <label for="checkboxMain">Select All</label>
+                                            </div>
+                                            <div class="checkbox checkbox-danger">
+                                                <a class="btn-danger btn btn-xs" onclick="delChargeables()" style="display: none;">Delete</a>
+                                            </div>
+                                            
+                                        </th>
+                                        <th>Name</th>
                                         <th>Description</th>
-                                        <th>Charge Type</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -144,5 +179,6 @@
 {!! Html::script('js/plugins/dataTables/datatables.select.min.js') !!}
 {!! Html::script('js/plugins/slick/slick.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
+{!! Html::script('js/plugins/iCheck/icheck.min.js') !!}
 {!! Html::script('js/reportScript.js') !!}
 @endsection
