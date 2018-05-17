@@ -94,7 +94,7 @@ class ContractController extends Controller
 //        return $data;
         $client_id = str_pad($data->client->id, 5, 0, STR_PAD_LEFT);
         $data['billing'] = $this->billingAdd($data->client);
-        return view('user.contract.create', compact('data','client_id'));
+        return view('user.contract.create2', compact('data','client_id'));
     }
 
     /**
@@ -156,7 +156,17 @@ class ContractController extends Controller
         return $data;
     }
 
-    public function createClientContract($id)
+    public function caseList(Request $request)
+    {
+        $data = CaseManagement::where('transaction_id', $request->input('id'))
+            ->where('temp', 0)
+            ->with('fees')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function createContract($id)
     {
         $data = Transaction::where('user_id', Auth::user()->id)
             ->where('client_id', $id)
@@ -171,14 +181,16 @@ class ContractController extends Controller
             $data = Transaction::with('client')->find($data->id);
         }
         $client_id = str_pad($id, 5, 0, STR_PAD_LEFT);
-        $data['billing'] = $this->billingAdd($data->client);
+
         return view('user.contract.create', compact('data','client_id'));
     }
 
     public function contractStore(Request $request)
     {
         $total = 0;
-        $count = Contract::count();
+        $count = Transaction::whereNotIn('status','pending')->count();
+        $count = str_pad($count + 1, 6, 0, STR_PAD_LEFT);
+        $count = $count .'-'. Carbon::now()->format('m-Y');
         $tran = Transaction::with('fees')->find($request->input('id'));
         foreach($tran->fees as $fee){
             $total += $fee->charge_doc;
@@ -195,7 +207,7 @@ class ContractController extends Controller
             $data = new Contract();
             $data->transaction_id = $tran->id;
             $data->client_id = $tran->client_id;
-            $data->contract_number = str_pad($count + 1, 6, 0, STR_PAD_LEFT);
+            $data->contract_number = $count;
         }
         if($request->input('action') === 'edit'){
             $data = Contract::where('transaction_id', $tran->id)->first();

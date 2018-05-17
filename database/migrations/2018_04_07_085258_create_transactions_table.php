@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('client_id');
-            $table->enum('status',array('pending','Approved','Ongoing','Accomplished'))->default('pending');
+            $table->enum('status',array('pending','void','Approved','Ongoing','Accomplished'))->default('pending');
             $table->timestamps();
         });
     }
