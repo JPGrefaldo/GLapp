@@ -22,7 +22,7 @@ class CreateCaseManagementsTable extends Migration
             $table->date('date')->nullable();
             $table->string('number')->unique()->nullable();
             $table->enum('class', array('Administrative','Criminal','Civil','Collection Retainer','General Retainer','Labor','Special Project','Others'))->nullable();
-            $table->enum('status', array('Open','Close'))->default('Open');
+            $table->enum('status', ['Open','Close'])->default('Open');
             $table->timestamps();
 
             $table->foreign('transaction_id')

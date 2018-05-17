@@ -20,6 +20,7 @@
         <div class="col-lg-4">
             <div class="title-action">
                 <button type="button" id="save-contract-btn" data-action="{!! ($data->status === 'Ongoing') ? 'edit' : 'add' !!}" class="btn btn-primary">{!! ($data->status === 'Ongoing') ? 'Update Contract' : 'Save Contract' !!}</button>
+                <button type="button" id="load-case" class="btn btn-primary">Load Case</button>
             </div>
         </div>
     </div>
@@ -69,6 +70,25 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Trust Fund</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon bg-muted">Amount:</span>
+                                        <label class="form-control text-success text-right" id="fund-total" data-total="0">0.00</label>
+                                        <span class="input-group-addon bg-muted"><span class="span-btn fund-add-btn"><i class="fa fa-plus"></i></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row" id="contract-info">
                     <div class="col-sm-12">
                         <div class="ibox float-e-margins">
@@ -107,7 +127,7 @@
                                 <div class="form-group">
                                     <div class="input-group m-b total-box">
                                         <span class="input-group-addon bg-muted">Total:</span>
-                                        <label class="form-control text-success" id="contract-total" data-total="0"></label>
+                                        <label class="form-control text-success" id="contract-total" data-total="0">0.00</label>
                                     </div>
                                 </div>
                             </div>
@@ -140,9 +160,6 @@
         </div>
 
     </div>
-
-
-
 
     <div class="modal inmodal fade" id="case-modal" data-id="0" data-action="add" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -354,6 +371,35 @@
         </div>
     </div>
 
+    <div class="modal inmodal fade" id="fund-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 15px;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Trust Fund</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon bg-muted">Amount:</span>
+                            <input name="amount" type="text" class="form-control numonly required" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="textarea-group">
+                            <span class="textarea-group-addon bg-muted">Description: <small>[optional]</small></span>
+                            <textarea name="description" id="" class="form-control resize-vertical"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="fund-store-btn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 
@@ -372,13 +418,10 @@
         $(document).ready(function(){
             var caseModal = $('#case-modal');
             var feeModal = $('#fee-modal');
+            var fundModal = $('#fund-modal');
             var tran_id = '{!! $data->id !!}';
-
-            $(document).on('change','.required',function(){
-                $(this).closest('.form-group').removeClass('has-error');
-            })
-
             loadCases();
+            getFund();
 
             $('.input-group.date').datepicker({
                 startView: 2,
@@ -386,6 +429,38 @@
                 keyboardNavigation: false,
                 forceParse: false,
                 autoclose: true
+            });
+
+            $(document).on('click','#load-case',function(){
+                loadCases();
+            });
+
+            $(document).on('click','.fund-add-btn',function(){
+                fundModal.modal({backdrop: 'static', keyboard: false});
+            });
+
+            $(document).on('click','#fund-store-btn',function(){
+                var amount = parseInt(fundModal.find('input[name="amount"]').val()||0);
+                if(amount < 1){
+                    fundModal.find('input[name="amount"]').closest('.form-group').addClass('has-error');
+                    toastr.error('Required!','Invalid amount!');
+                }else{
+
+                    $.post('{!! route('store-fund') !!}',{
+                        _token: '{!! csrf_token() !!}',
+                        amount: parseInt(fundModal.find('input[name="amount"]').val()),
+                        desc: fundModal.find('textarea[name="description"]').val(),
+                        id: tran_id
+                    },function(data){
+                        if(data != 0){
+                            toastr.success('Successful!','Trust fund added!');
+                            getFund();
+                            fundModal.modal('toggle');
+                        }else{
+                            toastr.error('Failed!','Cannot save data, repeat process!');
+                        }
+                    });
+                }
             });
 
             $(document).on('click','.case-action-btn',function(){
@@ -503,46 +578,65 @@
             });
 
             $(document).on('click','#btn-store-fee',function(){
-                storeFeeDetail();
+                if(feeValidator() < 1){
+                    $.post('{!! route('case-fee-store') !!}', {
+                        _token: '{!! csrf_token() !!}',
+                        transaction_id: tran_id,
+                        fee_id: feeModal.find('input[name="fee"]:checked').val(),
+                        case_id: feeModal.data('id'),
+                        action: feeModal.data('action'),
+                        charge_type: feeModal.find('select[name="charge_type"]').val(),
+                        status: feeModal.find('select[name="status"]').val(),
+                        free_page: parseInt(feeModal.find('input[name="free_page"]').val()||0),
+                        charge_doc: parseFloat(feeModal.find('input[name="charge_doc"]').val()||0),
+                        rate_1: parseFloat(feeModal.find('input[name="rate_1"]').val()||0),
+                        rate_2: parseFloat(feeModal.find('input[name="rate_2"]').val()||0),
+                        rate: parseFloat(feeModal.find('input[name="rate"]').val()||0),
+                        consumable_time: parseInt(feeModal.find('input[name="consumable_time"]').val()||0),
+                        excess_rate: parseFloat(feeModal.find('input[name="excess_rate"]').val()||0),
+                        amount: parseFloat(feeModal.find('input[name="amount"]').val()||0),
+                        cap_value: parseFloat(feeModal.find('input[name="cap_value"]').val()||0)
+                    },function(data){
+                        if(data[0].length != 0){
+                            loadCases(data[0].cases.id);
+                        }
+                        feeModal.modal('toggle');
+                        toastr.success('Successful!','Fee added successfully!');
+                    });
+                }
             });
 
             $(document).on('click','.fee-action-btn',function(){
-                var item = $(this);
-                var value = parseFloat(item.closest('tr').data('total'));
-                var caseTotal = parseFloat(item.closest('.tab-pane').find('.fees-total').data('total'));
-                var contractTotal = parseFloat($('#contract-total').data('total'));
                 $.get('{!! route('tran-fee-action') !!}',{
                     id: $(this).data('id'),
                     action: $(this).data('action')
                 },function(data){
                     if(data.length != 0) {
-                        feeModal.data('id',data.id);
-                        feeModal.data('action','edit');
-                        feeModal.find('select[name="charge_type"]').val(data.charge_type);
-                        feeModal.find('select[name="status"]').val(data.status);
-                        feeModal.find('input[name="free_page"]').val(data.free_page);
-                        feeModal.find('input[name="charge_doc"]').val(data.charge_doc);
-                        feeModal.find('input[name="rate_1"]').val(data.rate_1);
-                        feeModal.find('input[name="rate_2"]').val(data.rate_2);
-                        feeModal.find('input[name="rate"]').val(data.rate);
-                        feeModal.find('input[name="consumable_time"]').val(data.consumable_time);
-                        feeModal.find('input[name="excess_rate"]').val(data.excess_rate);
-                        feeModal.find('input[name="amount"]').val(data.amount);
-                        feeModal.find('input[name="cap_value"]').val(data.cap_value);
-                        feeModal.find('.fee-list').append('<div class="i-checks"><label> <input type="radio" value="'+ data.fee.id +'" name="fee" checked> <i></i> '+ data.fee.display_name +' </label></div>');
-                        $('.i-checks').iCheck({
-                            radioClass: 'iradio_square-green',
-                        });
-                        feeModal.modal({backdrop: 'static', keyboard: false});
-                    }else{
-                        caseTotal -= value;
-                        contractTotal -= value;
-                        item.closest('.tab-pane').find('.fees-total').data('total', caseTotal);
-                        item.closest('.tab-pane').find('.fees-total').empty().text(numeral(caseTotal).format('0,0.00'));
-                        $('#contract-total').data('total', contractTotal);
-                        $('#contract-total').empty().text(numeral(contractTotal).format('0,0.00'));
-                        item.closest('tr').remove();
+                        if(data[0] == 'edit'){
+                            feeModal.data('id',data[1].id);
+                            feeModal.data('action','edit');
+                            feeModal.find('select[name="charge_type"]').val(data[1].charge_type);
+                            feeModal.find('select[name="status"]').val(data[1].status);
+                            feeModal.find('input[name="free_page"]').val(data[1].free_page);
+                            feeModal.find('input[name="charge_doc"]').val(data[1].charge_doc);
+                            feeModal.find('input[name="rate_1"]').val(data[1].rate_1);
+                            feeModal.find('input[name="rate_2"]').val(data[1].rate_2);
+                            feeModal.find('input[name="rate"]').val(data[1].rate);
+                            feeModal.find('input[name="consumable_time"]').val(data[1].consumable_time);
+                            feeModal.find('input[name="excess_rate"]').val(data[1].excess_rate);
+                            feeModal.find('input[name="amount"]').val(data[1].amount);
+                            feeModal.find('input[name="cap_value"]').val(data[1].cap_value);
+                            feeModal.find('.fee-list').append('<div class="i-checks"><label> <input type="radio" value="'+ data[1].fee.id +'" name="fee" checked> <i></i> '+ data[1].fee.display_name +' </label></div>');
+                            $('.i-checks').iCheck({
+                                radioClass: 'iradio_square-green',
+                            });
+                            feeModal.modal({backdrop: 'static', keyboard: false});
+                        }
+                        if(data[0] == 'delete'){
+                            loadCases(data[1]);
+                        }
                     }
+
                 });
             });
 
@@ -587,6 +681,10 @@
                 $(this).find('.fee-list').empty();
             });
 
+            fundModal.on('hidden.bs.modal', function () {
+                $(this).find('input').val('');
+            });
+
             function loadCounsel(){
                 $.get('{!! route('load-counsel') !!}',{
                     id: caseModal.data('id'),
@@ -621,7 +719,7 @@
                 $.get('{!! route('create-contract-case-list') !!}',{
                     id: tran_id
                 },function(data){
-//                    console.log('load: '+ case_id);
+                    console.log('load: '+ case_id);
                     if(data.length != 0){
                         $('.case-action-btn').each(function(){
                             if($(this).data('type') != 'add'){
@@ -715,7 +813,7 @@
                                     total += parseFloat(data[a].fees[b].amount);
                                     total += parseFloat(data[a].fees[b].cap_value);
                                     content.find('#tab-'+ data[a].id).find('.fees-table').append('' +
-                                        '<tr data-total="'+ total +'" class="fee-row">' +
+                                        '<tr class="fee-row">' +
                                         '<td>'+ data[a].fees[b].fee.display_name +'</td>' +
                                         '<td>'+ data[a].fees[b].charge_type +'</td>' +
                                         '<td class="text-right">'+ data[a].fees[b].free_page +'</td>' +
@@ -736,22 +834,23 @@
                                         '</td>' +
                                         '</tr>' +
                                         '');
-                                    gtotal += parseFloat(total);
+                                    gtotal += total;
+                                    console.log('total: '+ total);
                                 }
-                                content.find('#tab-'+ data[a].id).find('.fees-total').data('total', gtotal);
                                 content.find('#tab-'+ data[a].id).find('.fees-total').empty().text(numeral(gtotal).format('0,0.00'));
                             }else{
                                 content.find('#tab-'+ data[a].id).find('.fees-table').empty().append('' +
-                                    '<tr>' +
-                                    '<td colspan="11" class="text-center"><h2>No record found</h2></td>' +
-                                    '</tr>' +
+                                        '<tr>' +
+                                            '<td colspan="11" class="text-center"><h2>No record found</h2></td>' +
+                                        '</tr>' +
                                     '');
                                 content.find('#tab-'+ data[a].id).find('.invoice-total').hide();
                             }
-                            grandTotal += parseFloat(gtotal);
+                            grandTotal += gtotal;
+                            console.log('gtotal: '+ gtotal);
                         }
-                        $('#contract-total').data('total', grandTotal);
                         $('#contract-total').empty().text(numeral(grandTotal).format('0,0.00'));
+                        console.log('grandTotal: '+ grandTotal);
                     }else{
                         $('.case-action-btn').each(function(){
                             if($(this).data('type') != 'add'){
@@ -765,33 +864,12 @@
 
             }
 
-            function storeFeeDetail(){
-                if(feeValidator() < 1){
-                    $.post('{!! route('case-fee-store') !!}', {
-                        _token: '{!! csrf_token() !!}',
-                        transaction_id: tran_id,
-                        fee_id: feeModal.find('input[name="fee"]:checked').val(),
-                        case_id: feeModal.data('id'),
-                        action: feeModal.data('action'),
-                        charge_type: feeModal.find('select[name="charge_type"]').val(),
-                        status: feeModal.find('select[name="status"]').val(),
-                        free_page: parseInt(feeModal.find('input[name="free_page"]').val()||0),
-                        charge_doc: parseFloat(feeModal.find('input[name="charge_doc"]').val()||0),
-                        rate_1: parseFloat(feeModal.find('input[name="rate_1"]').val()||0),
-                        rate_2: parseFloat(feeModal.find('input[name="rate_2"]').val()||0),
-                        rate: parseFloat(feeModal.find('input[name="rate"]').val()||0),
-                        consumable_time: parseInt(feeModal.find('input[name="consumable_time"]').val()||0),
-                        excess_rate: parseFloat(feeModal.find('input[name="excess_rate"]').val()||0),
-                        amount: parseFloat(feeModal.find('input[name="amount"]').val()||0),
-                        cap_value: parseFloat(feeModal.find('input[name="cap_value"]').val()||0)
-                    },function(data){
-                        if(data[0].length != 0){
-                            loadCases(data[0].cases.number);
-                        }
-                        feeModal.modal('toggle');
-                        toastr.success('Successful!','Fee added successfully!');
-                    });
-                }
+            function getFund() {
+                $.get('{!! route('get-fund') !!}',{
+                    id: tran_id
+                },function(data){
+                    $('#fund-total').text(data);
+                });
             }
 
             var feeValidator = function(){
@@ -811,6 +889,11 @@
                     feeModal.find('.least').closest('.form-group').addClass('has-error');
                     toastr.warning('Required!','Put at least one payment!');
                 }
+                if(count > 1){
+                    setTimeout(function(){
+                        $('.form-group').removeClass('has-error');
+                    }, 6000);
+                }
                 return count;
             }
 
@@ -825,6 +908,11 @@
                 });
                 if(count > 0){
                     toastr.error('Required!','Invalid inputs!');
+                }
+                if(count > 1){
+                    setTimeout(function(){
+                        $('.form-group').removeClass('has-error');
+                    }, 6000);
                 }
                 return count;
             }
@@ -842,10 +930,6 @@
                     console.log(id +': '+ fees);
                     if(fees < 1){
                         tab.addClass('has-error');
-                        toastr.options = {
-                            "closeButton": true,
-                            "progressBar": true,
-                        }
                         toastr.error('Required!','Please add Fee\'s in Case: '+ tab.data('title') +'!');
                         count += 1;
                     }
@@ -867,7 +951,6 @@
                 if($('#billing-address').length){
                     $('#billing-address').addClass('shake');
                     toastr.error('Required!','Update Billing address!');
-//                    count += 1;
                 }
 
                 if(!$('.fees-table').length){
@@ -878,9 +961,14 @@
                 setTimeout(function(){
                     $('.tabs-container').find('.nav-tabs > li').removeClass('has-error');
                     $('#billing-address').removeClass('shake');
+                    $('.form-group').removeClass('has-error');
                 }, 6000);
-
                 return count;
+            }
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
             }
 
         });

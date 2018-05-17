@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('fees', 'TransactionController@feeList')->name('fees');
         Route::get('tran-fee-action', 'TransactionController@tranFeeAction')->name('tran-fee-action');
         Route::post('case-fee-store', 'TransactionController@caseFeeStore')->name('case-fee-store');
+        Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
+        Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
