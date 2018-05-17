@@ -31,20 +31,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="m-b-md">
-                        <a href="#" class="btn btn-success btn-xs pull-right">Update</a>
-                    <h2>S.R. No.: <strong>{{date_format($data[0]->report->created_at,"Ymd")."-".$data[0]->report->id}}</strong></h2>
+                        {{-- <a href="#" class="btn btn-success btn-xs pull-right">Update</a> --}}
+                    <h2>S.R. No.: <strong></strong></h2>
                     </div>
                     <dl class="dl-horizontal">
-                    <dt>Case Class:</dt> <dd><span class="label label-primary">{{ $data[0]->cases[0]->class }}</span></dd>
+                    <dt>Case Class:</dt> <dd><span class="label label-primary"></span></dd>
                     </dl>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-5">
                     <dl class="dl-horizontal">
-                    <dt>Client Name:</dt> <dd>{{$data[0]->client->fname." ".$data[0]->client->lname }}</dd>
-                        <dt>Docket No.:</dt> <dd>{{$data[0]->cases->[0]->docket }}</dd>
-                        <dt>Case Title.:</dt> <dd>{{$data[0]->cases->[0]->title }}</dd>
+                    <dt>Client Name:</dt> <dd></dd>
+                        <dt>Docket No.:</dt> <dd></dd>
+                        <dt>Case Title.:</dt> <dd></dd>
                         <dt>Lead Counsel:<dt> <dd>Peter Leo M. Ralla</dd>
                         <dt>Venue:</dt> <dd>101</dd>
                     </dl>
@@ -58,27 +58,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <strong>Fee's Detail</strong>
-                        </div>
-                        <div class="panel panel-body">
-                            <table id="feeDetail" class="table table-striped table-hover" >
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Description</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <strong>Chargeable Expense</strong>

@@ -6,7 +6,7 @@ class ServiceReport extends Model
 {
     public function transactionDetail()
     {
-        return $this->belongsTo(TransactionFeeDetail::class,'transaction_id');
+        return $this->belongsTo(TransactionFeeDetail::class,'transaction_fee_detail_id');
     }
     public function transaction()
     {
@@ -14,7 +14,7 @@ class ServiceReport extends Model
     }
     public function client()
     {
-        return $this->belongsTo(Client::class,'App\Transaction.client_id');
+        return $this->belongsTo(TransactionFeeDetail::class,'transaction_fee_detail_id')->with('transaction');
     }
 }
    

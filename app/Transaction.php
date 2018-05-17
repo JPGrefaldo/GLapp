@@ -34,16 +34,5 @@ class Transaction extends Model
     {
         return $this->hasOne(ServiceReport::class);
     }
-    public function unPublished()
-    {
-        return $this->where('status','Ongoing')
-                    ->doesntHave('report')
-                    ->with(['client','fees','contract'])->get();
-    }
-    public function published()
-    {
-        return $this->where('status','Ongoing')
-                    ->has('report')
-                    ->with(['client','fees','contract','report'])->get();
-    }
+
 }

@@ -9,6 +9,8 @@
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
 {!! Html::style('css/plugins/iCheck/custom.css') !!}
+{!! Html::style('css/plugins/sweetalert/sweetalert.css') !!}
+
 
 <style>
 .ibox-content .row div {
@@ -180,5 +182,6 @@
 {!! Html::script('js/plugins/slick/slick.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/plugins/iCheck/icheck.min.js') !!}
+{!! Html::script('js/plugins/sweetalert/sweetalert.min.js') !!}
 {!! Html::script('js/reportScript.js') !!}
 @endsection

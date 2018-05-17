@@ -1,7 +1,3 @@
-
-
-        
-
 $.fn.dataTable.ext.errMode = 'throw';
 
 toastr.options = {
@@ -33,7 +29,7 @@ $('.slicker').slick({
 tblCase = $('#case').DataTable({
         autoWidth: false,
         ajax:{
-            url:"service-report",
+            url:"create",
             data: {
                 request:"case",
             }
@@ -120,7 +116,7 @@ function addChargeableId(id){
 }
 
 function sendChargeable(){
-    $.post('service-report', $.param(chargeableData) + '&' + $('.modal-content input').serialize()).fail(function(){
+    $.post('/service-report', $.param(chargeableData) + '&' + $('.modal-content input').serialize()).fail(function(){
         toastr['error'](`Oops! something went wrong, call CHARLIE PUTH!`);}).done(function(){
             getChargeable(chargeableData.transaction_fee_detail_id);
             tblFee.ajax.reload();
@@ -128,12 +124,12 @@ function sendChargeable(){
 }
 
 function getFee(id){
-    tblFee.ajax.url(`service-report?request=fee&id=${id}`).load();
+    tblFee.ajax.url(`create?request=fee&id=${id}`).load();
 
 }
 
 function getChargeable(id){
-    tblChargeable.ajax.url(`service-report?request=chargeable&id=${id}`).load();
+    tblChargeable.ajax.url(`create?request=chargeable&id=${id}`).load();
     addChargeableId(id);
 }
 
@@ -174,6 +170,7 @@ function selectedHandler(elem){
     }else {
         chargeables = chargeables.filter(item=>item != elem.value);
     }
+    
     if (chargeables.length){
         $('#chargeable a.btn-danger.btn.btn-xs').show();
     }else{
@@ -189,5 +186,29 @@ function selectedHandler(elem){
 }
 
 function delChargeables(){
-
+    swal({
+        title: "Delete selected?",
+        text: "This process is irreversible!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }, function () {
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $("#_token").attr('value')},
+              method: "DELETE",
+              url: "/service-report/destroy",
+            data: {"id":chargeables}
+            }).done(()=>{
+                swal("Deleted!", "Data has been removed.", "success");
+                tblChargeable.ajax.reload(()=>{
+                    if(!tblChargeable.data().length){
+                        tblFee.ajax.reload();
+                        prev();
+                    }
+                });
+            })
+        
+    });
 }

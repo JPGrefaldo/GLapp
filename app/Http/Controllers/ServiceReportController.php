@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
-    public function index(Request $request)
+    public function create(Request $request)
     {   
         switch ($request['request']){
             case 'case':
@@ -23,7 +23,7 @@ class ServiceReportController extends Controller
                 return ['data' => TransactionFeeDetail::findOrFail($request['id'])->chargeables];
                 break;
             default:
-                return view('servicereport.index');
+                return view('servicereport.create');
         }
     }
 
@@ -32,9 +32,9 @@ class ServiceReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        return view('servicereport.list');
     }
 
     /**
@@ -44,7 +44,7 @@ class ServiceReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Chargeable $chargeable, Request $request)
-    {
+    {   
        $chargeable->name = $request->name;
        $chargeable->description = $request->description;
        $chargeable->amount = $request->amount;
@@ -58,9 +58,9 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport,Request $request)
+    public function show(ServiceReport $serviceReport)
     {
-        return view('servicereport.list', $this->store($serviceReport->transaction, new request(['request' => 'published'])));
+       return $serviceReport->with(['client','transactionDetail'])->find(1);
     }
 
     /**
@@ -96,9 +96,9 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServiceReport $serviceReport)
+    public function destroy(Request $request)
     {
-        //
+        return Chargeable::destroy($request['id']);
     }
     private function getCase($id)
     {
