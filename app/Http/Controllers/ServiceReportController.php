@@ -59,8 +59,13 @@ class ServiceReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(ServiceReport $serviceReport)
-    {
-       return $serviceReport->with(['client','transactionDetail'])->find(1);
+    {   
+        $report['serviceReport'] = $serviceReport->getAttributes();
+        $report['contract'] = $serviceReport->transactionDetail->transaction->contract->getAttributes();
+        $report['client'] = $serviceReport->transactionDetail->transaction->contract->client->getAttributes();
+        $report['case']   = $serviceReport->transactionDetail->transaction->cases;
+        return view('servicereport.list',compact('report'));
+        
     }
 
     /**
