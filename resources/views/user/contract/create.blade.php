@@ -20,7 +20,6 @@
         <div class="col-lg-4">
             <div class="title-action">
                 <button type="button" id="save-contract-btn" data-action="{!! ($data->status === 'Ongoing') ? 'edit' : 'add' !!}" class="btn btn-primary">{!! ($data->status === 'Ongoing') ? 'Update Contract' : 'Save Contract' !!}</button>
-                <button type="button" id="load-case" class="btn btn-primary">Load Case</button>
             </div>
         </div>
     </div>
@@ -429,10 +428,6 @@
                 keyboardNavigation: false,
                 forceParse: false,
                 autoclose: true
-            });
-
-            $(document).on('click','#load-case',function(){
-                loadCases();
             });
 
             $(document).on('click','.fund-add-btn',function(){
@@ -950,6 +945,7 @@
 
                 if($('#billing-address').length){
                     $('#billing-address').addClass('shake');
+                    count += 1;
                     toastr.error('Required!','Update Billing address!');
                 }
 
