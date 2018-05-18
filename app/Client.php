@@ -31,8 +31,9 @@ class Client extends Model
     {
         return $this->hasOne('App\ClientBusiness', 'id','billing');
     }
-    
+
     public function serviceReport(){
         return $this->hasManyThrough(ServiceReport::class,Transaction::class);
     }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionsTable extends Migration
+class CreateArsFadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('ars_fads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('client_id');
-            $table->enum('status',array('pending','void','Approved','Ongoing','Accomplished'))->default('pending');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('ars_fads');
     }
 }

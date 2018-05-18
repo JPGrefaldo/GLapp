@@ -145,27 +145,15 @@ class CaseManagementController extends Controller
     public function actionCase(Request $request)
     {
         $data = CaseManagement::with('counsel_list')->find($request->input('id'));
-        if($request->input('action') == 'delete'){
-            $data->delete();
+        switch ($request->input('action')){
+            case 'edit':
+                $data2 = Counsel::get();
+                return response()->json(array($data, $data2));
+                break;
+            case 'delete':
+                $data->delete();
+                break;
         }
-        if($request->input('action') == 'edit'){
-            $data2 = Counsel::get();
-            return response()->json(array($data, $data2));
-        }
-    }
-
-    public function getCase(Request $request)
-    {
-        $ids = TransactionFeeDetail::where('transaction_id',$request->input('id'))
-            ->where('fee_id', $request->input('fee_id'))
-            ->pluck('case_id')
-            ->toArray();
-
-        $data = CaseManagement::where('transaction_id',$request->input('id'))
-            ->whereNotIn('id', $ids)
-            ->get();
-
-        return response()->json($data);
     }
 
     public function storeCase(Request $request)
@@ -175,9 +163,7 @@ class CaseManagementController extends Controller
         $data->venue = $request->input('venue');
         $data->date = Carbon::parse($request->input('date'));
         $data->number = $request->input('number');
-        $data->docket = $request->input('docket');
         $data->class = $request->input('case_class');
-        $data->status = $request->input('status');
         $data->temp = 0;
         if($data->save()){
             if($request->input('lead') != ''){
@@ -194,6 +180,7 @@ class CaseManagementController extends Controller
                 }
                 $lead->save();
             }
+            return $data->id;
         }
     }
 

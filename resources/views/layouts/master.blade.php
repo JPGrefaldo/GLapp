@@ -11,7 +11,6 @@
 
     {!! Html::style('css/bootstrap.min.css') !!}
     {!! Html::style('font-awesome/css/font-awesome.css') !!}
-    {!! Html::style('css/plugins/iCheck/custom.css') !!}
     {!! Html::style('css/animate.css') !!}
     {!! Html::style('css/style.css') !!}
     {!! Html::style('css/elegal-style.css') !!}

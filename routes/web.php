@@ -34,30 +34,28 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-list', 'UserController@getList')->name('user-list');
 
         Route::resource('contract', 'ContractController');
-        Route::get('contract-create/{id}', 'ContractController@createClientContract')->name('contract-create');
-        Route::get('contract-list', 'ContractController@getList')->name('contract-list');
+        Route::get('create-contract/{id}', 'ContractController@createContract')->name('create-contract');
         Route::post('contract-store', 'ContractController@contractStore')->name('contract-store');
+        Route::get('contract-list', 'ContractController@getList')->name('contract-list');
 
         Route::resource('transaction', 'TransactionController');
-        Route::get('fee-list', 'TransactionController@feeList')->name('fee-list');
-        Route::get('tran-fee-list', 'TransactionController@tranFeeList')->name('tran-fee-list');
-        Route::get('tran-case-list', 'TransactionController@tranCaseList')->name('tran-case-list');
-        Route::post('tran-fee-store', 'TransactionController@tranFeeStore')->name('tran-fee-store');
+        Route::get('fees', 'TransactionController@feeList')->name('fees');
         Route::get('tran-fee-action', 'TransactionController@tranFeeAction')->name('tran-fee-action');
-        Route::get('tran-cost', 'TransactionController@tranCost')->name('tran-cost');
+        Route::post('case-fee-store', 'TransactionController@caseFeeStore')->name('case-fee-store');
+        Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
+        Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
         Route::resource('counsel', 'CounselController');
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
 
         Route::resource('case', 'CaseManagementController');
-        Route::get('get-case', 'CaseManagementController@getCase')->name('get-case');
+        Route::get('action-contract-case', 'CaseManagementController@actionCase')->name('action-contract-case');
         Route::get('create-case', 'CaseManagementController@createCase')->name('create-case');
-        Route::post('store-case', 'CaseManagementController@storeCase')->name('store-case');
         Route::get('add-co-counsel', 'CaseManagementController@addCoCounsel')->name('add-co-counsel');
-        Route::get('get-co-counsel', 'CaseManagementController@getCoCounsel')->name('get-co-counsel');
         Route::get('remove-co-counsel', 'CaseManagementController@removeCoCounsel')->name('remove-co-counsel');
+        Route::post('store-contract-case', 'CaseManagementController@storeCase')->name('store-contract-case');
         Route::get('load-counsel', 'CaseManagementController@loadCounsel')->name('load-counsel');
-        Route::get('action-case', 'CaseManagementController@actionCase')->name('action-case');
+        Route::get('create-contract-case-list', 'ContractController@caseList')->name('create-contract-case-list');
 
         Route::resource('chargeable', 'ChargeableExpenseController');
 
@@ -66,8 +64,8 @@ Route::middleware(['auth'])->group(function () {
 
 
         /* Client Route */
-        Route::get('client', 'ClientController@index');
-        Route::post('client', 'ClientController@busAddress');
+        Route::get('client','ClientController@index');
+        Route::post('client','ClientController@busAddress');
         Route::get('client/list','ClientController@show');
         Route::post('client/update','ClientController@update');
         Route::post('client/destroy','ClientController@destroy');
@@ -93,5 +91,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::view('googleapi','googleapi');
     });
+
+
+
+
+
+
 
 });

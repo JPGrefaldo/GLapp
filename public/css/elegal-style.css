@@ -1,7 +1,7 @@
 .resize-vertical {
     resize:vertical;
     overflow:auto;
-    height: 100px !important;
+    min-height: 100px !important;
 }
 
 .input-group-select {
@@ -57,6 +57,18 @@
     padding: 9px 12px;
 }
 
+.has-error .textarea-group-addon {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.tabs-container .has-error > a {
+    color: #a94442 !important;
+    background-color: #f2dede !important;
+    border-color: #a94442 !important;
+}
+
 .input-daterange .input-group-addon {
     padding: 6px 12px !important;
 }
@@ -110,8 +122,8 @@
 }
 
 .total-box label {
-    height: 82px;
-    font-size: 69px;
+    height: 50px;
+    font-size: 40px;
     line-height: 0.9;
     text-align: right;
 }
@@ -145,4 +157,18 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.ibox-title > .ibox-tools > button {
+    margin-bottom: 0;
+}
+
+.fees-total {
+    font-weight: bold;
+}
+
+.case-box-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }

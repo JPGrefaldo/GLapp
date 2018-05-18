@@ -18,13 +18,13 @@ class CreateContractsTable extends Migration
             $table->integer('transaction_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->enum('contract_type', array('Special','General'));
-            $table->string('contract_number');
+            $table->string('contract_number')->unique();
             $table->date('contract_date');
             $table->date('start_date');
-            $table->date('end_date');
-            $table->enum('status',array('Open','Close'));
+            $table->date('end_date')->nullable();
+            $table->enum('status',array('Open','Close'))->default('Open');
             $table->decimal('amount_cost',10,2)->default(0);
-            $table->text('other_conditions');
+            $table->text('other_conditions')->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_id')
