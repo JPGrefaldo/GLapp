@@ -163,9 +163,7 @@ class CaseManagementController extends Controller
         $data->venue = $request->input('venue');
         $data->date = Carbon::parse($request->input('date'));
         $data->number = $request->input('number');
-        $data->docket = $request->input('docket');
         $data->class = $request->input('case_class');
-        $data->status = $request->input('status');
         $data->temp = 0;
         if($data->save()){
             if($request->input('lead') != ''){

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServiceReportsTable extends Migration
+class CreateChargeablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateServiceReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_reports', function (Blueprint $table) {
+        Schema::create('chargeables', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->string('amount')->nullable();
             $table->integer('transaction_fee_detail_id')->unsigned()->nullable();
-            $table->integer('case_managements_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_fee_detail_id')
-            ->references('id')
-            ->on('transaction_fee_details');
-
-            $table->foreign('case_managements_id')
-            ->references('id')
-            ->on('case_managements');
+                ->references('id')->on('transaction_fee_details')
+                ->onDelete('cascade');
         });
     }
 
@@ -36,6 +34,6 @@ class CreateServiceReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_reports');
+        Schema::dropIfExists('chargeables');
     }
 }

@@ -2,16 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Transaction;
+use App\Chargeable;
+use App\TransactionFeeDetail;
+use App\CaseManagement;
 use App\ServiceReport;
 use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
-    private $data;
-    public function index()
-    {
-        return view('servicereport.index');
+    public function index(Request $request)
+    {   
+        switch ($request['request']){
+            case 'case':
+                return ['data' => CaseManagement::all()];
+                break;
+            case 'fee':
+                return ['data' => CaseManagement::findOrFail($request['id'])->fees];
+                break;
+            case 'chargeable':
+                return ['data' => TransactionFeeDetail::findOrFail($request['id'])->chargeables];
+                break;
+            default:
+                return view('servicereport.index');
+        }
     }
 
     /**
@@ -30,19 +43,13 @@ class ServiceReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Transaction $transaction, Request $request)
+    public function store(Chargeable $chargeable, Request $request)
     {
-       switch($request['request']){
-            case 'published':
-                $this->data = $transaction->published();
-                break;
-            case 'unpublished':
-                $this->data = $transaction->unPublished();
-                break;
-            default:
-                $this->data = ['error' => 'Invalid Request'];
-       }
-       return ['data'=> $this->data];
+       $chargeable->name = $request->name;
+       $chargeable->description = $request->description;
+       $chargeable->amount = $request->amount;
+       $chargeable->transaction_fee_detail_id = $request->transaction_fee_detail_id;
+       $chargeable->save();
     }
 
     /**
@@ -53,9 +60,7 @@ class ServiceReportController extends Controller
      */
     public function show(ServiceReport $serviceReport,Request $request)
     {
-       $this->store($serviceReport->transaction, new request(['request' => 'published']));
-       return $this->format();
-        return view('servicereport.list');
+        return view('servicereport.list', $this->store($serviceReport->transaction, new request(['request' => 'published'])));
     }
 
     /**
@@ -76,9 +81,13 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ServiceReport $serviceReport)
+    public function update(Request $request)
     {
-        //
+        $serviceReport = request()->validate([
+            'transaction_fee_detail_id'=>'required'
+        ]);        
+        ServiceReport::create($serviceReport); 
+        return $request;
     }
 
     /**
@@ -91,12 +100,12 @@ class ServiceReportController extends Controller
     {
         //
     }
-    private function format()
-    {   
-       $formatted = [];
-       $data = $this->data[0];
-       $formatted['date'] = date_format($data->report->created_at, 'Ymd'). "-" .$data->report->id;
-       $formatted['date']
-       return $formatted;
+    private function getCase($id)
+    {
+        try{
+            return CaseManagement::findOrFail($id)->fees;
+        }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return ['error' => $e->getMessage()];
+        }
     }
 }

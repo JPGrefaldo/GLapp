@@ -32,19 +32,19 @@
                 <div class="col-lg-12">
                     <div class="m-b-md">
                         <a href="#" class="btn btn-success btn-xs pull-right">Update</a>
-                        <h2>S.R. No.:</h2>
+                    <h2>S.R. No.: <strong>{{date_format($data[0]->report->created_at,"Ymd")."-".$data[0]->report->id}}</strong></h2>
                     </div>
                     <dl class="dl-horizontal">
-                        <dt>Contract Status:</dt> <dd><span class="label label-primary">Active</span></dd>
+                    <dt>Case Class:</dt> <dd><span class="label label-primary">{{ $data[0]->cases[0]->class }}</span></dd>
                     </dl>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-5">
                     <dl class="dl-horizontal">
-                        <dt>Client Name:</dt> <dd>Alex Smith</dd>
-                        <dt>Docket No.:</dt> <dd>162</dd>
-                        <dt>Case Title.:</dt> <dd>162</dd>
+                    <dt>Client Name:</dt> <dd>{{$data[0]->client->fname." ".$data[0]->client->lname }}</dd>
+                        <dt>Docket No.:</dt> <dd>{{$data[0]->cases->[0]->docket }}</dd>
+                        <dt>Case Title.:</dt> <dd>{{$data[0]->cases->[0]->title }}</dd>
                         <dt>Lead Counsel:<dt> <dd>Peter Leo M. Ralla</dd>
                         <dt>Venue:</dt> <dd>101</dd>
                     </dl>
