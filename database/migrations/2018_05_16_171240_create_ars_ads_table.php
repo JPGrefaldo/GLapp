@@ -15,6 +15,7 @@ class CreateArsAdsTable extends Migration
     {
         Schema::create('ars_ads', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('description');
             $table->timestamps();
         });
     }
