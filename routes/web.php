@@ -64,11 +64,13 @@ Route::middleware(['auth'])->group(function () {
 
 
         /* Client Route */
-        Route::get('client','ClientController@index');
-        Route::post('client','ClientController@busAddress');
-        Route::get('client/list','ClientController@show');
-        Route::post('client/update','ClientController@update');
-        Route::post('client/destroy','ClientController@destroy');
+        Route::resource('clients', 'ClientController');
+        // Route::get('clients','ClientController@index');
+        // Route::get('clients/{id}','ClientController@edit');
+        // Route::post('clients','ClientController@busAddress');
+        // Route::get('clients/list','ClientController@show');
+        // Route::post('clients/update','ClientController@update');
+        // Route::post('clients/destroy','ClientController@destroy');
 
         /* Service Report Route */
         Route::resource('service-report','ServiceReportController');
