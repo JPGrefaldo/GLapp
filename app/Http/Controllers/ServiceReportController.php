@@ -34,7 +34,8 @@ class ServiceReportController extends Controller
      */
     public function index()
     {
-        return view('servicereport.list');
+        $data = ServiceReport::with(['transactionDetail.fee','transactionDetail.cases'])->get();
+        return view('servicereport.index', compact('data'));
     }
 
     /**

@@ -80,7 +80,7 @@
                             <table id="case" class="table table-striped table-hover" >
                                 <thead>
                                     <tr>
-                                        <th>Docket No.</th>
+                                        <th>Number</th>
                                         <th>Title</th>
                                     </tr>
                                 </thead>
