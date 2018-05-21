@@ -15,6 +15,8 @@ class CreateArsOosTable extends Migration
     {
         Schema::create('ars_oos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('description');
+            $table->string('outcome_outputcol');
             $table->timestamps();
         });
     }

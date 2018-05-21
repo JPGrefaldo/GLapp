@@ -15,6 +15,7 @@ class CreateArsFadsTable extends Migration
     {
         Schema::create('ars_fads', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('description');
             $table->timestamps();
         });
     }
