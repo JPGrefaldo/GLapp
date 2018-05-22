@@ -649,11 +649,10 @@
                         other_conditions: contract.find('textarea[name="other_conditions"]').val(),
                     },function(data){
                         if(data.length != 0) {
-    //                        window.location.replace('http://'+window.location.host+'/contract');
-                            toastr.success('Successful!','Contract has no error!');
+                            toastr.success('Successful!','Contract has been saved!');
                             setTimeout(function(){
                                 window.location.replace('{!! route('contract.index') !!}');
-                            }, 6000);
+                            }, 3000);
                         }
                     });
                 }
@@ -943,11 +942,11 @@
                     toastr.error('Required!','Invalid inputs!');
                 }
 
-                if($('#billing-address').length){
-                    $('#billing-address').addClass('shake');
-                    count += 1;
-                    toastr.error('Required!','Update Billing address!');
-                }
+//                if($('#billing-address').length){
+//                    $('#billing-address').addClass('shake');
+//                    count += 1;
+//                    toastr.error('Required!','Update Billing address!');
+//                }
 
                 if(!$('.fees-table').length){
                     count += 1;
