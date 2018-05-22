@@ -188,7 +188,7 @@ class ContractController extends Controller
     public function contractStore(Request $request)
     {
         $total = 0;
-        $count = Transaction::whereNotIn('status','pending')->count();
+        $count = Transaction::whereNotIn('status',['pending'])->count();
         $count = str_pad($count + 1, 6, 0, STR_PAD_LEFT);
         $count = $count .'-'. Carbon::now()->format('m-Y');
         $tran = Transaction::with('fees')->find($request->input('id'));
@@ -212,7 +212,7 @@ class ContractController extends Controller
         if($request->input('action') === 'edit'){
             $data = Contract::where('transaction_id', $tran->id)->first();
         }
-
+        
         $data->contract_type = $request->input('contract_type');
         $data->contract_date = Carbon::parse($request->input('contract_date'));
         $data->start_date = Carbon::parse($request->input('start_date'));

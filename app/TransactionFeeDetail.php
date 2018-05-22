@@ -17,10 +17,14 @@ class TransactionFeeDetail extends Model
     }
     public function serviceReport()
     {
-        return $this->hasOne(ServiceReport::class,'trans_id');
+        return $this->hasOne(ServiceReport::class);
     }
     public function chargeables()
     {
         return $this->hasMany(Chargeable::class);
+    }
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
     }
 }

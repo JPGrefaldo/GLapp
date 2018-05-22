@@ -67,7 +67,7 @@
                 </li>
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href="/client"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
+                    <a href="{!! route('clients.index') !!}"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
 
@@ -93,9 +93,12 @@
                     <a href="{!! route('chargeable.create') !!}"><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
                 </li>
 
-
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
-                    <a href="/service-report"><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
+                <li class="{!! if_uri_pattern(array('service-report*')) == 1 ? 'active' : '' !!}">
+                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Service Report</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="{!! if_uri_pattern(array('service-report/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('service-report.create') !!}">Create</a></li>
+                        <li class="{!! if_uri_pattern(array('service-report')) == 1 ? 'active' : '' !!}"><a href="{!! route('service-report.index') !!}">List</a></li>
+                    </ul>
                 </li>
 
                 <li class="{!! if_uri_pattern(array('billing*')) == 1 ? 'active' : '' !!}">

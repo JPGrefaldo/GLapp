@@ -14,7 +14,7 @@ class ArsController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.ars.index');
     }
 
     /**

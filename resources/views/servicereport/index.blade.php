@@ -1,27 +1,18 @@
 @extends('layouts.master')
-
 @section('title', 'Service Report')
 
 @section('styles')
 {!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
+{!! Html::style('css/plugins/toastr/toastr.min.css') !!}
+{!! Html::style('css/plugins/sweetalert/sweetalert.css') !!}
 {!! Html::style('css/plugins/slick/slick.css') !!}
 {!! Html::style('css/plugins/slick/slick-theme.css') !!}
-{!! Html::style('css/plugins/toastr/toastr.min.css') !!}
-{!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
-
-<style>
-.ibox-content .row div {
-        -webkit-transition: width 0.3s ease;
-        -moz-transition: width 0.3s ease;
-        -o-transition: width 0.3s ease;
-        transition: width 0.3s ease;
-    }
-</style>
 @endsection
 
 @section('content')
+
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
         <h2>Service Report</h2>
         <ol class="breadcrumb">
             <li>
@@ -32,110 +23,36 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-4">
-        <div class="title-action">
-            <button type="submit" class="btn btn-primary" onclick="saveSR()">Save Contract</button>
-        </div>
+    <div class="col-lg-2">
+
     </div>
 </div>
 
 <div id="root" class="wrapper wrapper-content animated fadeInUp">
-    <div class="ibox float-e-argins">
-        <div class="ibox-content">
-            <div class="row">
-                <div class="slicker">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Cases
-                        </div>
-                        <div class="panel-body">
-                            <table id="case" class="table table-striped table-hover" >
-                                <thead>
-                                    <tr>
-                                        <th>Docket No.</th>
-                                        <th>Title</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Service Report</strong>
                 </div>
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Fee Details
-                        </div>
-                        <div class="panel-body">
-                            <table id="fee" class="table table-striped table-hover" >
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th>Charge Type</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <button class="btn btn-muted col-lg-offset-6" onclick="prev()">Back</button>
+                <div class="panel-body">
+                    <table id="serviceReport" class="table table-striped table-hover" >
+                        <thead>
+                            <tr>
+                                <th>Fee</th>
+                                <th>Case</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Chargeable Expense
-                            <a href="#" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#chargeableModal">Add</a>
-                        </div>
-                        <div class="panel-body">
-                            <table id="chargeable" class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th>Charge Type</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <button class="btn btn-muted col-lg-offset-6" onclick="prev()">Back</button>
-                </div>     
-            </div>
-        </div>
-        </div>
-    </div>          
-</div>
-<div class="modal inmodal fade" id="chargeableModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Chargeable Expense</h4>
-                <small class="font-bold">Add new Chargeable Expense</small>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Name</span>
-                    <input name="name" type="text" class="form-control" required>
-                </div>
-                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Description</span>
-                    <input name="description" type="text" class="form-control" required>
-                </div>
-                <div class="input-group m-b"><span class="input-group-addon bg-muted" >Amount</span>
-                    <input name="amount" type="text" class="form-control" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="sendChargeable()" data-dismiss="modal">Add</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @endsection
 
@@ -144,5 +61,25 @@
 {!! Html::script('js/plugins/dataTables/datatables.select.min.js') !!}
 {!! Html::script('js/plugins/slick/slick.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
-{!! Html::script('js/reportScript.js') !!}
+{!! Html::script('js/plugins/iCheck/icheck.min.js') !!}
+{!! Html::script('js/plugins/sweetalert/sweetalert.min.js') !!}
+
+<script>
+console.log({!! $data !!});
+serviceReport = $('#serviceReport').DataTable({
+        autoWidth: false,
+        data:{!! $data !!},
+        columns: [
+            {data: "transaction_detail.fee.name"},
+            {data: "transaction_detail.cases.title"},
+        ],
+        columnDefs: [{
+            targets: 2,
+            data: null,
+            render:function(row){
+                return `<a class="btn-success btn btn-xs" href="/service-report/${row.id}">View</a>` 
+            }
+        }]
+    });
+</script>
 @endsection

@@ -19,7 +19,7 @@ toastr.options = {
 
 $('.slicker').slick({
     accessibility:false,
-    draggable:true,
+    draggable:false,
     cssEase:'ease',
     easing:'linear',
     arrows:false
@@ -29,13 +29,13 @@ $('.slicker').slick({
 tblCase = $('#case').DataTable({
         autoWidth: false,
         ajax:{
-            url:"service-report",
+            url:"create",
             data: {
                 request:"case",
             }
         },
         columns: [
-            {data: "docket"},
+            {data: "number"},
             {data: "title"},
         ],
         columnDefs: [{
@@ -58,22 +58,18 @@ tblFee = $('#fee').DataTable({
         targets:0,
         data:null,
         render:function(a,b,row){
-        return `<div class="radio radio-success">
-                    <input type="radio" name="radio1" value="transaction_fee_detail_id=${row.id}" >
-                    <label for="radio1">
-                        ${row.fee.name}
-                    </label>
+        return `<div class="i-checks">
+                    <label><input name="radio1" type="radio" value="transaction_fee_detail_id=${row.id}"><i></i> ${row.fee.name}</label>
                 </div>`
         }
     },{
         targets: 3,
         data: null,
         render:function(a,b,row){
-            console.log(row.chargeables.lenght ? true : false);
             if(row.chargeables.length){
-                return `<a class="btn-success btn btn-xs" onclick="getChargeable(${row.fee.id})">View</a>`;
+                return `<a class="btn-success btn btn-xs" onclick="getChargeable(${row.id})">View</a>`;
             }else{
-                return `<a  class="btn-primary btn btn-xs" onclick="addChargeableId(${row.fee.id})" data-toggle="modal" data-target="#chargeableModal">Add</a>`;
+                return `<a  class="btn-primary btn btn-xs" onclick="addChargeableId(${row.id})" data-toggle="modal" data-target="#chargeableModal">Add</a>`;
             }
         }
     }]
@@ -81,20 +77,20 @@ tblFee = $('#fee').DataTable({
 
 tblChargeable = $('#chargeable').DataTable({
     autoWidth: false,
-    dom: 'frBtip',
-    buttons: [
-        'csv','print'
-    ],
     columns: [
+        {data: null},
         {data: "name"},
         {data: "description"},
         {data: "amount"}
     ],
     columnDefs: [{
-        targets: 3,
+        targets: 0,
         data: null,
-        render:function(row){
-            return `<a class="btn-danger btn btn-xs">Delete</a>` 
+        render: function(row){
+            return `<div class="checkbox checkbox-info">
+                        <input id="checkbox${row.id}" value="${row.id}" onchange="selectedHandler(this)" type="checkbox">
+                        <label></label>
+                    </div>`
         }
     }]
 });
@@ -103,7 +99,6 @@ $('#fee, #chargeable').on('xhr.dt',function(e, settings, json, xhr){
     let slicker = $('.slicker');
     if(xhr.status === 200){
         slicker.slick('slickCurrentSlide') < 2 ? slicker.slick('slickNext'): null ;
-        console.log(settings);
     }else{
         toastr['error']("No records found!");
     }
@@ -121,7 +116,7 @@ function addChargeableId(id){
 }
 
 function sendChargeable(){
-    $.post('service-report', $.param(chargeableData) + '&' + $('.modal-content input').serialize()).fail(function(){
+    $.post('/service-report', $.param(chargeableData) + '&' + $('.modal-content input').serialize()).fail(function(){
         toastr['error'](`Oops! something went wrong, call CHARLIE PUTH!`);}).done(function(){
             getChargeable(chargeableData.transaction_fee_detail_id);
             tblFee.ajax.reload();
@@ -129,11 +124,12 @@ function sendChargeable(){
 }
 
 function getFee(id){
-    tblFee.ajax.url(`service-report?request=fee&id=${id}`).load();
+    tblFee.ajax.url(`create?request=fee&id=${id}`).load();
+
 }
 
 function getChargeable(id){
-    tblChargeable.ajax.url(`service-report?request=chargeable&id=${id}`).load();
+    tblChargeable.ajax.url(`create?request=chargeable&id=${id}`).load();
     addChargeableId(id);
 }
 
@@ -147,6 +143,72 @@ function saveSR(){
         method: "PUT",
         url: "/service-report/test",
         data:$('input[name=radio1]:checked').val()
-    }).done(response=>console.log(response)).fail(response=>toastr['error'](`Please Select Fee Details`))
+    }).done(response=>toastr['info'](`Service report has been saved`)).fail(response=>toastr['error'](`Please Select Fee Details`))
 }
 
+tblFee.on('draw',function(){
+    $('.i-checks').iCheck({
+        radioClass: 'iradio_square-green',
+    });
+});
+
+let chargeables = [];
+
+function selectedHandler(elem){
+    if(elem.id == 'checkboxMain'){
+        $('#chargeable .checkbox-info input').prop('checked', elem.checked);
+        if(elem.checked){
+            chargeables = [];
+            for (i = 0; i < tblChargeable.data().length;i++){
+                chargeables.push(tblChargeable.data()[i].id);
+            }
+        }else{
+            chargeables = [];
+        }
+    }else if(elem.checked){
+        chargeables.push(elem.value);
+    }else {
+        chargeables = chargeables.filter(item=>item != elem.value);
+    }
+    
+    if (chargeables.length){
+        $('#chargeable a.btn-danger.btn.btn-xs').show();
+    }else{
+        $('#chargeable a.btn-danger.btn.btn-xs').hide();
+    }
+
+    if(chargeables.length == tblChargeable.data().length){
+        $('#checkboxMain').prop('checked', true);
+    }else{
+        $('#checkboxMain').prop('checked', false);
+    }
+
+}
+
+function delChargeables(){
+    swal({
+        title: "Delete selected?",
+        text: "This process is irreversible!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }, function () {
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $("#_token").attr('value')},
+              method: "DELETE",
+              url: "/service-report/destroy",
+            data: {"id":chargeables}
+            }).done(()=>{
+                swal("Deleted!", "Data has been removed.", "success");
+                tblChargeable.ajax.reload(()=>{
+                    if(!tblChargeable.data().length){
+                        tblFee.ajax.reload();
+                        prev();
+                    }
+                });
+            })
+        
+    });
+}

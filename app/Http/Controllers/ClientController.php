@@ -13,9 +13,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Client $client)
     {  
-        return view('client.index');
+        return view('client.index', compact('client'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return $client->get();
+        return view('client.show');
     }
 
     public function update(Request $request, Client $client)
@@ -82,5 +82,3 @@ class ClientController extends Controller
         }
     }
 }
-
-

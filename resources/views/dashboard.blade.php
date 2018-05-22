@@ -3,6 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('styles')
+    {!! Html::style('DataTables/datatables.css') !!}
 <style>
     .nopads{
         padding:0;
@@ -262,12 +263,10 @@
 @endsection
 
 
-@section('styles')
-    {!! Html::style('DataTables/dataTables.css') !!}
-@endsection
+
 
 @section('scripts')
-    {!! Html::script('DataTables/dataTables.js') !!}
+    {!! Html::script('DataTables/datatables.js') !!}
     {!! Html::script('js/plugins/chartJs/Chart.min.js') !!}
     {!! Html::script('js/plugins/slimscroll/jquery.slimscroll.min.js') !!}
 

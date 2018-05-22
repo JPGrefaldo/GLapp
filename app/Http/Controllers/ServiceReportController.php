@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ServiceReportController extends Controller
 {
-    public function index(Request $request)
+    public function create(Request $request)
     {   
         switch ($request['request']){
             case 'case':
@@ -23,7 +23,7 @@ class ServiceReportController extends Controller
                 return ['data' => TransactionFeeDetail::findOrFail($request['id'])->chargeables];
                 break;
             default:
-                return view('servicereport.index');
+                return view('servicereport.create');
         }
     }
 
@@ -32,9 +32,10 @@ class ServiceReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        $data = ServiceReport::with(['transactionDetail.fee','transactionDetail.cases'])->get();
+        return view('servicereport.index', compact('data'));
     }
 
     /**
@@ -44,7 +45,7 @@ class ServiceReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Chargeable $chargeable, Request $request)
-    {
+    {   
        $chargeable->name = $request->name;
        $chargeable->description = $request->description;
        $chargeable->amount = $request->amount;
@@ -58,9 +59,14 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiceReport $serviceReport,Request $request)
-    {
-        return view('servicereport.list', $this->store($serviceReport->transaction, new request(['request' => 'published'])));
+    public function show(ServiceReport $serviceReport)
+    {   
+        $report['serviceReport'] = $serviceReport->getAttributes();
+        $report['contract'] = $serviceReport->transactionDetail->transaction->contract->getAttributes();
+        $report['client'] = $serviceReport->transactionDetail->transaction->contract->client->getAttributes();
+        $report['case']   = $serviceReport->transactionDetail->transaction->cases;
+        return view('servicereport.list',compact('report'));
+        
     }
 
     /**
@@ -96,9 +102,9 @@ class ServiceReportController extends Controller
      * @param  \App\ServiceReport  $serviceReport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServiceReport $serviceReport)
+    public function destroy(Request $request)
     {
-        //
+        return Chargeable::destroy($request['id']);
     }
     private function getCase($id)
     {
