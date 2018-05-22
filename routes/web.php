@@ -45,8 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
-        Route::resource('counsel', 'CounselController');
-        Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
+
 
         Route::resource('case', 'CaseManagementController');
         Route::get('action-contract-case', 'CaseManagementController@actionCase')->name('action-contract-case');
@@ -75,8 +74,9 @@ Route::middleware(['auth'])->group(function () {
         
     });
 
-    Route::group(['middleware' => ['role:admin|council']], function () {
-
+    Route::group(['middleware' => ['role:admin|counsel']], function () {
+        Route::resource('counsel', 'CounselController');
+        Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
     });
 
     Route::group(['middleware' => ['role:admin|council|para-legal']], function () {

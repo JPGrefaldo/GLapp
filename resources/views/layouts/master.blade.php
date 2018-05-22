@@ -70,25 +70,29 @@
                     <a href="/client"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
+
                 <li class="{!! if_uri_pattern(array('contract*')) == 1 ? 'active' : '' !!}">
                     <a href="{!! route('contract.index') !!}"><i class="fa fa-user"></i> <span class="nav-label">Contracts</span></a>
                 </li>
 
+                {{--@can('add counsel|read counsel')--}}
                 <li class="{!! if_uri_pattern(array('counsel*')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Counsel</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('add counsel')
                         <li class="{!! if_uri_pattern(array('counsel/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('counsel.create') !!}">Create</a></li>
                         @endcan
-                        @can('browse counsel')
+                        @can('read counsel')
                         <li class="{!! if_uri_pattern(array('counsel')) == 1 ? 'active' : '' !!}"><a href="{!! route('counsel.index') !!}">List</a></li>
                         @endcan
                     </ul>
                 </li>
+                {{--@endcan--}}
 
                 <li class="{!! if_uri_pattern(array('chargeable*')) == 1 ? 'active' : '' !!}">
                     <a href="{!! route('chargeable.create') !!}"><i class="fa fa-file-text"></i> <span class="nav-label">Chargeable Expenses</span></a>
                 </li>
+
 
                 <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
                     <a href="/service-report"><i class="fa fa-bar-chart"></i> <span class="nav-label">Service Report</span></a>
@@ -98,6 +102,7 @@
                     <a href="{!! route('billing.create') !!}"><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
                 </li>
 
+                @hasrole('admin')
                 <li class="{!! if_uri_pattern(array('user*','profile*','role*','logs')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Others</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -106,6 +111,7 @@
                         <li class="{!! if_uri_pattern(array('logs')) == 1 ? 'active' : '' !!}"><a href="{!! route('logs') !!}">Logs</a></li>
                     </ul>
                 </li>
+                @endhasrole
                 {{--side menus end--}}
 
             </ul>

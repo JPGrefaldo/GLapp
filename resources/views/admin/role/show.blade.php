@@ -46,7 +46,7 @@
                                     @foreach($datas as $data)
                                     <dd>
                                         <div class="i-checks">
-                                            <input type="checkbox" name="permission[]" class="permission" value="{!! $data->id !!}" @if(in_array($data->id, $default)) checked @endif >
+                                            <input type="checkbox" name="permission[]" class="permission" value="{!! $data->name !!}" @if(in_array($data->id, $default)) checked @endif >
                                             {!! ucfirst($data->name) !!}
                                         </div>
                                     </dd>

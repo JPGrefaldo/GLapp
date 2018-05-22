@@ -54,16 +54,16 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $ids = $request->input('permission');
-        $permissions = Permission::whereIn('id', $ids)
-            ->pluck('name')
-            ->toArray();
+//        app()['cache']->forget('spatie.permission.cache');
+        $ids = $request->input('permission',[]);
+//        $permissions = Permission::whereIn('id', $ids)
+//            ->pluck('name')
+//            ->toArray();
 
         $role = Role::find($id);
 
-        $role->syncPermissions($permissions);
+        $role->syncPermissions($ids);
 
-//        return $ids;
         return redirect()->back();
     }
 

@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
         app()['cache']->forget('spatie.permission.cache');
         $roles = array(
             'admin',
-            'council',
+            'counsel',
             'para-legal'
         );
 
@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
 
         $userList = array(
             array('Admin', 'admin@gmail.com', 'pacific'),
-            array('Council', 'council@gmail.com', 'pacific'),
+            array('Counsel', 'counsel@gmail.com', 'pacific'),
             array('Para-Legal', 'paralegal@gmail.com', 'pacific'),
         );
 
@@ -66,9 +66,17 @@ class UsersTableSeeder extends Seeder
             $user->name = $data[0];
             $user->email = $data[1];
             $user->password = bcrypt($data[2]);
-            $user->save();
-            if($data[0] === 'Admin'){
-                $user->assignRole('admin');
+            if($user->save()){
+                switch ($user->name) {
+                    case 'Counsel':
+                        $user->assignRole('counsel');
+                        break;
+                    case 'Para-Legal':
+                        $user->assignRole('para-legal');
+                        break;
+                    default:
+                        $user->assignRole('admin');
+                }
             }
         }
 
