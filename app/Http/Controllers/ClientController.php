@@ -26,7 +26,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('client.show');
+        return view('client.show',compact('client'));
     }
 
     public function update(Request $request, Client $client)
@@ -55,6 +55,12 @@ class ClientController extends Controller
     public function destroy(Request $request)
     {
         return Client::destroy($request['client_id']);
+    }
+
+    public function create(Client $client)
+    {
+        $client->isNotRecorded = "Create";
+        return view('client.show', compact('client'));
     }
 
     public function busAddress( Client $client,Request $req)
