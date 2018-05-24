@@ -1,3 +1,23 @@
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "progressBar": false,
+    "preventDuplicates": true,
+    "positionClass": "toast-top-right",
+    "onclick": null,
+    "showDuration": "100",
+    "hideDuration": "1000",
+    "timeOut": "3000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
+
+let billing, client;
+let business = [];
 $.fn.dataTable.ext.errMode = 'throw';
 
 tblBusiness = $('#business').DataTable({
@@ -30,6 +50,36 @@ function getBusiness(id){
 
 function zapBusiness(elem){
     
+}
+
+function saveClient(){
+
+}
+
+function createClient(){
+    client = $('.row .col-lg-12:first input').serializeAssoc(true);
+    checkAddress() && sendPackage();
+}
+
+function sendPackage(){
+    $.post('/clients',{"business":business ,"client":client , "_token":$('#_token').attr('value')});
+}
+
+function checkAddress(){
+    return business.length || swal({
+        title: "Business details are empty.",
+        text: "Please add a business detail.",
+        type: "warning"
+    });
+}
+
+function saveAddress(){
+   value = $('.modal-body input, .modal-body select').serializeAssoc(true,['route','street_number']);
+   value && business.push(value);
+}
+
+function checkFields(){
+    fields = ['administrative_area_level_1','contract','country','locality','name','oic','postal_code','neighborhood'];
 }
 
 tblBusiness.on('draw',function(){

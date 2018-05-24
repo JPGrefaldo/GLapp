@@ -25,7 +25,7 @@
     </div>
     <div class="col-lg-4 pull-right">
         <div class="title-action">
-            <button type="button" class="btn btn-w-m btn-primary">Add Client</button>
+            <a href="{!! route('clients.create') !!}" type="button" class="btn btn-w-m btn-primary">Add Client</a>
         </div>
     </div>
 </div>

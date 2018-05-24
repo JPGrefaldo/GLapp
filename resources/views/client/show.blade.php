@@ -5,6 +5,8 @@
 @section('styles')
 {!! Html::style('css/plugins/dataTables/datatables.min.css') !!}
 {!! Html::style('css/plugins/iCheck/custom.css') !!}
+{!! Html::style('css/plugins/sweetalert/sweetalert.css') !!}
+{!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 @endsection
 
 @section('content')
@@ -25,7 +27,11 @@
     </div>
     <div class="col-lg-4">
         <div class="title-action">
-            <button type="button" id="save-contract-btn" class="btn btn-primary">{!! $client->isNotRecorded ?? "Save" !!}</button>
+            @if(if_uri('clients/create'))
+                <button type="button" class="btn btn-primary" onclick="createClient()">Create</button> 
+            @else
+                <button type="button" class="btn btn-primary" onclick="saveClient()">Save</button>
+            @endif
         </div>
     </div>
 </div>
@@ -108,8 +114,8 @@
 
                             <div class="input-group m-b">
                                 <span class="input-group-addon bg-muted">Business Type</span>
-                                <select name="business_nature" type="text" class="form-control">
-                                    <option disabled selected></option>
+                                <select name="business_nature" class="form-control">
+                                    <option selected value=""></option>
                                     <option value="1">Corporate</option>
                                     <option value="2">Infrastructure</option>
                                     <option value="3">advertising</option>
@@ -160,25 +166,26 @@
                             </div>
                             
                             <div class="row">
-                                    <div class="col-lg-7">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon bg-muted">Country</span>
-                                            <input name="country"  type="text" class="form-control  country_acInput1" ></div>
+                                <div class="col-lg-7">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon bg-muted">Country</span>
+                                        <input name="country"  type="text" class="form-control  country_acInput1" >
                                     </div>
-                                    <div class="col-lg-5">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon bg-muted">Zip Code</span>
-                                            <input name="postal_code" type="text" class="form-control  postal_code_acInput1" ></div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon bg-muted">Zip Code</span>
+                                        <input name="postal_code" type="text" class="form-control  postal_code_acInput1" >
                                     </div>
+                                </div>
                             </div>
-
                         </div>
             </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" onclick="saveAddress()">Save</button>
             </div>
         </div>
     </div>
@@ -196,5 +203,5 @@ $(document).ready(getBusiness({!! $client->id !!}));
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"
 async defer></script>
 {!! Html::script('js/plugins/iCheck/icheck.min.js') !!}
-
+{!! Html::script('js/plugins/sweetalert/sweetalert.min.js') !!}
 @endsection

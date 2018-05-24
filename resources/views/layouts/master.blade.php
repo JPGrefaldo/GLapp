@@ -66,7 +66,7 @@
                     <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span></a>
                 </li>
 
-                <li class="{!! if_uri_pattern(array('')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_route(['clients.index','clients.show','clients.create']) == 1 ? 'active' : '' !!}">
                     <a href="{!! route('clients.index') !!}"><i class="fa fa-user"></i> <span class="nav-label">Clients</span></a>
                 </li>
 
