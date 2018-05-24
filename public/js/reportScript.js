@@ -35,7 +35,7 @@ tblCase = $('#case').DataTable({
             }
         },
         columns: [
-            {data: "docket"},
+            {data: "number"},
             {data: "title"},
         ],
         columnDefs: [{
@@ -67,9 +67,9 @@ tblFee = $('#fee').DataTable({
         data: null,
         render:function(a,b,row){
             if(row.chargeables.length){
-                return `<a class="btn-success btn btn-xs" onclick="getChargeable(${row.fee.id})">View</a>`;
+                return `<a class="btn-success btn btn-xs" onclick="getChargeable(${row.id})">View</a>`;
             }else{
-                return `<a  class="btn-primary btn btn-xs" onclick="addChargeableId(${row.fee.id})" data-toggle="modal" data-target="#chargeableModal">Add</a>`;
+                return `<a  class="btn-primary btn btn-xs" onclick="addChargeableId(${row.id})" data-toggle="modal" data-target="#chargeableModal">Add</a>`;
             }
         }
     }]
@@ -125,7 +125,6 @@ function sendChargeable(){
 
 function getFee(id){
     tblFee.ajax.url(`create?request=fee&id=${id}`).load();
-
 }
 
 function getChargeable(id){

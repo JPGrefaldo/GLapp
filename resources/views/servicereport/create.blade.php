@@ -80,7 +80,7 @@
                             <table id="case" class="table table-striped table-hover" >
                                 <thead>
                                     <tr>
-                                        <th>Docket No.</th>
+                                        <th>Number</th>
                                         <th>Title</th>
                                     </tr>
                                 </thead>
@@ -178,7 +178,6 @@
 
 @section('scripts')
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
-{!! Html::script('js/plugins/dataTables/datatables.select.min.js') !!}
 {!! Html::script('js/plugins/slick/slick.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/plugins/iCheck/icheck.min.js') !!}

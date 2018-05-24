@@ -94,7 +94,7 @@ class ContractController extends Controller
 //        return $data;
         $client_id = str_pad($data->client->id, 5, 0, STR_PAD_LEFT);
         $data['billing'] = $this->billingAdd($data->client);
-        return view('user.contract.create2', compact('data','client_id'));
+        return view('user.contract.create', compact('data','client_id'));
     }
 
     /**
@@ -188,7 +188,7 @@ class ContractController extends Controller
     public function contractStore(Request $request)
     {
         $total = 0;
-        $count = Transaction::whereNotIn('status','pending')->count();
+        $count = Transaction::whereNotIn('status',['pending'])->count();
         $count = str_pad($count + 1, 6, 0, STR_PAD_LEFT);
         $count = $count .'-'. Carbon::now()->format('m-Y');
         $tran = Transaction::with('fees')->find($request->input('id'));
@@ -209,15 +209,15 @@ class ContractController extends Controller
             $data->client_id = $tran->client_id;
             $data->contract_number = $count;
         }
+
         if($request->input('action') === 'edit'){
             $data = Contract::where('transaction_id', $tran->id)->first();
         }
-
+        
         $data->contract_type = $request->input('contract_type');
         $data->contract_date = Carbon::parse($request->input('contract_date'));
         $data->start_date = Carbon::parse($request->input('start_date'));
         $data->end_date = Carbon::parse($request->input('end_date'));
-        $data->status = $request->input('status');
         $data->other_conditions = $request->input('other_conditions');
         $data->amount_cost = $total;
         if($data->save()){

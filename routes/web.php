@@ -52,9 +52,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
+<<<<<<< HEAD
         Route::resource('counsel', 'CounselController');
         
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
+=======
+
+>>>>>>> 4703117b1d90e8fb4874e9e96a369dbfc185ca58
 
         Route::resource('case', 'CaseManagementController');
         Route::get('action-contract-case', 'CaseManagementController@actionCase')->name('action-contract-case');
@@ -72,19 +76,19 @@ Route::middleware(['auth'])->group(function () {
 
 
         /* Client Route */
-        Route::get('client','ClientController@index');
-        Route::post('client','ClientController@busAddress');
-        Route::get('client/list','ClientController@show');
-        Route::post('client/update','ClientController@update');
-        Route::post('client/destroy','ClientController@destroy');
+        Route::resource('clients', 'ClientController');
 
         /* Service Report Route */
         Route::resource('service-report','ServiceReportController');
+
+        /** Client Business Route */
+        Route::resource('business','BusinessController');
         
     });
 
-    Route::group(['middleware' => ['role:admin|council']], function () {
-
+    Route::group(['middleware' => ['role:admin|counsel']], function () {
+        Route::resource('counsel', 'CounselController');
+        Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
     });
 
     Route::group(['middleware' => ['role:admin|council|para-legal']], function () {

@@ -13,9 +13,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Client $client)
     {  
-        return view('client.index');
+        return view('client.index', compact('client'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return $client->get();
+        return view('client.show',compact('client'));
     }
 
     public function update(Request $request, Client $client)
@@ -57,6 +57,12 @@ class ClientController extends Controller
         return Client::destroy($request['client_id']);
     }
 
+    public function create(Client $client)
+    {
+        $client->isNotRecorded = "Create";
+        return view('client.show', compact('client'));
+    }
+
     public function busAddress( Client $client,Request $req)
     {   
         switch($req['request']){
@@ -82,5 +88,3 @@ class ClientController extends Controller
         }
     }
 }
-
-
