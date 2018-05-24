@@ -52,13 +52,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
-<<<<<<< HEAD
+
         Route::resource('counsel', 'CounselController');
         
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
-=======
 
->>>>>>> 4703117b1d90e8fb4874e9e96a369dbfc185ca58
 
         Route::resource('case', 'CaseManagementController');
         Route::get('action-contract-case', 'CaseManagementController@actionCase')->name('action-contract-case');
