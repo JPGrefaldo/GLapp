@@ -25,7 +25,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
 
     Route::group(['middleware' => ['role:admin']], function () {
-        Route::get('ars', 'ArsController@index');
+        //activity report sheet's
+        Route::resource('ars', 'ArsController');
+
+        Route::get('ars-list', 'ArsController@getList')->name('ars-list');
+        Route::get('create-ars', 'ArsController@createCase')->name('create-ars');
 
 
         Route::get('role', 'RoleController@index')->name('role');
@@ -49,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
         Route::resource('counsel', 'CounselController');
+        
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
 
         Route::resource('case', 'CaseManagementController');
