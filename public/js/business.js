@@ -41,6 +41,21 @@ tblBusiness = $('#business').DataTable({
         data: function(row,type,val,meta){
             return `${row.street_number} ${row.route}, ${row.neighborhood}, ${row.locality}, ${row.administrative_area_level_1}, ${row.country} `
         }
+    },{
+        targets: 3,
+        width: "5%",
+        data: function(row,type,val,meta){
+            return `<button class="btn btn-primary btn-xs">View</button>`
+        }
+    },{
+        targets: 4,
+        width: "5%",
+        data: function(row,type,val,meta){
+            return `<div class="checkbox checkbox-danger no-padding">
+                        <input id="${row.id}" type="checkbox" onchange="">
+                        <label></label>
+                    </div>`
+        }
     }]
 });
 
@@ -74,14 +89,36 @@ function checkAddress(){
 }
 
 function saveAddress(){
-   value = $('.modal-body input, .modal-body select').serializeAssoc(true,['route','street_number']);
-   value && business.push(value);
+   let value = $('.modal-body input, .modal-body select').serializeAssoc(true,['route','street_number']);
+   if(value){
+        business.push(value);
+        tblBusiness.row.add(value).draw(false);
+        $('#businessModal').modal('hide');
+   } 
 }
 
 function checkFields(){
     fields = ['administrative_area_level_1','contract','country','locality','name','oic','postal_code','neighborhood'];
 }
 
+function clearFields(){
+    $('.modal-body input, .modal-body select').val('');
+}
+
+function selectAll(checked){
+    $('#business input[type=checkbox').prop('checked', checked);
+}
+$('#business input[type=checkbox]').not("#selectAll").change(function(){console.log('hello')});
+$('#business input[type=checkbox]').not("#selectAll").change(function(){
+    console.log('hello');
+    $('#business input[type=checkbox]:checked').not("#selectAll").length < tblBusiness.data().length ? selectAll(1) :  $('#selectAll').prop('checked', false);
+});
+
+$('#businessModal').on('hidden.bs.modal', function () {
+    clearFields();
+    $('.modal-body input, .modal-body select').closest('div').removeClass('has-error');
+  });
+  
 tblBusiness.on('draw',function(){
     $('.i-checks').iCheck({
         radioClass: 'iradio_square-green',

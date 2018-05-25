@@ -7,6 +7,7 @@
 {!! Html::style('css/plugins/iCheck/custom.css') !!}
 {!! Html::style('css/plugins/sweetalert/sweetalert.css') !!}
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
+{!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
 @endsection
 
 @section('content')
@@ -81,6 +82,13 @@
                                 <th>Billing</th>
                                 <th>Business Name</th>
                                 <th>Address</th>
+                                <th>Select All</th>
+                                <th>
+                                    <div class="checkbox checkbox-danger no-padding">
+                                        <input id="selectAll" type="checkbox" onchange="selectAll(this.checked)">
+                                        <label></label>
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,9 +203,13 @@
 @section('scripts')
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
+{!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/business.js') !!}
 <script>
-$(document).ready(getBusiness({!! $client->id !!}));
+$(document).ready(function(){
+    getBusiness({!! $client->id !!});
+    $('#business input[type=checkbox]').not("#selectAll").change(function(){console.log('hello')});
+});
 </script>
 {!! Html::script('js/google.js') !!}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVS0CN-Ez85eOLGEh7d113v9LE9ZzDses&libraries=places&callback=initAutocomplete"
