@@ -1,22 +1,22 @@
 @extends('layouts.master')
 
-@section('title', 'Counsel|Create')
+@section('title', 'ars|Create')
 
 
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Counsel</h2>
+            <h2>Create ars</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="{!! route('counsel.index') !!}">Counsel List</a>
+                    <a href="{!! route('ars.index') !!}">ars List</a>
                 </li>
                 <li class="active">
-                    <strong>Create Counsel</strong>
+                    <strong>Create ars</strong>
                 </li>
             </ol>
         </div>
@@ -30,10 +30,10 @@
             <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Counsel <small>Basic Info</small></h5>
+                        <h5><small>Info</small></h5>
                     </div>
                     <div class="ibox-content">
-                        {{Form::open(array('route'=>array('counsel.store')))}}
+                        {{Form::open(array('route'=>array('ars.store')))}}
                         <div class="row">
                             <div class="col-sm-5 col-sm-push-7">
                                 <div class="form-group">
@@ -57,42 +57,42 @@
                             </div>
                             <div class="col-sm-7 col-sm-pull-5">
                                 <div class="form-group">
-                                    <label>First Name</label>
-                                    {{Form::text('first-name',null, array('class'=>'form-control'))}}
-                                    @if($errors->has('first-name'))
-                                        <span class="text-danger">{{$errors->first('first-name')}}</span>
+                                    <label>Case Project Name</label>
+                                    {{Form::text('Case Project Name',null, array('class'=>'form-control'))}}
+                                    @if($errors->has('Case Project Name'))
+                                        <span class="text-danger">{{$errors->first('Case Project Name')}}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Middle Name</label>
-                                    {{Form::text('middle-name',null, array('class'=>'form-control'))}}
-                                    @if($errors->has('middle-name'))
-                                        <span class="text-danger">{{$errors->first('middle-name')}}</span>
+                                    <label>Docket #/Venue</label>
+                                    {{Form::text('Docket #/Venue',null, array('class'=>'form-control'))}}
+                                    @if($errors->has('Docket #/Venue'))
+                                        <span class="text-danger">{{$errors->first('Docket #/Venue')}}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Last Name</label>
+                                    <label>Reporter</label>
                                     {{Form::text('last-name',null, array('class'=>'form-control'))}}
                                     @if($errors->has('last-name'))
                                         <span class="text-danger">{{$errors->first('last-name')}}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Lawyer Type</label>
+                                    <label>Gr Title</label>
                                     {{Form::text('lawyer-type',null, array('class'=>'form-control'))}}
                                     @if($errors->has('lawyer-type'))
                                         <span class="text-danger">{{$errors->first('lawyer-type')}}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Lawyer Code</label>
+                                    <label>Client</label>
                                     {{Form::text('lawyer-code',null, array('class'=>'form-control'))}}
                                     @if($errors->has('lawyer-code'))
                                         <span class="text-danger">{{$errors->first('lawyer-code')}}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Address</label>
+                                    <label>Ars Date</label>
                                     {{Form::textarea('address',null, array('class'=>'form-control resize-vertical'))}}
                                     @if($errors->has('address'))
                                         <span class="text-danger">{{$errors->first('address')}}</span>

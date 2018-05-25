@@ -10,7 +10,6 @@
                         <h4 class="modal-title">Client Info</h4>
                         <small class="font-bold">Add/Edit Client Info</small>
                     </div>
-    
                             <div class="tabs-container no-margins">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">Personal Info</a></li>
@@ -28,19 +27,17 @@
                                                 <div class="input-group m-b"><span class="input-group-addon bg-muted">Middle Name</span>
                                                     <input name="mname" type="text" class="form-control" required>
                                                 </div>
-                                               
                                             </div>
                                             <div class="col-lg-6">
-                                                    <div class="input-group m-b"><span class="input-group-addon bg-muted">Last Name</span>
-                                                        <input name="lname" type="text" class="form-control" required>
-                                                    </div>
+                                                <div class="input-group m-b"><span class="input-group-addon bg-muted">Last Name</span>
+                                                    <input name="lname" type="text" class="form-control" required>
+                                                </div>
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon bg-muted">Email</span>
                                                     <input name="email" type="text" class="form-control" required>
                                                 </div>
                                             </div>
                                             </div>
-                                        
                                         </div>
                                     </div>
     

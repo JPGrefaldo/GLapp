@@ -20,6 +20,31 @@ $(document).ready(function(){
         }
     });
 
-
-
 });
+(function ($){
+    $.fn.serializeAssoc = function(check = false, excludeFields = []){
+        let fields = {};
+        let toaster = true;
+        unmarker(this);
+        $.each(this.serializeArray(), function(key,item){
+            if(check){
+                toaster = excludeFields.filter(field => {return field == item.name}).length || item.value || sendError(item);
+            }
+            fields[item.name] = item.value;
+        });
+        return toaster ? fields : nofity();
+     };
+    function nofity(){
+        toastr['error']("Please fill up the red marked fields.");
+        return false;
+    }
+    function unmarker(elem){
+        elem.on('click',function(){
+            $(this).closest("div").removeClass('has-error');
+        });
+    }
+    function sendError(item){
+        $(`[name=${item.name}`).closest("div").addClass('has-error'); 
+        return false;
+    }
+})(jQuery);

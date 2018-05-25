@@ -125,7 +125,6 @@ function sendChargeable(){
 
 function getFee(id){
     tblFee.ajax.url(`create?request=fee&id=${id}`).load();
-
 }
 
 function getChargeable(id){

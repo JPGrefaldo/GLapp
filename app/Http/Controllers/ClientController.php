@@ -26,7 +26,21 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('client.show');
+        return view('client.show',compact('client'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'client.fname' => 'required',
+            'client.mname' => 'required',
+            'client.lname' => 'required',
+            'client.email' => 'required',
+        ]);
+
+        if(count($request['business'])){
+            $this->saveBusiness($request['business']);
+        }
     }
 
     public function update(Request $request, Client $client)
@@ -39,7 +53,7 @@ class ClientController extends Controller
         ]);
 
         $request['id'] = $request['client_id'];
-        $userId = $client->addClient($request->except('_token','client_id'));
+        $userId = $client->add($request->except('_token','client_id'));
         
         $busAddress = $this->getBusHandler();
 
@@ -55,6 +69,12 @@ class ClientController extends Controller
     public function destroy(Request $request)
     {
         return Client::destroy($request['client_id']);
+    }
+
+    public function create(Client $client)
+    {
+        $client->isNotRecorded = "Create";
+        return view('client.show', compact('client'));
     }
 
     public function busAddress( Client $client,Request $req)
@@ -80,5 +100,10 @@ class ClientController extends Controller
         }else{
             return ["data"=>ClientBusiness::where('client_id',null)->get()];
         }
+    }
+
+    protected function saveBusiness($business)
+    {
+
     }
 }

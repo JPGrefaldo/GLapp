@@ -29,7 +29,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
 
     Route::group(['middleware' => ['role:admin']], function () {
-        Route::get('ars', 'ArsController@index');
+        //activity report sheet's
+        Route::resource('ars', 'ArsController');
+
+        Route::get('ars-list', 'ArsController@getList')->name('ars-list');
+        Route::get('create-ars', 'ArsController@createCase')->name('create-ars');
 
 
         Route::get('role', 'RoleController@index')->name('role');
@@ -53,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
 
+        Route::resource('counsel', 'CounselController');
+        
+        Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
+
 
         Route::resource('case', 'CaseManagementController');
         Route::get('action-contract-case', 'CaseManagementController@actionCase')->name('action-contract-case');
@@ -71,15 +79,12 @@ Route::middleware(['auth'])->group(function () {
 
         /* Client Route */
         Route::resource('clients', 'ClientController');
-        // Route::get('clients','ClientController@index');
-        // Route::get('clients/{id}','ClientController@edit');
-        // Route::post('clients','ClientController@busAddress');
-        // Route::get('clients/list','ClientController@show');
-        // Route::post('clients/update','ClientController@update');
-        // Route::post('clients/destroy','ClientController@destroy');
 
         /* Service Report Route */
         Route::resource('service-report','ServiceReportController');
+
+        /** Client Business Route */
+        Route::resource('business','BusinessController');
         
     });
 

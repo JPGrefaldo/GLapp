@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\ChargeableExpense;
+use App\ClientBusiness;
+use App\Client;
 use Illuminate\Http\Request;
 
-class ChargeableExpenseController extends Controller
+class BusinessController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return ['data' => Client::findOrFail($request['client'])->business];
     }
 
     /**
@@ -24,7 +25,7 @@ class ChargeableExpenseController extends Controller
      */
     public function create()
     {
-        return view('user.chargeable-expense.create');
+        //
     }
 
     /**
@@ -41,10 +42,10 @@ class ChargeableExpenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ChargeableExpense  $chargeableExpense
+     * @param  \App\ClientBusiness  $clientBusiness
      * @return \Illuminate\Http\Response
      */
-    public function show(ChargeableExpense $chargeableExpense)
+    public function show(ClientBusiness $clientBusiness)
     {
         //
     }
@@ -52,10 +53,10 @@ class ChargeableExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ChargeableExpense  $chargeableExpense
+     * @param  \App\ClientBusiness  $clientBusiness
      * @return \Illuminate\Http\Response
      */
-    public function edit(ChargeableExpense $chargeableExpense)
+    public function edit(ClientBusiness $clientBusiness)
     {
         //
     }
@@ -64,10 +65,10 @@ class ChargeableExpenseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ChargeableExpense  $chargeableExpense
+     * @param  \App\ClientBusiness  $clientBusiness
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ChargeableExpense $chargeableExpense)
+    public function update(Request $request, ClientBusiness $clientBusiness)
     {
         //
     }
@@ -75,10 +76,10 @@ class ChargeableExpenseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ChargeableExpense  $chargeableExpense
+     * @param  \App\ClientBusiness  $clientBusiness
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChargeableExpense $chargeableExpense)
+    public function destroy(ClientBusiness $clientBusiness)
     {
         //
     }

@@ -8,7 +8,7 @@ class Client extends Model
         return $this->hasMany(ClientBusiness::class);
     }
     
-    public function addClient($info){
+    public function add($info){
         return $this->updateOrCreate([ 'id' => $info['id'] ],$info)->id;
     }
 
