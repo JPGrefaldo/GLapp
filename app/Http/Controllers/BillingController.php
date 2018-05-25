@@ -14,7 +14,8 @@ class BillingController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('user.billing.index');
     }
 
     /**

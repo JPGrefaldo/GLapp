@@ -171,6 +171,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
+        Vsmoraes\Pdf\PdfServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -233,6 +234,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'LogActivity' => App\Helpers\LogActivity::class,
+        'PDF' => Vsmoraes\Pdf\PdfFacade::class,
 
     ],
 

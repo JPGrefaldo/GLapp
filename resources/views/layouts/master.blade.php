@@ -17,9 +17,7 @@
     @yield('styles')
 
 </head>
-
-<body>
-
+@role('admin') <body class="skin-3"> @else <body class=""> @endrole
 <div id="wrapper">
     @php
         $user = \App\User::with('profile')->find(Auth::user()->id);
@@ -102,16 +100,28 @@
                 </li>
 
                 <li class="{!! if_uri_pattern(array('billing*')) == 1 ? 'active' : '' !!}">
-                    <a href="{!! route('billing.create') !!}"><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span></a>
+                    <a href="#"><i class="fa fa-file-o"></i> <span class="nav-label">Billing</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="{!! if_uri_pattern(array('billing/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('billing.create') !!}">Create</a></li>
+                        <li class="{!! if_uri_pattern(array('billing')) == 1 ? 'active' : '' !!}"><a href="{!! route('billing.index') !!}">List</a></li>
+                    </ul>
                 </li>
 
                 @hasrole('admin')
-                <li class="{!! if_uri_pattern(array('user*','profile*','role*','logs')) == 1 ? 'active' : '' !!}">
+                <li class="{!! if_uri_pattern(array('user*','profile*','role*','logs','print*')) == 1 ? 'active' : '' !!}">
                     <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Others</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li class="{!! if_uri_pattern(array('user*','profile*')) == 1 ? 'active' : '' !!}"><a href="{!! route('user.index') !!}">Users</a></li>
                         <li class="{!! if_uri_pattern(array('role*')) == 1 ? 'active' : '' !!}"><a href="{!! route('role') !!}">Roles</a></li>
                         <li class="{!! if_uri_pattern(array('logs')) == 1 ? 'active' : '' !!}"><a href="{!! route('logs') !!}">Logs</a></li>
+                        <li class="{!! if_uri_pattern(array('print*')) == 1 ? 'active' : '' !!}">
+                            <a href="#">Print Layouts <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li class="{!! if_uri_pattern(array('print-layout-billing')) == 1 ? 'active' : '' !!}"><a href="{!! route('print-layout-billing') !!}">Billing</a></li>
+                                <li><a href="#">Third Level Item</a></li>
+                                <li><a href="#">Third Level Item</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 @endhasrole

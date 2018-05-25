@@ -21,6 +21,10 @@ Route::get('logs', 'HomeController@logActivity')->name('logs');
 Route::get('dt-get-logs', 'HomeController@dtGetLogs')->name('dt-get-logs');
 Route::get('get-logs', 'HomeController@getLogs')->name('get-logs');
 
+Route::get('print-layout-billing', 'PrintController@printBillingLayout')->name('print-layout-billing');
+Route::get('print-billing', 'PrintController@printBilling')->name('print-billing');
+Route::get('pdf-billing', 'PrintController@pdfBilling')->name('pdf-billing');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
 
