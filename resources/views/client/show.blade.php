@@ -82,7 +82,8 @@
                                 <th>Billing</th>
                                 <th>Business Name</th>
                                 <th>Address</th>
-                                <th>Select All</th>
+                                <th><span>Select All</span>
+                                    <button class="btn btn-danger btn-xs no-margins" onclick="zapBusiness()">Delete</button></th>
                                 <th>
                                     <div class="checkbox checkbox-danger no-padding">
                                         <input id="selectAll" type="checkbox" onchange="selectAll(this.checked)">
@@ -204,11 +205,12 @@
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 {!! Html::script('js/business.js') !!}
 <script>
 $(document).ready(function(){
     getBusiness({!! $client->id !!});
-    $('#business input[type=checkbox]').not("#selectAll").change(function(){console.log('hello')});
+    $('th button.btn-danger').hide();
 });
 </script>
 {!! Html::script('js/google.js') !!}

@@ -1,4 +1,4 @@
-toastr.options = {
+  toastr.options = {
     "closeButton": false,
     "debug": false,
     "progressBar": false,
@@ -53,7 +53,7 @@ tblBusiness = $('#business').DataTable({
         data: function(row,type,val,meta){
             return `<div class="checkbox checkbox-danger no-padding">
                         <input id="${row.id}" type="checkbox" onchange="">
-                        <label></label>
+                        <label>{{ message }}</label>
                     </div>`
         }
     }]
@@ -63,64 +63,9 @@ function getBusiness(id){
     id ? tblBusiness.ajax.url(`/business?client=${id}`).load() : null;
 }
 
-function zapBusiness(elem){
-    
-}
-
-function saveClient(){
-
-}
-
-function createClient(){
-    client = $('.row .col-lg-12:first input').serializeAssoc(true);
-    checkAddress() && sendPackage();
-}
-
-function sendPackage(){
-    $.post('/clients',{"business":business ,"client":client , "_token":$('#_token').attr('value')});
-}
-
-function checkAddress(){
-    return business.length || swal({
-        title: "Business details are empty.",
-        text: "Please add a business detail.",
-        type: "warning"
-    });
-}
-
-function saveAddress(){
-   let value = $('.modal-body input, .modal-body select').serializeAssoc(true,['route','street_number']);
-   if(value){
-        business.push(value);
-        tblBusiness.row.add(value).draw(false);
-        $('#businessModal').modal('hide');
-   } 
-}
-
-function checkFields(){
-    fields = ['administrative_area_level_1','contract','country','locality','name','oic','postal_code','neighborhood'];
-}
-
-function clearFields(){
-    $('.modal-body input, .modal-body select').val('');
-}
-
-function selectAll(checked){
-    $('#business input[type=checkbox').prop('checked', checked);
-}
-$('#business input[type=checkbox]').not("#selectAll").change(function(){console.log('hello')});
-$('#business input[type=checkbox]').not("#selectAll").change(function(){
-    console.log('hello');
-    $('#business input[type=checkbox]:checked').not("#selectAll").length < tblBusiness.data().length ? selectAll(1) :  $('#selectAll').prop('checked', false);
-});
-
-$('#businessModal').on('hidden.bs.modal', function () {
-    clearFields();
-    $('.modal-body input, .modal-body select').closest('div').removeClass('has-error');
+var app = new Vue({
+    el: '#business',
+    data: {
+      message: 'Hello Vue!'
+    }
   });
-  
-tblBusiness.on('draw',function(){
-    $('.i-checks').iCheck({
-        radioClass: 'iradio_square-green',
-    });
-});
