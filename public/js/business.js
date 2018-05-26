@@ -1,4 +1,4 @@
-toastr.options = {
+  toastr.options = {
     "closeButton": false,
     "debug": false,
     "progressBar": false,
@@ -53,7 +53,7 @@ tblBusiness = $('#business').DataTable({
         data: function(row,type,val,meta){
             return `<div class="checkbox checkbox-danger no-padding">
                         <input id="${row.id}" type="checkbox" onchange="">
-                        <label></label>
+                        <label>{{ message }}</label>
                     </div>`
         }
     }]
