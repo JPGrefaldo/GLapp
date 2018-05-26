@@ -108,10 +108,22 @@ function clearFields(){
 function selectAll(checked){
     $('#business input[type=checkbox').prop('checked', checked);
 }
-$('#business input[type=checkbox]').not("#selectAll").change(function(){console.log('hello')});
-$('#business input[type=checkbox]').not("#selectAll").change(function(){
-    console.log('hello');
-    $('#business input[type=checkbox]:checked').not("#selectAll").length < tblBusiness.data().length ? selectAll(1) :  $('#selectAll').prop('checked', false);
+
+function selected(){
+    selection = $('#business input[type=checkbox]:checked').not("#selectAll");
+    if(selection.length){
+        $('#business th span').hide();
+        $('#business button.btn-danger').show();
+        return selection.length;
+    }else{
+        $('#business th span').show();
+        $('#business button.btn-danger').hide();  
+        return 0;
+    }
+}
+
+$('#business input[type=checkbox]').change(function(){
+    selected() < tblBusiness.data().length ? $('#selectAll').prop('checked', false) : selectAll(1);
 });
 
 $('#businessModal').on('hidden.bs.modal', function () {
