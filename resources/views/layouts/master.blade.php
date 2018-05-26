@@ -104,6 +104,7 @@
                     <ul class="nav nav-second-level collapse">
                         <li class="{!! if_uri_pattern(array('billing/create')) == 1 ? 'active' : '' !!}"><a href="{!! route('billing.create') !!}">Create</a></li>
                         <li class="{!! if_uri_pattern(array('billing')) == 1 ? 'active' : '' !!}"><a href="{!! route('billing.index') !!}">List</a></li>
+                        <li class="{!! if_uri_pattern(array('billing')) == 1 ? 'active' : '' !!}"><a href="">New</a></li>
                     </ul>
                 </li>
 

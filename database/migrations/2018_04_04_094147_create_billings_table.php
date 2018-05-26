@@ -19,7 +19,7 @@ class CreateBillingsTable extends Migration
             $table->integer('client_id')->unsigned()->nullable();
             $table->decimal('billing_number');
             $table->date('billing_date');
-            $table->decimal('unpaid_balance');
+            $table->decimal('unpaid_balance',10, 2);
             $table->decimal('billing_amount');
             //$table->date('last_payment');
             //$table->decimal('last_paid');

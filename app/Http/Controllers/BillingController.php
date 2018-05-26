@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Billing;
+use App\ServiceReport;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -25,7 +26,13 @@ class BillingController extends Controller
      */
     public function create()
     {
-        return view('user.billing.create');
+        $service_reports = ServiceReport::with('feeDetail')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+//        return $service_reports;
+
+        return view('user.billing.create', compact('service_reports'));
     }
 
     /**
@@ -83,4 +90,10 @@ class BillingController extends Controller
     {
         //
     }
+
+    public function billType(Request $request)
+    {
+        
+    }
+
 }

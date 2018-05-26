@@ -25,6 +25,6 @@ class TransactionFeeDetail extends Model
     }
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->belongsTo(Transaction::class)->with('client');
     }
 }
