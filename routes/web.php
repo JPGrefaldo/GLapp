@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
 
 
+
         Route::resource('counsel', 'CounselController');
         
         Route::get('counsel-list', 'CounselController@getList')->name('counsel-list');
