@@ -210,10 +210,6 @@
 <script>
 $(document).ready(function(){
     getBusiness({!! $client->id !!});
-<<<<<<< HEAD
-=======
-    $('th button.btn-danger').hide();
->>>>>>> master
 });
 </script>
 {!! Html::script('js/google.js') !!}

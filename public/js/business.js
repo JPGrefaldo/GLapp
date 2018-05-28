@@ -53,7 +53,7 @@ tblBusiness = $('#business').DataTable({
         data: function(row,type,val,meta){
             return `<div class="checkbox checkbox-danger no-padding">
                         <input id="${row.id}" type="checkbox" onchange="">
-                        <label>{{ message }}</label>
+                        <label></label>
                     </div>`
         }
     }]
