@@ -16,7 +16,7 @@
   }
 
 
-let billing, client;
+let clientId, businessId, billing;
 let business = [];
 $.fn.dataTable.ext.errMode = 'throw';
 
@@ -31,8 +31,9 @@ tblBusiness = $('#business').DataTable({
         targets: 0,
         width: "5%",
         render: function(row,type,val,meta){
+            
             return `<div class="i-checks">
-                        <label><input name="radio1" type="radio" id="${row.id}"><i></i></label>
+                        <label><input name="radio1" type="radio" id="${row.id}" ${row.id == billing && "checked"}><i></i></label>
                     </div>`
         }
     },{
@@ -59,25 +60,76 @@ tblBusiness = $('#business').DataTable({
     }]
 });
 
+function setNload(id){
+    clientId = id;
+    tblBusiness.ajax.url(`/business?client=${id}`).load();
+}
+
 function getBusiness(id){
-    id ? tblBusiness.ajax.url(`/business?client=${id}`).load() : null;
+    id && setNload(id);
 }
 
-function zapBusiness(elem){
-    
+function setBilling(id){
+    billing = id;
 }
 
-function saveClient(){
+function confirm(){
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover from this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+        }, function () {
+            zapBusiness();
+            swal.close();
+        });
 
 }
 
-function createClient(){
-    client = $('.row .col-lg-12:first input').serializeAssoc(true);
-    checkAddress() && sendPackage();
+function zapBusiness(){
+    let businessId = selected().map(function(){return this.id}).toArray();
+    $.delete('/business/destroy',{businessId: businessId})
+        .done(()=>tblBusiness.rows(selected().closest('tr')).remove().draw(false));
 }
 
-function sendPackage(){
-    $.post('/clients',{"business":business ,"client":client , "_token":$('#_token').attr('value')});
+function constructClient(newClient){
+    let client = getClientFields();
+    let billing = $('input[type=radio]:checked').attr('id');
+
+    if(newClient && !checkAddress()){
+        return;
+    }
+
+    if(!billing){
+        swal({
+            title: "Please Select Billing Address",
+            type: "error"
+        });
+        return;
+    }
+
+    if(!client){
+        return;
+    }
+
+    client['billing'] = billing;
+    dispatchClient(newClient, client, billing);
+ }
+
+function dispatchClient(newClient, client, billing){
+    if(newClient){
+        $.post('/clients',{"business":business ,"client":client })
+            .done(function(){location = '/clients'});
+    }else{
+        $.put('/clients/' + clientId,{client:client})
+            .done(function(){window.location = from || '/clients'});
+    }
+}
+
+function getClientFields(){
+    return $('.row .col-lg-12:first input').serializeAssoc(true);
 }
 
 function checkAddress(){
@@ -91,14 +143,21 @@ function checkAddress(){
 function saveAddress(){
    let value = $('.modal-body input, .modal-body select').serializeAssoc(true,['route','street_number']);
    if(value){
+       if(clientId){
+        value['client_id'] = clientId;
+        $.post('/business',{"businessId":businessId,"business":value});
+        tblBusiness.ajax.reload();
+       }else{
         business.push(value);
         tblBusiness.row.add(value).draw(false);
+       }
+        
         $('#businessModal').modal('hide');
    } 
 }
 
 function checkFields(){
-    fields = ['administrative_area_level_1','contract','country','locality','name','oic','postal_code','neighborhood'];
+  
 }
 
 function clearFields(){
@@ -112,26 +171,33 @@ function selectAll(checked){
 function selected(){
     selection = $('#business input[type=checkbox]:checked').not("#selectAll");
     if(selection.length){
-        $('#business th span').hide();
-        $('#business button.btn-danger').show();
-        return selection.length;
+        switchBtnHead(true);
+        return selection;
     }else{
-        $('#business th span').show();
-        $('#business button.btn-danger').hide();  
+        switchBtnHead(false);
         return 0;
     }
 }
 
-$('#business input[type=checkbox]').change(function(){
-    selected() < tblBusiness.data().length ? $('#selectAll').prop('checked', false) : selectAll(1);
+function switchBtnHead(state = true){
+    $('#business button.btn-danger').toggle(state);
+    $('#business th span').toggle(!state);
+}
+
+$('#business ').on('change','input[type=checkbox]',function(){
+    selected().length == tblBusiness.data().length ? selectAll(1) : $('#selectAll').prop('checked', false);
 });
 
 $('#businessModal').on('hidden.bs.modal', function () {
     clearFields();
     $('.modal-body input, .modal-body select').closest('div').removeClass('has-error');
   });
-  
+ 
 tblBusiness.on('draw',function(){
+    selected();
+    if(!tblBusiness.data().length){
+        switchBtnHead(false);
+    }
     $('.i-checks').iCheck({
         radioClass: 'iradio_square-green',
     });
