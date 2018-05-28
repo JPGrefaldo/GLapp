@@ -31,7 +31,7 @@ $factory->define(App\Client::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\ClientBusiness::class, function ($faker) {
+$factory->define(App\Business::class, function ($faker) {
     return [
         'client_id'                     => '',
         'name'                          => $faker->company,

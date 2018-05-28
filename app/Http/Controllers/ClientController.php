@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
-use App\ClientBusiness;
+use App\Business;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -36,34 +36,20 @@ class ClientController extends Controller
             'client.mname' => 'required',
             'client.lname' => 'required',
             'client.email' => 'required',
+            'business'     => 'required'
         ]);
 
+        $id = Client::create($request['client']);
+
         if(count($request['business'])){
-            $this->saveBusiness($request['business']);
+            $this->saveBusiness($id, $request['business']);
         }
     }
 
-    public function update(Request $request, Client $client)
+    public function update(Client $client, Request $request)
     {   
-        $this->validate($request,[
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'email' => 'required',
-        ]);
-
-        $request['id'] = $request['client_id'];
-        $userId = $client->add($request->except('_token','client_id'));
-        
-        $busAddress = $this->getBusHandler();
-
-        if(count($busAddress['data'])){
-                foreach ($busAddress['data'] as $item){
-                $item->client_id = $userId;
-                $item->save();
-            }
-        }
-        return "Success!";
+        $client->update($request['client']);
+        return 'success';
     }
 
     public function destroy(Request $request)
@@ -73,37 +59,11 @@ class ClientController extends Controller
 
     public function create(Client $client)
     {
-        $client->isNotRecorded = "Create";
         return view('client.show', compact('client'));
-    }
-
-    public function busAddress( Client $client,Request $req)
-    {   
-        switch($req['request']){
-            case 'get':
-                return $this->getBusHandler($req);
-                break;
-            case 'post':
-                return $client->addBusiness($req->except('_token','request'));
-                break;
-            case 'destroy':
-                return $client->zapBusiness($req['id']);
-                break;
-            default:
-                return ['error' => 'No request supplied!'];
-        }
-    }
-
-    public function getBusHandler($req = ['client_id'=>""]){
-        if ($req['client_id']){
-            return ['data'=>Client::find($req['client_id'])->business];
-        }else{
-            return ["data"=>ClientBusiness::where('client_id',null)->get()];
-        }
     }
 
     protected function saveBusiness($business)
     {
-
+        
     }
 }

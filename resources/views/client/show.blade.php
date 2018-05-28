@@ -8,6 +8,12 @@
 {!! Html::style('css/plugins/sweetalert/sweetalert.css') !!}
 {!! Html::style('css/plugins/toastr/toastr.min.css') !!}
 {!! Html::style('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') !!}
+
+<style>
+    .pac-container {
+        z-index: 10000 !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -29,9 +35,9 @@
     <div class="col-lg-4">
         <div class="title-action">
             @if(if_uri('clients/create'))
-                <button type="button" class="btn btn-primary" onclick="createClient()">Create</button> 
+                <button type="button" class="btn btn-primary" onclick="constructClient(true)">Create</button> 
             @else
-                <button type="button" class="btn btn-primary" onclick="saveClient()">Save</button>
+                <button type="button" class="btn btn-primary" onclick="constructClient(false)">Save</button>
             @endif
         </div>
     </div>
@@ -83,7 +89,7 @@
                                 <th>Business Name</th>
                                 <th>Address</th>
                                 <th><span>Select All</span>
-                                    <button class="btn btn-danger btn-xs no-margins" onclick="zapBusiness()">Delete</button></th>
+                                    <button class="btn btn-danger btn-xs no-margins" onclick="confirm()" style="display:none;">Delete</button></th>
                                 <th>
                                     <div class="checkbox checkbox-danger no-padding">
                                         <input id="selectAll" type="checkbox" onchange="selectAll(this.checked)">
@@ -205,11 +211,18 @@
 {!! Html::script('js/plugins/dataTables/datatables.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
 {!! Html::script('js/plugins/toastr/toastr.min.js') !!}
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 {!! Html::script('js/business.js') !!}
 <script>
+    let from = location.search;
+    from = from.substr(from.indexOf('=')+1);
 $(document).ready(function(){
+    setBilling({!! $client->billing !!})
     getBusiness({!! $client->id !!});
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('#_token').attr('value')
+    }
+});
 });
 </script>
 {!! Html::script('js/google.js') !!}

@@ -15,12 +15,17 @@ class CreateServiceReportsTable extends Migration
     {
         Schema::create('service_reports', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('transaction_id')->unsigned()->nullable();
             $table->integer('transaction_fee_detail_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_fee_detail_id')
             ->references('id')
             ->on('transaction_fee_details');
+
+            $table->foreign('transaction_id')
+            ->references('id')
+            ->on('transactions');
         });
     }
 

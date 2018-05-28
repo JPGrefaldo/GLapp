@@ -91,9 +91,11 @@ class ServiceReportController extends Controller
     {
         $serviceReport = request()->validate([
             'transaction_fee_detail_id'=>'required'
-        ]);        
+        ]);
+
+        $serviceReport['transaction_id'] = TransactionFeeDetail::find(1)->transaction_id;
         ServiceReport::create($serviceReport); 
-        return $request;
+        return "Success!";
     }
 
     /**
