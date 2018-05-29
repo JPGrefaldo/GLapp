@@ -4,7 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ars extends Model
+class Ars extends Model
 {
-    //
+    public function ads()
+    {
+        return $this->hasMany('App\ArsAd','ars_id','id');
+    }
+
 }

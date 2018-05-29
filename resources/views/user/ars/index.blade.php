@@ -13,7 +13,7 @@
                     <a href="/">Home</a>
                 </li>
                 <li class="active">
-                    <strong>Ars List</strong>
+                    <strong>List</strong>
                 </li>
             </ol>
         </div>
@@ -91,7 +91,8 @@
                     { data: 'time_finnish', name: 'time_finnish' },
                     { data: 'duration', name: 'duration' },
                     { data: 'sr_no', name: 'sr_no' },
-                    { data: 'billing_instruction', name: 'billing_entry' },
+                    { data: 'billing_instruction', name: 'billing_instruction' },
+                    { data: 'billing_entry', name: 'billing_entry' },
                     { data: 'action', name: 'action' }
                 ]
             });

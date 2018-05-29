@@ -15,9 +15,16 @@ class CreateArsOosTable extends Migration
     {
         Schema::create('ars_oos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('ars_id')->unsigned();
             $table->string('description');
             $table->string('outcome_outputcol');
             $table->timestamps();
+
+
+            $table->foreign('ars_id')
+            ->references('id')->on('ars_oos')
+            ->onDelete('cascade');
+
         });
     }
 
