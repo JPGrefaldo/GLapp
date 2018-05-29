@@ -160,6 +160,77 @@ class TransactionController extends Controller
         return response()->json($data);
     }
 
+    public function feeIndex()
+    {
+        return view('user.fee.index');
+    }
 
+    public function feeGet(Request $request)
+    {
+        $data = Fee::find($request->input('id'));
+
+        return response()->json($data);
+    }
+
+    public function feeDelete(Request $request)
+    {
+        $data = Fee::find($request->input('id'));
+        $data->delete();
+    }
+
+    public function feeStore(Request $request)
+    {
+        $string = strtolower($request->input('name'));
+        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        $string = preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+
+        $count = Fee::count();
+        $count += 1;
+        $valid = 0;
+
+        if($request->input('action') == 'add'){
+            $data = new Fee();
+            $data->code = str_pad($count, 3, '0', STR_PAD_LEFT);
+        }
+        if($request->input('action') == 'edit'){
+            $data = Fee::find($request->input('id'));
+        }
+
+        $data->name = $string;
+        $data->display_name = $request->input('name');
+        $data->description =  $request->input('description');
+        if($data->save()){
+            return response()->json($request->input('action'));
+        }
+    }
+
+    public function feeGetList()
+    {
+        $list = Fee::get();
+
+        $data = DataTables::of($list)
+            ->addColumn('code', function ($list) {
+                $info = $list->code;
+                return $info;
+            })
+            ->addColumn('name', function ($list) {
+                $info = $list->display_name;
+                return $info;
+            })
+            ->addColumn('description', function ($list) {
+                $info = $list->description;
+                return $info;
+            })
+            ->addColumn('action', function ($list) {
+                $menu = [];
+                $menu[] = '<button data-id="'.$list->id.'" type="button" data-type="edit" class="action btn-white btn btn-xs"><i class="fa fa-pencil text-success"></i> Edit</button>';
+                $menu[] = '<button data-id="'.$list->id.'" type="button" data-type="delete" class="action btn-white btn btn-xs"><i class="fa fa-trash text-danger"></i> Trash</button>';
+                return '<div class="btn-group text-right">'.implode($menu).'</div>';
+            })
+            ->make(true);
+
+        return $data;
+    }
 
 }

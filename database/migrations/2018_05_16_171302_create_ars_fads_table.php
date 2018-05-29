@@ -15,8 +15,13 @@ class CreateArsFadsTable extends Migration
     {
         Schema::create('ars_fads', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('ars_id')->unsigned();
             $table->string('description');
             $table->timestamps();
+
+            $table->foreign('ars_id')
+            ->references('id')->on('ars_fads')
+            ->onDelete('cascade');
         });
     }
 

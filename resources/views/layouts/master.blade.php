@@ -116,7 +116,7 @@
                         <li class="{!! if_uri_pattern(array('user*','profile*')) == 1 ? 'active' : '' !!}"><a href="{!! route('user.index') !!}">Users</a></li>
                         <li class="{!! if_uri_pattern(array('role*')) == 1 ? 'active' : '' !!}"><a href="{!! route('role') !!}">Roles</a></li>
                         <li class="{!! if_uri_pattern(array('logs')) == 1 ? 'active' : '' !!}"><a href="{!! route('logs') !!}">Logs</a></li>
-                        <li class="{!! if_uri_pattern(array('fee')) == 1 ? 'active' : '' !!}"><a href="{!! route('logs') !!}">Logs</a></li>
+                        <li class="{!! if_uri_pattern(array('fee')) == 1 ? 'active' : '' !!}"><a href="{!! route('fee') !!}">Fee</a></li>
                         <li class="{!! if_uri_pattern(array('print*')) == 1 ? 'active' : '' !!}">
                             <a href="#">Print Layouts <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
