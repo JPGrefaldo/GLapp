@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ars;
+use App\Ars;
 use App\ArsAd;
 use App\Helpers\LogActivity;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class ArsController extends Controller
 
     public function getList()
     {
-        $list = ars::get();
+        $list = Ars::get();
 
         $data = DataTables::of($list)
             ->addColumn('case_project_name', function ($list) {
@@ -156,12 +156,14 @@ class ArsController extends Controller
 
     public function show(Ars $ars)
     {
-        $ars = Ars::with('address')->find($ars->id);
+         $ars = Ars::find($ars->id);
 
+        return $ars;
 
         return view('user.ars.show', compact('ars'));
     }
 
+     
   
     public function edit(Ars $ars)
     {
