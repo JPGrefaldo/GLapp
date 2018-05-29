@@ -10,5 +10,4 @@ class Ars extends Model
     {
         return $this->hasMany('App\ArsAd','ars_id','id');
     }
-
 }
