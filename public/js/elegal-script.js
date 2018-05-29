@@ -24,15 +24,16 @@ $(document).ready(function(){
 (function ($){
     $.fn.serializeAssoc = function(check = false, excludeFields = []){
         let fields = {};
-        let toaster = true;
+        let toaster = [];
         unmarker(this);
         $.each(this.serializeArray(), function(key,item){
             if(check){
-                toaster = excludeFields.filter(field => {return field == item.name}).length || item.value || sendError(item);
+                toaster.push(excludeFields.filter(field => {return field == item.name}).length || item.value || sendError(item));
             }
             fields[item.name] = item.value;
         });
-        return toaster ? fields : nofity();
+        return toaster.every(x => {return x && true }) ? fields : nofity();
+        
      };
     function nofity(){
         toastr['error']("Please fill up the red marked fields.");
