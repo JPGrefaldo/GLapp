@@ -21,7 +21,7 @@ class Client extends Model
 
     public function bill()
     {
-        return $this->hasOne('App\ClientBusiness', 'id','billing');
+        return $this->hasOne('App\Business', 'id','billing');
     }
 
     public function serviceReport(){
