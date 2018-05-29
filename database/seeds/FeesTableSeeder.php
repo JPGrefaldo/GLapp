@@ -25,13 +25,15 @@ class FeesTableSeeder extends Seeder
             $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
             $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
             $string = preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
-            $digits = 2;
+
+            $count = Fee::count();
+            $count += 1;
 
             $data = new Fee();
             $data->name = $string;
             $data->display_name = $list;
             $data->description =  $faker->text($maxNbChars = 200);
-            $data->code = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+            $data->code = str_pad($count, 3, '0', STR_PAD_LEFT);
             $data->save();
         }
     }

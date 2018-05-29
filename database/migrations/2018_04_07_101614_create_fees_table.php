@@ -19,6 +19,7 @@ class CreateFeesTable extends Migration
             $table->string('display_name');
             $table->text('description');
             $table->string('code')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

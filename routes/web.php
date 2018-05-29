@@ -55,6 +55,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('case-fee-store', 'TransactionController@caseFeeStore')->name('case-fee-store');
         Route::post('store-fund', 'TransactionController@storeTrustFund')->name('store-fund');
         Route::get('get-fund', 'TransactionController@getTrustFund')->name('get-fund');
+        Route::get('fee', 'TransactionController@feeIndex')->name('fee');
+        Route::get('fee-list', 'TransactionController@feeGetList')->name('fee-list');
+        Route::get('fee-get', 'TransactionController@feeGet')->name('fee-get');
+        Route::get('fee-delete', 'TransactionController@feeDelete')->name('fee-delete');
+        Route::post('fee-store', 'TransactionController@feeStore')->name('fee-store');
 
 
 
