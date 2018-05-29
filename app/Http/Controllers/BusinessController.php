@@ -80,8 +80,8 @@ class BusinessController extends Controller
      * @param  \App\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Business $business)
-    {
-        return $business->destroy($request['businessId']);
+    public function destroy(Request $request)
+    {   
+        return Business::destroy($request['businessId']);
     }
 }

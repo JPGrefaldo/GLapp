@@ -15,9 +15,7 @@
     "hideMethod": "fadeOut"
   }
 
-
-let clientId, businessId, billing;
-let business = [];
+let clientId, businessId, billing, tblRow;
 $.fn.dataTable.ext.errMode = 'throw';
 
 tblBusiness = $('#business').DataTable({
@@ -46,7 +44,7 @@ tblBusiness = $('#business').DataTable({
         targets: 3,
         width: "5%",
         data: function(row,type,val,meta){
-            return `<button class="btn btn-primary btn-xs">View</button>`
+            return `<button class="btn btn-primary btn-xs" onclick="viewBusiness(this)">View</button>`
         }
     },{
         targets: 4,
@@ -89,9 +87,18 @@ function confirm(){
 }
 
 function zapBusiness(){
-    let businessId = selected().map(function(){return this.id}).toArray();
-    $.delete('/business/destroy',{businessId: businessId})
-        .done(()=>tblBusiness.rows(selected().closest('tr')).remove().draw(false));
+    if(clientId){
+        let businessId = selected().map(function(){return this.id}).toArray();
+        $.delete('/business/destroy',{businessId: businessId})
+            .done(removeRow());
+    }else{
+        removeRow();
+    }
+
+}
+
+function removeRow(){
+    tblBusiness.rows(selected().closest('tr')).remove().draw(false);
 }
 
 function constructClient(newClient){
@@ -133,7 +140,7 @@ function getClientFields(){
 }
 
 function checkAddress(){
-    return business.length || swal({
+    return tblBusiness.data().length || swal({
         title: "Business details are empty.",
         text: "Please add a business detail.",
         type: "warning"
@@ -148,16 +155,19 @@ function saveAddress(){
         $.post('/business',{"businessId":businessId,"business":value});
         tblBusiness.ajax.reload();
        }else{
-        business.push(value);
-        tblBusiness.row.add(value).draw(false);
+        processBusinessStack(value);
        }
-        
         $('#businessModal').modal('hide');
    } 
 }
 
-function checkFields(){
-  
+function processBusinessStack(value){
+    if(tblRow){
+        tblBusiness.row(tblRow).data(value).draw(false);
+    }else{
+        tblBusiness.row.add(value).draw(false);
+    }
+    tblRow = null;
 }
 
 function clearFields(){
@@ -183,9 +193,20 @@ function switchBtnHead(state = true){
     $('#business button.btn-danger').toggle(state);
     $('#business th span').toggle(!state);
 }
+function viewBusiness(elem){
+    tblRow = elem.closest('tr');
+    let rowData = tblBusiness.row(tblRow).data();
+    $('#businessModal').modal('show');
+    businessId = rowData.id;
+    for(item in rowData){
+        $(`input[name=${item}], select[name=${item}]`).val(rowData[item]);
+    }
+    console.log(rowData);
+}
 
-$('#business ').on('change','input[type=checkbox]',function(){
-    selected().length == tblBusiness.data().length ? selectAll(1) : $('#selectAll').prop('checked', false);
+$('#business').on('change','input[type=checkbox]',function(){
+    let pageItems = tblBusiness.page.info().end - tblBusiness.page.info().start;
+    selected().length == pageItems ? selectAll(1) : $('#selectAll').prop('checked', false);
 });
 
 $('#businessModal').on('hidden.bs.modal', function () {
